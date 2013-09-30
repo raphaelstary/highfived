@@ -1,0 +1,36 @@
+/*footer {*/
+/*position: fixed;*/
+/*bottom: 0;*/
+/*left: 0;*/
+/*background-color: #d3d3d3;*/
+/*width: 100%;*/
+/*border-top: 1px solid #5a5c5d;*/
+/*background-color: #5a5c5d; *//**//*#d3d3d3;*/
+/*}*/
+body {
+    padding-bottom: 70px;
+}
+
+.blue {
+    background-color: #00b8f8;
+}
+
+.blue a {
+    color: #D1EEFF;
+}
+
+.yellow {
+    background-color: #ffcc00;
+}
+
+.yellow a {
+    color: #FFF3B8;
+}
+
+.pink {
+    background-color: #ff51e4;
+}
+
+.pink a {
+    color: #FFCFEE;
+}
