@@ -3,14 +3,95 @@
 <head>
     <title>letsplay.io - high five</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="css/bootstrap.css" rel="stylesheet" media="screen">
-    <link href="css/editor.css" rel="stylesheet" media="screen">
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/editor.css" rel="stylesheet">
 </head>
 <body>
 <canvas id="editor-ui" height="100" width="100"></canvas>
 
+<section id="layers-tool" class="panel panel-default">
+    <div class="panel-heading">
+        <input type="search" class="form-control input-sm" placeholder="Search">
+    </div>
+    <div class="panel-body">
 
-<nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+        <ul class="list-group">
+            <li class="list-group-item">
+                <span class="badge">8</span>
+
+                <p class="list-group-item-heading">
+                    <a href="#">event area</a>
+                    <a href="#"><span class="glyphicon glyphicon-eye-open"></span></a>
+                </p>
+
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <a href="#">entry explosion</a>
+                        <a href="#"><span class="glyphicon glyphicon-eye-open"></span></a>
+                        <a href="#"><span class="glyphicon glyphicon-link"></span></a>
+                        <a href="#"><span class="glyphicon glyphicon-trash"></span></a>
+                    </li>
+                    <li class="list-group-item">
+
+                        <p class="list-group-item-heading">
+                            <a href="#">trap</a>
+                            <a href="#"><span class="glyphicon glyphicon-eye-open"></span></a>
+                            <a href="#"><span class="glyphicon glyphicon-link"></span></a>
+                            <a href="#"><span class="glyphicon glyphicon-trash"></span></a>
+                        </p>
+
+                        <form class="form-horizontal list-group-item-text">
+                            <div class="form-group">
+                                <label class="control-label col-xs-4 input-sm" for="xpoint">x</label>
+
+                                <div class="col-xs-8">
+                                    <input id="xpoint" type="text" class="form-control input-sm" placeholder="x">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-xs-4 input-sm" for="ypoint">y</label>
+
+                                <div class="col-xs-8">
+                                    <input id="ypoint" type="text" class="form-control input-sm" placeholder="y">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-xs-4 input-sm" for="width">width</label>
+
+                                <div class="col-xs-8">
+                                    <input id="width" type="text" class="form-control input-sm" placeholder="width">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-xs-4 input-sm" for="height">height</label>
+
+                                <div class="col-xs-8">
+                                    <input id="height" type="text" class="form-control input-sm" placeholder="height">
+                                </div>
+                            </div>
+                        </form>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="#">another event</a>
+                        <a href="#"><span class="glyphicon glyphicon-eye-open"></span></a>
+                        <a href="#"><span class="glyphicon glyphicon-link"></span></a>
+                        <a href="#"><span class="glyphicon glyphicon-trash"></span></a>
+                    </li>
+                </ul>
+            </li>
+            <li class="list-group-item"><a href="#">physics body</a></li>
+            <li class="list-group-item"><a href="#">collision area</a></li>
+            <li class="list-group-item"><a href="#">animated object</a></li>
+            <li class="list-group-item"><a href="#">transition path</a></li>
+            <li class="list-group-item"><a href="#">AI point</a></li>
+            <li class="list-group-item"><a href="#">static image</a></li>
+            <li class="list-group-item"><a href="#">vector field</a></li>
+            <li class="list-group-item"><a href="#">touch area</a></li>
+        </ul>
+    </div>
+</section>
+
+<nav class="navbar navbar-default navbar-fixed-bottom">
     <p class="navbar-text pull-left">
         <a href="#" class="navbar-link"><span class="glyphicon glyphicon-phone"></span></a>
         <a href="#" class="navbar-link"><span class="glyphicon glyphicon-pencil"></span></a>
@@ -34,10 +115,7 @@
         </a>
 
         <ul class="dropdown-menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li><a href="#">Separated link</a></li>
+            <li><a href="#">Layers</a></li>
         </ul>
     </div>
 

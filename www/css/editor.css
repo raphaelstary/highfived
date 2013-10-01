@@ -7,8 +7,12 @@
 /*border-top: 1px solid #5a5c5d;*/
 /*background-color: #5a5c5d; *//**//*#d3d3d3;*/
 /*}*/
-body {
-    padding-bottom: 70px;
+/*body {*/
+    /*padding-bottom: 70px;*/
+/*}*/
+
+nav.navbar-default {
+    background-color: #dddddd;
 }
 
 .blue {
@@ -33,4 +37,51 @@ body {
 
 .pink a {
     color: #FFCFEE;
+}
+
+section#layers-tool {
+    position: absolute;
+    width: 200px;
+    right: 10px;
+    top: 10px;
+}
+
+section .list-group-item {
+    border-left: 0;
+    border-right: 0;
+}
+
+section .list-group-item:first-child {
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+}
+
+section .list-group-item:last-child {
+    margin-bottom: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.panel-body {
+    padding: 0;
+}
+
+.list-group-item > .list-group > .list-group-item {
+    /*padding-left: 0;*/
+    /*padding-right: 0;*/
+    margin-left: -15px;
+    margin-right: -15px;
+}
+
+.list-group-item > .list-group {
+    margin-bottom: 0;
+}
+
+.list-group-item > .list-group > .list-group-item:last-child {
+    margin-bottom: -10px;
+    border-bottom: 0;
+}
+
+.active-light {
+    background-color: #d9edf7;
 }
