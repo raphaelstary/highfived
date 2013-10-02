@@ -1,0 +1,30 @@
+{
+  "name": "highfive",
+  "version": "0.0.1",
+  "license": "MIT",
+  "amd": {},
+  "engine": "node ~0.10.20",
+  "volo": {
+    "baseUrl": "www/js/lib",
+    "dependencies": {
+      "require": "github:jrburke/requirejs/2.1.8",
+      "domReady": "github:requirejs/domReady/2.0.1",
+      "bootstrap": "github:twbs/bootstrap/v3.0.0#dist/js/bootstrap.js",
+      "jquery": "github:jquery/jquery/2.0.3",
+      "knockout": "https://github.com/knockout/knockout/releases/download/v2.3.0/knockout-2.3.0.js"
+    },
+    "testUrl": "test/lib",
+    "testDependencies": {
+      "jasmine": "github:pivotal/jasmine/v1.3.1"
+    }
+  },
+  "devDependencies": {
+    "jshint": "~2.1.4",
+    "requirejs": "~2.1.8",
+    "volo-ghdeploy": "0.0.6",
+    "volo-appcache": "0.0.2",
+    "jasmine-node": "~1.11.0",
+    "node-static": "~0.7.0",
+    "almond": "~0.2.5"
+  }
+}

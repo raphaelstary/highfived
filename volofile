@@ -1,0 +1,103 @@
+/*jslint node: true */
+'use strict';
+
+var WWW = 'www';
+var WWW_BUILT = 'www-built';
+var WWW_GHDEPLOY = 'www-ghdeploy';
+var MAIN_JS = WWW + '/js/main.js';
+
+module.exports = {
+    clean: {
+        summary: 'removes built directory',
+
+        run: 'v.rm ' + WWW_BUILT
+    },
+
+    test: {
+        summary: 'executes all unit tests aka jasmin spec files',
+
+        run: function (d, v, namedArgs) {
+            d.resolve(
+               v.withDir('test', function () {
+                  return v.exec('node consoleRunner.js');
+               })
+            );
+        }
+    },
+
+    lint: {
+        summary: 'runs jshint on a.js',
+        run: 'n.jshint ' + MAIN_JS
+    },
+
+    ghdeploy: require('volo-ghdeploy')(WWW_BUILT, WWW_GHDEPLOY),
+
+    appcache: require('volo-appcache')({
+        depends: ['build'],
+        dir: WWW_BUILT
+    }),
+
+    serve: {
+        summary: 'start a local web server for testing',
+
+        run: function (d, v, namedArgs, alternatePath) {
+            var PORT = 8080;
+            var PATH = alternatePath || WWW;
+
+            var staticHttp = require('node-static');
+            var fileServer = new(staticHttp.Server)(PATH);
+            var simpleUserHash = 0;
+
+            var app = require('http').createServer(function (request, response) {
+                request.addListener('end', function () {
+                    fileServer.serve(request, response);
+                }).resume();
+            });
+
+            app.listen(PORT);
+            console.log("starting web server, serving folder '" + PATH + "' at http://localhost:" + PORT);
+        }
+    },
+
+    build: {
+        summary: 'build the stuff, means uglify and concatenate files',
+
+        flags: {
+            //Does not print the build output.
+            'q': 'quiet'
+        },
+
+        depends: ['test', 'clean'],
+
+        run: function (d, v, namedArgs) {
+
+            v.copyDir(WWW, WWW_BUILT);
+            v.rm(WWW_BUILT + '/js');
+
+            d.resolve(v.spawn('node',
+                [
+                    'node_modules/.bin/r.js',
+                    '-o',
+                    'baseUrl=' + WWW + '/js',
+                    'name=../../node_modules/almond/almond',
+                    'include=main',
+                    'wrap=true',
+                    'out=' + WWW_BUILT + '/js/app.js'
+                ], {
+                    useConsole: !namedArgs.quiet
+                }
+            ));
+
+            var indexName = WWW_BUILT + '/index.html',
+                contents = v.read(indexName),
+                scriptRegExp = /(<script[^>]+data-main="[^"]+"[^>]+)(src="[^"]+")([^>]*>\s*<\/script>)/;
+
+            contents = contents.replace(scriptRegExp,
+                function (match, pre, script, post) {
+                    return '<script src="js/app.js"' + post;
+                }
+            );
+            v.write(indexName, contents);
+        }
+    }
+};

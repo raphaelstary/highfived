@@ -14,3 +14,7 @@ results
 npm-debug.log
 
 .idea
+node_modules
+www/js/lib
+www-built
+www-ghpages

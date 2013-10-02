@@ -54,12 +54,14 @@ section .list-group-item {
 section .list-group-item:first-child {
     border-top-right-radius: 0;
     border-top-left-radius: 0;
+    border-top: 0;
 }
 
 section .list-group-item:last-child {
     margin-bottom: 0;
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
+    border-bottom: 0;
 }
 
 .panel-body {
@@ -71,6 +73,11 @@ section .list-group-item:last-child {
     /*padding-right: 0;*/
     margin-left: -15px;
     margin-right: -15px;
+    /*padding-left: 25px;*/
+}
+
+section .list-group {
+    margin-bottom: 0;
 }
 
 .list-group-item > .list-group {
@@ -84,4 +91,8 @@ section .list-group-item:last-child {
 
 .active-light {
     background-color: #d9edf7;
+}
+
+.form-group {
+    margin-bottom: 5px;
 }
