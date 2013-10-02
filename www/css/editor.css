@@ -32,7 +32,7 @@ nav.navbar-default {
 }
 
 .pink {
-    background-color: #ff51e4;
+    color: #ff51e4 !important;
 }
 
 .pink a {
@@ -73,7 +73,7 @@ section .list-group-item:last-child {
     /*padding-right: 0;*/
     margin-left: -15px;
     margin-right: -15px;
-    /*padding-left: 25px;*/
+    padding-left: 30px;
 }
 
 section .list-group {

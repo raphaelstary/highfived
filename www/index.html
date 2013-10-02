@@ -19,10 +19,10 @@
             <li class="list-group-item active-light">
                 <span class="badge">8</span>
 
-                <p class="list-group-item-heading">
-                    <a href="#">event area</a>
+                <div class="list-group-item-heading">
+                    <a href="#">&#9660; event area</a>
                     <a href="#"><span class="glyphicon glyphicon-eye-open"></span></a>
-                </p>
+                </div>
 
                 <ul class="list-group">
                     <li class="list-group-item">
@@ -33,13 +33,13 @@
                     </li>
                     <li class="list-group-item">
 
-                        <p class="list-group-item-heading">
+                        <div class="list-group-item-heading">
                             <a href="#">trap</a>
                             <a href="#"><span class="glyphicon glyphicon-pencil"></span></a>
                             <a href="#"><span class="glyphicon glyphicon-eye-open"></span></a>
                             <a href="#"><span class="glyphicon glyphicon-link"></span></a>
                             <a href="#"><span class="glyphicon glyphicon-trash"></span></a>
-                        </p>
+                        </div>
 
                         <form class="form-horizontal list-group-item-text">
                             <div class="form-group">
@@ -80,22 +80,26 @@
                     </li>
                 </ul>
             </li>
-            <li class="list-group-item"><a href="#">physics body</a></li>
-            <li class="list-group-item"><a href="#">collision area</a></li>
-            <li class="list-group-item"><a href="#">animated object</a></li>
-            <li class="list-group-item"><a href="#">transition path</a></li>
-            <li class="list-group-item"><a href="#">AI point</a></li>
-            <li class="list-group-item"><a href="#">static image</a></li>
-            <li class="list-group-item"><a href="#">vector field</a></li>
-            <li class="list-group-item"><a href="#">touch area</a></li>
+            <li class="list-group-item"><a href="#">&#9656; physics body</a></li>
+            <li class="list-group-item"><a href="#">&#9656; collision area</a></li>
+            <li class="list-group-item"><a href="#">&#9656; animated object</a></li>
+            <li class="list-group-item"><a href="#">&#9656; transition path</a></li>
+            <li class="list-group-item"><a href="#">&#9656; AI point</a></li>
+            <li class="list-group-item"><a href="#">&#9656; static image</a></li>
+            <li class="list-group-item"><a href="#">&#9656; vector field</a></li>
+            <li class="list-group-item"><a href="#">&#9656; touch area</a></li>
         </ul>
     </div>
 </section>
 
-<nav class="navbar navbar-default navbar-fixed-bottom">
+<nav id="control-bar" class="navbar navbar-default navbar-fixed-bottom">
     <p class="navbar-text pull-left">
-        <a href="#" class="navbar-link"><span class="glyphicon glyphicon-phone"></span></a>
-        <a href="#" class="navbar-link"><span class="glyphicon glyphicon-pencil"></span></a>
+        <a href="#" class="navbar-link" data-bind="click: playPointer, css: {pink: isPlayPointerActive()}">
+            <span class="glyphicon glyphicon-phone"></span>
+        </a>
+        <a href="#" class="navbar-link" data-bind="click: buildPointer, css: {pink: isBuildPointerActive()}">
+            <span class="glyphicon glyphicon-pencil"></span>
+        </a>
     </p>
 
     <form class="navbar-form navbar-left">
@@ -105,9 +109,14 @@
     </form>
 
     <p class="navbar-text">
-        <a href="#" class="navbar-link"><span class="glyphicon glyphicon-play"></span></a>
-        <!--<span class="glyphicon glyphicon-pause"></span>-->
-        <!--<a href="#" class="navbar-link"><span class="glyphicon glyphicon-film"></span></a>-->
+        <a href="#" class="navbar-link" data-bind="click: togglePlay">
+            <span class="glyphicon glyphicon-play" data-bind="visible: isPause"></span>
+            <span class="glyphicon glyphicon-pause" data-bind="visible: isPlay"></span>
+        </a>
+        <a href="#" class="navbar-link" data-bind="click: toggleGhostMapping, visible: isPlay,
+            css: {pink: isGhostMappingActive()}">
+            <span class="glyphicon glyphicon-film"></span>
+        </a>
     </p>
 
     <div class="btn-group dropup pull-right navbar-text">
@@ -116,8 +125,12 @@
         </a>
 
         <ul class="dropdown-menu">
-            <li><a href="#">Layers</a></li>
-            <li><a href="#">export</a></li>
+            <li>
+                <a href="#" data-bind="click: showLayerTool">Layers</a>
+            </li>
+            <li>
+                <a href="#" data-bind="click: exportStuff">export</a>
+            </li>
         </ul>
     </div>
 
