@@ -14,90 +14,107 @@
         <input type="search" class="form-control input-sm" placeholder="Search">
     </div>
     <div class="panel-body">
+        <ul class="list-group" data-bind="foreach: layers">
+            <li class="list-group-item">
+                <span class="badge" data-bind="text: itemCount"></span>
 
-        <ul class="list-group">
-            <li class="list-group-item active-light">
-                <span class="badge">8</span>
+                <div class="list-group-item-heading"
+                     data-bind="event: {mouseover: $root.toggleLayerControls, mouseout: $root.toggleLayerControls}">
 
-                <div class="list-group-item-heading">
-                    <a href="#">&#9660; event area</a>
-                    <a href="#"><span class="glyphicon glyphicon-eye-open"></span></a>
+                    <a href="#" data-bind="click: $root.toggleSelectLayer">
+                        <span data-bind="html: isSelected() ? '&#9660;': '&#9656;'"></span>
+                        <span data-bind="text: name"></span>
+                    </a>
+
+                    <a href="#" data-bind="visible: showHide, click: $root.toggleHideLayer">
+                        <span class="glyphicon"
+                              data-bind="css: {'glyphicon-eye-open': !isHidden(), 'glyphicon-eye-close': isHidden,
+                                                'active-light': !showControls()}">
+                        </span>
+                    </a>
                 </div>
 
-                <ul class="list-group">
-                    <li class="list-group-item">
-                        <a href="#">entry explosion</a>
-                        <a href="#"><span class="glyphicon glyphicon-eye-open"></span></a>
-                        <a href="#"><span class="glyphicon glyphicon-link"></span></a>
-                        <a href="#"><span class="glyphicon glyphicon-trash"></span></a>
-                    </li>
-                    <li class="list-group-item">
+                <ul class="list-group" data-bind="foreach: items, visible: showItems">
 
-                        <div class="list-group-item-heading">
-                            <a href="#">trap</a>
-                            <a href="#"><span class="glyphicon glyphicon-pencil"></span></a>
-                            <a href="#"><span class="glyphicon glyphicon-eye-open"></span></a>
-                            <a href="#"><span class="glyphicon glyphicon-link"></span></a>
-                            <a href="#"><span class="glyphicon glyphicon-trash"></span></a>
-                        </div>
+                    <li class="list-group-item"
+                        data-bind="event: {mouseover: $root.toggleItemControls, mouseout: $root.toggleItemControls}">
 
-                        <form class="form-horizontal list-group-item-text">
+                        <a href="#" data-bind="text: name, click: $root.toggleSelectItem, visible: !isEditOn()"></a>
+
+                        <input type="text" class="form-control input-sm" placeholder="name"
+                                data-bind="value: name, visible: isEditOn">
+
+                        <a href="#" data-bind="click: $root.toggleEditItemName, visible: showEdit">
+                            <span class="glyphicon glyphicon-pencil"
+                                    data-bind="css: {'active-light': !showControls()}">
+                            </span>
+                        </a>
+
+                        <a href="#" data-bind="click: $root.toggleHideItem, visible: showHide">
+                            <span class="glyphicon"
+                                    data-bind="css: {'glyphicon-eye-open': !isHidden(), 'glyphicon-eye-close': isHidden,
+                                                'active-light': !showControls()}">
+                            </span>
+                        </a>
+
+                        <a href="#" data-bind="click: $root.linkItem, visible: showControls">
+                            <span class="glyphicon glyphicon-link"></span>
+                        </a>
+
+                        <a href="#" data-bind="click: $parent.deleteItem, visible: showControls">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </a>
+
+                        <form class="form-horizontal list-group-item-text"
+                              data-bind="visible: isSelected">
+
                             <div class="form-group">
                                 <label class="control-label col-xs-4 input-sm" for="xpoint">x</label>
 
                                 <div class="col-xs-8">
-                                    <input id="xpoint" type="text" class="form-control input-sm" placeholder="x">
+                                    <input id="xpoint" type="text" class="form-control input-sm" placeholder="x"
+                                           data-bind="value: xPoint">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-xs-4 input-sm" for="ypoint">y</label>
 
                                 <div class="col-xs-8">
-                                    <input id="ypoint" type="text" class="form-control input-sm" placeholder="y">
+                                    <input id="ypoint" type="text" class="form-control input-sm" placeholder="y"
+                                           data-bind="value: yPoint">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-xs-4 input-sm" for="width">width</label>
 
                                 <div class="col-xs-8">
-                                    <input id="width" type="text" class="form-control input-sm" placeholder="width">
+                                    <input id="width" type="text" class="form-control input-sm" placeholder="width"
+                                           data-bind="value: width">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-xs-4 input-sm" for="height">height</label>
 
                                 <div class="col-xs-8">
-                                    <input id="height" type="text" class="form-control input-sm" placeholder="height">
+                                    <input id="height" type="text" class="form-control input-sm" placeholder="height"
+                                           data-bind="value: height">
                                 </div>
                             </div>
+
                         </form>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="#">another event</a>
-                        <a href="#"><span class="glyphicon glyphicon-eye-open"></span></a>
-                        <a href="#"><span class="glyphicon glyphicon-link"></span></a>
-                        <a href="#"><span class="glyphicon glyphicon-trash"></span></a>
                     </li>
                 </ul>
             </li>
-            <li class="list-group-item"><a href="#">&#9656; physics body</a></li>
-            <li class="list-group-item"><a href="#">&#9656; collision area</a></li>
-            <li class="list-group-item"><a href="#">&#9656; animated object</a></li>
-            <li class="list-group-item"><a href="#">&#9656; transition path</a></li>
-            <li class="list-group-item"><a href="#">&#9656; AI point</a></li>
-            <li class="list-group-item"><a href="#">&#9656; static image</a></li>
-            <li class="list-group-item"><a href="#">&#9656; vector field</a></li>
-            <li class="list-group-item"><a href="#">&#9656; touch area</a></li>
         </ul>
     </div>
 </section>
 
 <nav id="control-bar" class="navbar navbar-default navbar-fixed-bottom">
     <p class="navbar-text pull-left">
-        <a href="#" class="navbar-link" data-bind="click: playPointer, css: {pink: isPlayPointerActive()}">
+        <a href="#" class="navbar-link" data-bind="click: playPointer, css: {pink: isPlayPointerActive}">
             <span class="glyphicon glyphicon-phone"></span>
         </a>
-        <a href="#" class="navbar-link" data-bind="click: buildPointer, css: {pink: isBuildPointerActive()}">
+        <a href="#" class="navbar-link" data-bind="click: buildPointer, css: {pink: isBuildPointerActive}">
             <span class="glyphicon glyphicon-pencil"></span>
         </a>
     </p>
@@ -110,11 +127,10 @@
 
     <p class="navbar-text">
         <a href="#" class="navbar-link" data-bind="click: togglePlay">
-            <span class="glyphicon glyphicon-play" data-bind="visible: isPause"></span>
-            <span class="glyphicon glyphicon-pause" data-bind="visible: isPlay"></span>
+            <span class="glyphicon " data-bind="css: {'glyphicon-play': isPause, 'glyphicon-pause': isPlay}"></span>
         </a>
         <a href="#" class="navbar-link" data-bind="click: toggleGhostMapping, visible: isPlay,
-            css: {pink: isGhostMappingActive()}">
+            css: {pink: isGhostMappingActive}">
             <span class="glyphicon glyphicon-film"></span>
         </a>
     </p>

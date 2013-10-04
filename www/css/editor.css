@@ -41,7 +41,7 @@ nav.navbar-default {
 
 section#layers-tool {
     position: absolute;
-    width: 200px;
+    width: 225px;
     right: 10px;
     top: 10px;
 }
@@ -90,7 +90,7 @@ section .list-group {
 }
 
 .active-light {
-    background-color: #d9edf7;
+    color: #dddddd;
 }
 
 .form-group {
