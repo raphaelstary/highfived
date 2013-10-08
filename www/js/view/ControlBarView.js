@@ -1,5 +1,5 @@
 define(['lib/knockout'], function (ko) {
-    function ControlBarView() {
+    function ControlBarView(showLayerTool) {
         var self = this;
         this.isPlay = ko.observable(false);
 
@@ -9,6 +9,7 @@ define(['lib/knockout'], function (ko) {
         this.isPlayPointerActive = ko.observable(true);
         this.isBuildPointerActive = ko.observable(false);
         this.isGhostMappingActive = ko.observable(false);
+        this.showLayerTool = showLayerTool;
     }
 
     ControlBarView.prototype.playPointer = function () {
@@ -29,8 +30,8 @@ define(['lib/knockout'], function (ko) {
         this.isGhostMappingActive(!this.isGhostMappingActive());
     };
 
-    ControlBarView.prototype.showLayerTool = function () {
-        console.log("show layer tool");
+    ControlBarView.prototype.toggleShowLayerTool = function () {
+        this.showLayerTool(!this.showLayerTool());
     };
 
     ControlBarView.prototype.exportStuff = function () {

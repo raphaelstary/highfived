@@ -1,8 +1,9 @@
 define(['lib/knockout', 'view/Layer'], function(ko, Layer) {
 
-    function LayerToolView(layers) {
+    function LayerToolView(layers, showLayerTool) {
 
         this.layers = ko.observableArray();
+        this.showLayerTool = showLayerTool;
 
         var self = this;
         layers.forEach(function (layer) {

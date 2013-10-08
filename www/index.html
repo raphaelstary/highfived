@@ -9,7 +9,7 @@
 <body>
 <canvas id="editor-ui" height="100" width="100"></canvas>
 
-<section id="layers-tool" class="panel panel-default">
+<section id="layers-tool" class="panel panel-default" data-bind="visible: showLayerTool">
     <div class="panel-heading">
         <input type="search" class="form-control input-sm" placeholder="Search">
     </div>
@@ -142,7 +142,7 @@
 
         <ul class="dropdown-menu">
             <li>
-                <a href="#" data-bind="click: showLayerTool">Layers</a>
+                <a href="#" data-bind="click: toggleShowLayerTool">Layers</a>
             </li>
             <li>
                 <a href="#" data-bind="click: exportStuff">export</a>

@@ -45,8 +45,10 @@ require(['lib/knockout', 'view/ControlBarView', 'view/LayerToolView', 'lib/domRe
             }
         ];
 
-        ko.applyBindings(new ControlBarView(), document.getElementById('control-bar'));
-        ko.applyBindings(new LayerToolView(layers), document.getElementById('layers-tool'));
+        var showLayerTool = ko.observable(false);
+
+        ko.applyBindings(new ControlBarView(showLayerTool), document.getElementById('control-bar'));
+        ko.applyBindings(new LayerToolView(layers, showLayerTool), document.getElementById('layers-tool'));
 
     }
 );
