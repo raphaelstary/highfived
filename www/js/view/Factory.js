@@ -1,4 +1,4 @@
-define(['lib/knockout', 'view/Layer'], function (ko, Layer) {
+define(['lib/knockout', 'view/Layer', 'view/Item'], function (ko, Layer, Item) {
     function Factory(list) {
         this.list = list;
     }
@@ -11,7 +11,16 @@ define(['lib/knockout', 'view/Layer'], function (ko, Layer) {
         }
 
         this.list.forEach(function (layer) {
-            result.push(new Layer(layer.id, layer.name));
+            var items = ko.observableArray();
+
+            if (layer.items !== undefined && layer.items !== null && layer.items.length > 0) {
+
+                layer.items.forEach(function(item) {
+                    items.push(new Item(item.id, item.name, item.xPoint, item.yPoint, item.width, item.height));
+                });
+            }
+
+            result.push(new Layer(layer.id, layer.name, items));
         });
 
         return result;
