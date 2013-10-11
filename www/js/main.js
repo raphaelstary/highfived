@@ -1,6 +1,5 @@
-require(['lib/knockout', 'view/ControlBarView', 'view/LayerToolView', 'view/Factory', 'view/LayerItemFilter',
-    'lib/domReady', 'lib/bootstrap'],
-    function (ko, ControlBarView, LayerToolView, Factory, LayerItemFilter) {
+require(['view/MainView', 'lib/domReady', 'lib/bootstrap'],
+    function (MainView) {
 
         var inputLayers = [
             {
@@ -46,16 +45,6 @@ require(['lib/knockout', 'view/ControlBarView', 'view/LayerToolView', 'view/Fact
             }
         ];
 
-        var showLayerTool = ko.observable(false);
-        var layers = new Factory(inputLayers).createLayerModel();
-
-        var controlBarView = new ControlBarView(showLayerTool);
-        ko.applyBindings(controlBarView, document.getElementById('control-bar'));
-
-        var layerToolView = new LayerToolView(layers, showLayerTool);
-        ko.applyBindings(layerToolView, document.getElementById('layers-tool'));
-
-        var itemFilter = new LayerItemFilter(layers);
-        layerToolView.filter.subscribe(itemFilter.handle.bind(itemFilter));
+        var layerModel = new MainView(inputLayers).init();
     }
 );
