@@ -11,7 +11,8 @@
 
 <section id="layers-tool" class="panel panel-default" data-bind="visible: showLayerTool">
     <div class="panel-heading">
-        <input type="search" class="form-control input-sm" placeholder="Search">
+        <input type="search" class="form-control input-sm" placeholder="Search"
+                data-bind="value: filter, valueUpdate: 'afterkeydown'">
     </div>
     <div class="panel-body">
         <ul class="list-group" data-bind="foreach: layers">

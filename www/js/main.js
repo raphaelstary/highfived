@@ -1,7 +1,7 @@
-require(['lib/knockout', 'view/ControlBarView', 'view/LayerToolView', 'lib/domReady', 'lib/bootstrap'],
-    function (ko, ControlBarView, LayerToolView) {
+require(['lib/knockout', 'view/ControlBarView', 'view/LayerToolView', 'view/Factory', 'lib/domReady', 'lib/bootstrap'],
+    function (ko, ControlBarView, LayerToolView, Factory) {
 
-        var layers = [
+        var inputLayers = [
             {
                 id: 'event',
                 name: 'event area',
@@ -46,7 +46,7 @@ require(['lib/knockout', 'view/ControlBarView', 'view/LayerToolView', 'lib/domRe
         ];
 
         var showLayerTool = ko.observable(false);
-
+        var layers = new Factory(inputLayers).createLayerModel();
         ko.applyBindings(new ControlBarView(showLayerTool), document.getElementById('control-bar'));
         ko.applyBindings(new LayerToolView(layers, showLayerTool), document.getElementById('layers-tool'));
 
