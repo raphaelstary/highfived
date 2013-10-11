@@ -1,33 +1,10 @@
-define(['lib/knockout', 'view/Layer'], function(ko, Layer) {
+define(['lib/knockout'], function(ko) {
 
     function LayerToolView(layers, showLayerTool) {
 
         this.layers = layers;
         this.showLayerTool = showLayerTool;
         this.filter = ko.observable();
-
-        var self = this;
-        var tempLayers = {};
-        this.filter.subscribe(function (newValue) {
-
-            ko.utils.arrayForEach(self.layers(), function(layer) {
-
-                if (tempLayers[layer.id] !== undefined) {
-
-                    tempLayers[layer.id].forEach(function (item) {
-                        layer.items.push(item);
-                    });
-
-                    layer.items.sort(function (left, right) {
-                        return left.id < right.id ? -1 : 1;
-                    });
-                }
-
-                tempLayers[layer.id] = layer.items.remove(function (item) {
-                    return !(item.name().indexOf(self.filter()) != -1);
-                });
-            });
-        });
     }
 
     LayerToolView.prototype.toggleLayerControls = function (layer) {

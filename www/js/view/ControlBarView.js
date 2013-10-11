@@ -1,4 +1,5 @@
 define(['lib/knockout'], function (ko) {
+
     function ControlBarView(showLayerTool) {
         var self = this;
         this.isPlay = ko.observable(false);

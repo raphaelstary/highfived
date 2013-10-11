@@ -1,3 +1,4 @@
 // list _here_ all spec modules
-define(['spec/FactorySpec'
+define(['spec/view/FactorySpec',
+    'spec/view/LayerItemFilterSpec'
 ]);

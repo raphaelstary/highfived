@@ -1,6 +1,6 @@
 define(['view/Factory', 'lib/knockout', 'view/Layer', 'view/Item'], function (Factory, ko, Layer, Item) {
 
-    describe('view model creation', function () {
+    describe('view model creation, method call of createLayerModel', function () {
 
         it('should create an empty observable array, ' +
             'when I call create, ' +
