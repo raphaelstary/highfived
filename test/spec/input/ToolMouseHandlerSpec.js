@@ -185,29 +185,29 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
             expect(itemOne.height()).toBe(150);
         });
 
-//        it("should change item's width and height, " +
-//            "when moving mouse cursor, " +
-//            "given one item has been selected " +
-//            " and the 'top & right' action point has been selected", function () {
-//
-//            itemOne.isSelected(true);
-//            var interpretItemAction = function () {
-//                return PointerAction.RESIZE_TOP_AND_RIGHT;
-//            };
-//
-//            var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
-//
-//            cut.handleDown({clientX: 0, clientY: 0});
-//
-//            cut.handleMove({clientX: 250, clientY: 50});
-//
-//            expect(layerOneItems.length).toBe(1);
-//
-//            expect(itemOne.xPoint()).toBe(100);
-//            expect(itemOne.yPoint()).toBe(50);
-//            expect(itemOne.width()).toBe(150);
-//            expect(itemOne.height()).toBe(150);
-//        });
+        it("should change item's width and height, " +
+            "when moving mouse cursor, " +
+            "given one item has been selected " +
+            " and the 'top & right' action point has been selected", function () {
+
+            itemOne.isSelected(true);
+            var interpretItemAction = function () {
+                return PointerAction.RESIZE_TOP_AND_RIGHT;
+            };
+
+            var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
+
+            cut.handleDown({clientX: 0, clientY: 0});
+
+            cut.handleMove({clientX: 250, clientY: 50});
+
+            expect(layerOneItems.length).toBe(1);
+
+            expect(itemOne.xPoint()).toBe(100);
+            expect(itemOne.yPoint()).toBe(50);
+            expect(itemOne.width()).toBe(150);
+            expect(itemOne.height()).toBe(150);
+        });
 
         beforeEach(function () {
             layers = ko.observableArray([
