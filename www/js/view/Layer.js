@@ -1,6 +1,5 @@
-define(['lib/knockout', 'view/Item'], function (ko, Item) {
-    function Layer(id, name, items) {
-        this.id = id;
+define(['lib/knockout'], function (ko) {
+    function Layer(name, items) {
         this.name = ko.observable(name);
         this.items = items;
 

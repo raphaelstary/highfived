@@ -1,6 +1,5 @@
 define(['lib/knockout'], function (ko) {
-    function Item(id, name, xPoint, yPoint, width, height) {
-        this.id = id;
+    function Item(name, xPoint, yPoint, width, height) {
         this.name = ko.observable(name);
         this.xPoint = ko.observable(xPoint);
         this.yPoint = ko.observable(yPoint);

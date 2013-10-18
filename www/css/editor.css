@@ -51,7 +51,7 @@ section .list-group-item {
     border-right: 0;
 }
 
-section .list-group-item:first-child {
+section > .panel-body > .list-group:first-child > .list-group-item:first-child {
     border-top-right-radius: 0;
     border-top-left-radius: 0;
     border-top: 0;
