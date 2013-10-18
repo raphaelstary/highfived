@@ -598,6 +598,42 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
             expect(itemOne.height()).toBe(50);
         });
 
+        it("should change nothing on recently changed item (instead creates a new one), " +
+            "when releasing click button, " +
+            "given one item was selected & changed", function () {
+
+            itemOne.isSelected(true);
+            var interpretItemAction = function () {
+                return PointerAction.RESIZE_BOTTOM_AND_RIGHT;
+            };
+
+            var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
+
+            cut.handleDown({clientX: 200, clientY: 200});
+            cut.handleMove({clientX: 250, clientY: 250});
+            cut.handleMove({clientX: 275, clientY: 275});
+            cut.handleUp({clientX: 300, clientY: 300});
+
+            cut._checkCollision = function() {
+                return false;
+            };
+            cut._interpretAction = function () {
+                return PointerAction.NOTHING;
+            };
+
+            cut.handleDown({clientX: 350, clientY: 350});
+            cut.handleMove({clientX: 400, clientY: 400});
+            cut.handleMove({clientX: 425, clientY: 425});
+            cut.handleUp({clientX: 450, clientY: 450});
+
+            expect(layerOneItems.length).toBe(2);
+
+            expect(itemOne.xPoint()).toBe(100);
+            expect(itemOne.yPoint()).toBe(100);
+            expect(itemOne.width()).toBe(200);
+            expect(itemOne.height()).toBe(200);
+        });
+
         beforeEach(function () {
             layers = ko.observableArray([
                 new Layer('layerOne', ko.observableArray([new Item('onlyItem', 100, 100, 100, 100)]))

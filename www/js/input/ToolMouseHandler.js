@@ -9,7 +9,7 @@ define(['view/Item', 'lib/knockout', 'input/PointerAction'], function (Item, ko,
         this._interpretAction = interpretPointerAction;
 
         this.counter = 0;
-        this.activeShape = {};
+        this.activeShape = null;
         this.activeAction = PointerAction.NOTHING;
     }
 
