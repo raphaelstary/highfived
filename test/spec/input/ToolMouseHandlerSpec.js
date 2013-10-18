@@ -281,6 +281,54 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
             expect(itemOne.height()).toBe(200);
         });
 
+        it("should change item's width, " +
+            "when moving mouse cursor, " +
+            "given one item has been selected " +
+            " and the 'left' action point has been selected", function () {
+
+            itemOne.isSelected(true);
+            var interpretItemAction = function () {
+                return PointerAction.RESIZE_LEFT;
+            };
+
+            var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
+
+            cut.handleDown({clientX: 0, clientY: 0});
+
+            cut.handleMove({clientX: 50, clientY: 50});
+
+            expect(layerOneItems.length).toBe(1);
+
+            expect(itemOne.xPoint()).toBe(50);
+            expect(itemOne.yPoint()).toBe(100);
+            expect(itemOne.width()).toBe(150);
+            expect(itemOne.height()).toBe(100);
+        });
+
+//        it("should change item's height, " +
+//            "when moving mouse cursor, " +
+//            "given one item has been selected " +
+//            " and the 'top' action point has been selected", function () {
+//
+//            itemOne.isSelected(true);
+//            var interpretItemAction = function () {
+//                return PointerAction.RESIZE_TOP;
+//            };
+//
+//            var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
+//
+//            cut.handleDown({clientX: 0, clientY: 0});
+//
+//            cut.handleMove({clientX: 50, clientY: 50});
+//
+//            expect(layerOneItems.length).toBe(1);
+//
+//            expect(itemOne.xPoint()).toBe(100);
+//            expect(itemOne.yPoint()).toBe(50);
+//            expect(itemOne.width()).toBe(100);
+//            expect(itemOne.height()).toBe(150);
+//        });
+
         beforeEach(function () {
             layers = ko.observableArray([
                 new Layer('layerOne', ko.observableArray([new Item('onlyItem', 100, 100, 100, 100)]))
