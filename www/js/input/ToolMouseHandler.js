@@ -57,6 +57,23 @@ define(['view/Item', 'lib/knockout', 'input/PointerAction'], function (Item, ko,
     ToolMouseHandler.prototype.handleMove = function (event) {
         this._validate(event);
 
+        this._resizeShape(event);
+    };
+
+    ToolMouseHandler.prototype.handleUp = function (event) {
+        this._validate(event);
+
+        this._resizeShape(event);
+
+        this._normalizeRect(this.activeShape);
+    };
+
+    ToolMouseHandler.prototype._validate = function (event) {
+        if (event == null || event.clientX == null || event.clientY == null)
+            throw "Illegal argument: " + event;
+    };
+
+    ToolMouseHandler.prototype._resizeShape = function (event) {
         if (this.activeAction === PointerAction.RESIZE_BOTTOM_AND_RIGHT) {
             this._resizeRight(event);
             this._resizeBottom(event);
@@ -85,19 +102,6 @@ define(['view/Item', 'lib/knockout', 'input/PointerAction'], function (Item, ko,
         } else if (this.activeAction === PointerAction.RESIZE_TOP) {
             this._resizeTop(event);
         }
-    };
-
-    ToolMouseHandler.prototype.handleUp = function (event) {
-        this._validate(event);
-
-        this._resizeRight(event);
-        this._resizeBottom(event);
-        this._normalizeRect(this.activeShape);
-    };
-
-    ToolMouseHandler.prototype._validate = function (event) {
-        if (event == null || event.clientX == null || event.clientY == null)
-            throw "Illegal argument: " + event;
     };
 
     ToolMouseHandler.prototype._resizeRight = function (event) {

@@ -88,6 +88,8 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
     describe("as a user I want to resize an existing rect", function () {
         var layers, layerOne, layerOneItems, itemOne, checkPointerItemCollision;
 
+        // ############################## mouse move method:
+
         it("should change nothing on existing item (instead creates a new one), " +
             "when moving mouse cursor, " +
             "given no item has been selected", function () {
@@ -327,6 +329,273 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
             expect(itemOne.yPoint()).toBe(50);
             expect(itemOne.width()).toBe(100);
             expect(itemOne.height()).toBe(150);
+        });
+
+        // ############################## mouse up method:
+
+        it("should change nothing on existing item (instead creates a new one), " +
+            "when releasing click button, " +
+            "given no item has been selected", function () {
+
+            checkPointerItemCollision = function () {
+                return false;
+            };
+            var interpretItemAction = function () {
+                return PointerAction.RESIZE_BOTTOM_AND_RIGHT;
+            };
+
+            var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
+
+            cut.handleDown({clientX: 0, clientY: 0});
+
+            cut.handleUp({clientX: 500, clientY: 500});
+
+            expect(layerOneItems.length).toBe(2);
+
+            expect(itemOne.xPoint()).toBe(100);
+            expect(itemOne.yPoint()).toBe(100);
+            expect(itemOne.width()).toBe(100);
+            expect(itemOne.height()).toBe(100);
+        });
+
+        it("should change nothing on existing item (instead creates a new one), " +
+            "when releasing click button, " +
+            "given one item has been selected " +
+            " and no action point has been selected", function () {
+
+            var interpretItemAction = function () {
+                return PointerAction.NOTHING;
+            };
+            itemOne.isSelected(true);
+
+            var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
+
+            cut.handleDown({clientX: 0, clientY: 0});
+
+            cut.handleUp({clientX: 500, clientY: 500});
+
+            expect(layerOneItems.length).toBe(2);
+
+            expect(itemOne.xPoint()).toBe(100);
+            expect(itemOne.yPoint()).toBe(100);
+            expect(itemOne.width()).toBe(100);
+            expect(itemOne.height()).toBe(100);
+        });
+
+        it("should change item's width and height, " +
+            "when releasing click button, " +
+            "given one item has been selected " +
+            " and the 'bottom & right' action point has been selected", function () {
+
+            itemOne.isSelected(true);
+            var interpretItemAction = function () {
+                return PointerAction.RESIZE_BOTTOM_AND_RIGHT;
+            };
+
+            var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
+
+            cut.handleDown({clientX: 0, clientY: 0});
+
+            cut.handleUp({clientX: 300, clientY: 300});
+
+            expect(layerOneItems.length).toBe(1);
+
+            expect(itemOne.xPoint()).toBe(100);
+            expect(itemOne.yPoint()).toBe(100);
+            expect(itemOne.width()).toBe(200);
+            expect(itemOne.height()).toBe(200);
+        });
+
+        it("should change item's width and height, " +
+            "when releasing click button, " +
+            "given one item has been selected " +
+            " and the 'top & left' action point has been selected", function () {
+
+            itemOne.isSelected(true);
+            var interpretItemAction = function () {
+                return PointerAction.RESIZE_TOP_AND_LEFT;
+            };
+
+            var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
+
+            cut.handleDown({clientX: 0, clientY: 0});
+
+            cut.handleUp({clientX: 50, clientY: 50});
+
+            expect(layerOneItems.length).toBe(1);
+
+            expect(itemOne.xPoint()).toBe(50);
+            expect(itemOne.yPoint()).toBe(50);
+            expect(itemOne.width()).toBe(150);
+            expect(itemOne.height()).toBe(150);
+        });
+
+        it("should change item's width and height, " +
+            "when releasing click button, " +
+            "given one item has been selected " +
+            " and the 'top & right' action point has been selected", function () {
+
+            itemOne.isSelected(true);
+            var interpretItemAction = function () {
+                return PointerAction.RESIZE_TOP_AND_RIGHT;
+            };
+
+            var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
+
+            cut.handleDown({clientX: 0, clientY: 0});
+
+            cut.handleUp({clientX: 250, clientY: 50});
+
+            expect(layerOneItems.length).toBe(1);
+
+            expect(itemOne.xPoint()).toBe(100);
+            expect(itemOne.yPoint()).toBe(50);
+            expect(itemOne.width()).toBe(150);
+            expect(itemOne.height()).toBe(150);
+        });
+
+        it("should change item's width and height, " +
+            "when releasing click button, " +
+            "given one item has been selected " +
+            " and the 'bottom & left' action point has been selected", function () {
+
+            itemOne.isSelected(true);
+            var interpretItemAction = function () {
+                return PointerAction.RESIZE_BOTTOM_AND_LEFT;
+            };
+
+            var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
+
+            cut.handleDown({clientX: 0, clientY: 0});
+
+            cut.handleUp({clientX: 50, clientY: 250});
+
+            expect(layerOneItems.length).toBe(1);
+
+            expect(itemOne.xPoint()).toBe(50);
+            expect(itemOne.yPoint()).toBe(100);
+            expect(itemOne.width()).toBe(150);
+            expect(itemOne.height()).toBe(150);
+        });
+
+        it("should change item's width, " +
+            "when releasing click button, " +
+            "given one item has been selected " +
+            " and the 'right' action point has been selected", function () {
+
+            itemOne.isSelected(true);
+            var interpretItemAction = function () {
+                return PointerAction.RESIZE_RIGHT;
+            };
+
+            var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
+
+            cut.handleDown({clientX: 0, clientY: 0});
+
+            cut.handleUp({clientX: 300, clientY: 300});
+
+            expect(layerOneItems.length).toBe(1);
+
+            expect(itemOne.xPoint()).toBe(100);
+            expect(itemOne.yPoint()).toBe(100);
+            expect(itemOne.width()).toBe(200);
+            expect(itemOne.height()).toBe(100);
+        });
+
+        it("should change item's height, " +
+            "when releasing click button, " +
+            "given one item has been selected " +
+            " and the 'bottom' action point has been selected", function () {
+
+            itemOne.isSelected(true);
+            var interpretItemAction = function () {
+                return PointerAction.RESIZE_BOTTOM;
+            };
+
+            var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
+
+            cut.handleDown({clientX: 0, clientY: 0});
+
+            cut.handleUp({clientX: 300, clientY: 300});
+
+            expect(layerOneItems.length).toBe(1);
+
+            expect(itemOne.xPoint()).toBe(100);
+            expect(itemOne.yPoint()).toBe(100);
+            expect(itemOne.width()).toBe(100);
+            expect(itemOne.height()).toBe(200);
+        });
+
+        it("should change item's width, " +
+            "when releasing click button, " +
+            "given one item has been selected " +
+            " and the 'left' action point has been selected", function () {
+
+            itemOne.isSelected(true);
+            var interpretItemAction = function () {
+                return PointerAction.RESIZE_LEFT;
+            };
+
+            var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
+
+            cut.handleDown({clientX: 0, clientY: 0});
+
+            cut.handleUp({clientX: 50, clientY: 50});
+
+            expect(layerOneItems.length).toBe(1);
+
+            expect(itemOne.xPoint()).toBe(50);
+            expect(itemOne.yPoint()).toBe(100);
+            expect(itemOne.width()).toBe(150);
+            expect(itemOne.height()).toBe(100);
+        });
+
+        it("should change item's height, " +
+            "when releasing click button, " +
+            "given one item has been selected " +
+            " and the 'top' action point has been selected", function () {
+
+            itemOne.isSelected(true);
+            var interpretItemAction = function () {
+                return PointerAction.RESIZE_TOP;
+            };
+
+            var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
+
+            cut.handleDown({clientX: 0, clientY: 0});
+
+            cut.handleUp({clientX: 50, clientY: 50});
+
+            expect(layerOneItems.length).toBe(1);
+
+            expect(itemOne.xPoint()).toBe(100);
+            expect(itemOne.yPoint()).toBe(50);
+            expect(itemOne.width()).toBe(100);
+            expect(itemOne.height()).toBe(150);
+        });
+
+        it("should normalize the changed item, " +
+            "when releasing click button, " +
+            "given one item has been selected " +
+            " and the 'bottom & right' action point has been selected", function () {
+
+            itemOne.isSelected(true);
+            var interpretItemAction = function () {
+                return PointerAction.RESIZE_BOTTOM_AND_RIGHT;
+            };
+
+            var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
+
+            cut.handleDown({clientX: 0, clientY: 0});
+
+            cut.handleUp({clientX: 50, clientY: 50});
+
+            expect(layerOneItems.length).toBe(1);
+
+            expect(itemOne.xPoint()).toBe(50);
+            expect(itemOne.yPoint()).toBe(50);
+            expect(itemOne.width()).toBe(50);
+            expect(itemOne.height()).toBe(50);
         });
 
         beforeEach(function () {
