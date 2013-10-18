@@ -60,15 +60,20 @@ define(['view/Item', 'lib/knockout', 'input/PointerAction'], function (Item, ko,
         if (this.activeAction === PointerAction.RESIZE_BOTTOM_AND_RIGHT) {
             this._resizeRight(event);
             this._resizeBottom(event);
+
         } else if (this.activeAction === PointerAction.RESIZE_TOP_AND_LEFT) {
             this._resizeTop(event);
             this._resizeLeft(event);
+
         } else if (this.activeAction === PointerAction.RESIZE_TOP_AND_RIGHT) {
             this._resizeTop(event);
             this._resizeRight(event);
+
         } else if (this.activeAction === PointerAction.RESIZE_BOTTOM_AND_LEFT) {
             this._resizeLeft(event);
             this._resizeBottom(event);
+        } else if (this.activeAction === PointerAction.RESIZE_RIGHT) {
+            this._resizeRight(event);
         }
     };
 

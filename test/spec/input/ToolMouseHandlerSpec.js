@@ -233,6 +233,30 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
             expect(itemOne.height()).toBe(150);
         });
 
+        it("should change item's width, " +
+            "when moving mouse cursor, " +
+            "given one item has been selected " +
+            " and the 'right' action point has been selected", function () {
+
+            itemOne.isSelected(true);
+            var interpretItemAction = function () {
+                return PointerAction.RESIZE_RIGHT;
+            };
+
+            var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
+
+            cut.handleDown({clientX: 0, clientY: 0});
+
+            cut.handleMove({clientX: 300, clientY: 300});
+
+            expect(layerOneItems.length).toBe(1);
+
+            expect(itemOne.xPoint()).toBe(100);
+            expect(itemOne.yPoint()).toBe(100);
+            expect(itemOne.width()).toBe(200);
+            expect(itemOne.height()).toBe(100);
+        });
+
         beforeEach(function () {
             layers = ko.observableArray([
                 new Layer('layerOne', ko.observableArray([new Item('onlyItem', 100, 100, 100, 100)]))
