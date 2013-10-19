@@ -1,5 +1,5 @@
-define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'input/PointerAction'], function (
-    ToolMouseHandler, ko, Layer, Item, PointerAction) {
+define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'input/PointerAction', 'spec/input/expectItem'], function (
+    ToolMouseHandler, ko, Layer, Item, PointerAction, expectItem) {
 
     describe("as a user I want to draw a new rect", function () {
         var layers, layerOne, layerOneItems;
@@ -19,10 +19,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
             expect(item).toBeDefined();
             expect(item instanceof Item).toBeTruthy();
 
-            expect(item.xPoint()).toBe(0);
-            expect(item.yPoint()).toBe(0);
-            expect(item.width()).toBe(10);
-            expect(item.height()).toBe(10);
+            expectItem(item).fn('xPoint').toBe(0).fn('yPoint').toBe(0).fn('width').toBe(10).fn('height').toBe(10);
         });
 
         it("should change item's width and height, " +
@@ -36,10 +33,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
 
             cut.handleMove({clientX: 100, clientY: 100});
 
-            expect(item.xPoint()).toBe(0);
-            expect(item.yPoint()).toBe(0);
-            expect(item.width()).toBe(100);
-            expect(item.height()).toBe(100);
+            expectItem(item).fn('xPoint').toBe(0).fn('yPoint').toBe(0).fn('width').toBe(100).fn('height').toBe(100);
         });
 
         it("should change item's width and height, " +
@@ -53,10 +47,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
 
             cut.handleUp({clientX: 100, clientY: 100});
 
-            expect(item.xPoint()).toBe(0);
-            expect(item.yPoint()).toBe(0);
-            expect(item.width()).toBe(100);
-            expect(item.height()).toBe(100);
+            expectItem(item).fn('xPoint').toBe(0).fn('yPoint').toBe(0).fn('width').toBe(100).fn('height').toBe(100);
         });
 
         it("should normalize item's width and height, " +
@@ -70,10 +61,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
 
             cut.handleUp({clientX: 100, clientY: 100});
 
-            expect(item.xPoint()).toBe(100);
-            expect(item.yPoint()).toBe(100);
-            expect(item.width()).toBe(100);
-            expect(item.height()).toBe(100);
+            expectItem(item).fn('xPoint').toBe(100).fn('yPoint').toBe(100).fn('width').toBe(100).fn('height').toBe(100);
         });
 
         beforeEach(function () {
@@ -109,10 +97,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
 
             expect(layerOneItems.length).toBe(2);
 
-            expect(itemOne.xPoint()).toBe(100);
-            expect(itemOne.yPoint()).toBe(100);
-            expect(itemOne.width()).toBe(100);
-            expect(itemOne.height()).toBe(100);
+            expectItem(itemOne).fn('xPoint').toBe(100).fn('yPoint').toBe(100).fn('width').toBe(100).fn('height').toBe(100);
         });
 
         it("should change nothing on existing item (instead creates a new one), " +
@@ -133,10 +118,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
 
             expect(layerOneItems.length).toBe(2);
 
-            expect(itemOne.xPoint()).toBe(100);
-            expect(itemOne.yPoint()).toBe(100);
-            expect(itemOne.width()).toBe(100);
-            expect(itemOne.height()).toBe(100);
+            expectItem(itemOne).fn('xPoint').toBe(100).fn('yPoint').toBe(100).fn('width').toBe(100).fn('height').toBe(100);
         });
 
         it("should change item's width and height, " +
@@ -157,10 +139,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
 
             expect(layerOneItems.length).toBe(1);
 
-            expect(itemOne.xPoint()).toBe(100);
-            expect(itemOne.yPoint()).toBe(100);
-            expect(itemOne.width()).toBe(200);
-            expect(itemOne.height()).toBe(200);
+            expectItem(itemOne).fn('xPoint').toBe(100).fn('yPoint').toBe(100).fn('width').toBe(200).fn('height').toBe(200);
         });
 
         it("should change item's width and height, " +
@@ -181,10 +160,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
 
             expect(layerOneItems.length).toBe(1);
 
-            expect(itemOne.xPoint()).toBe(50);
-            expect(itemOne.yPoint()).toBe(50);
-            expect(itemOne.width()).toBe(150);
-            expect(itemOne.height()).toBe(150);
+            expectItem(itemOne).fn('xPoint').toBe(50).fn('yPoint').toBe(50).fn('width').toBe(150).fn('height').toBe(150);
         });
 
         it("should change item's width and height, " +
@@ -205,10 +181,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
 
             expect(layerOneItems.length).toBe(1);
 
-            expect(itemOne.xPoint()).toBe(100);
-            expect(itemOne.yPoint()).toBe(50);
-            expect(itemOne.width()).toBe(150);
-            expect(itemOne.height()).toBe(150);
+            expectItem(itemOne).fn('xPoint').toBe(100).fn('yPoint').toBe(50).fn('width').toBe(150).fn('height').toBe(150);
         });
 
         it("should change item's width and height, " +
@@ -229,10 +202,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
 
             expect(layerOneItems.length).toBe(1);
 
-            expect(itemOne.xPoint()).toBe(50);
-            expect(itemOne.yPoint()).toBe(100);
-            expect(itemOne.width()).toBe(150);
-            expect(itemOne.height()).toBe(150);
+            expectItem(itemOne).fn('xPoint').toBe(50).fn('yPoint').toBe(100).fn('width').toBe(150).fn('height').toBe(150);
         });
 
         it("should change item's width, " +
@@ -253,10 +223,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
 
             expect(layerOneItems.length).toBe(1);
 
-            expect(itemOne.xPoint()).toBe(100);
-            expect(itemOne.yPoint()).toBe(100);
-            expect(itemOne.width()).toBe(200);
-            expect(itemOne.height()).toBe(100);
+            expectItem(itemOne).fn('xPoint').toBe(100).fn('yPoint').toBe(100).fn('width').toBe(200).fn('height').toBe(100);
         });
 
         it("should change item's height, " +
@@ -277,10 +244,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
 
             expect(layerOneItems.length).toBe(1);
 
-            expect(itemOne.xPoint()).toBe(100);
-            expect(itemOne.yPoint()).toBe(100);
-            expect(itemOne.width()).toBe(100);
-            expect(itemOne.height()).toBe(200);
+            expectItem(itemOne).fn('xPoint').toBe(100).fn('yPoint').toBe(100).fn('width').toBe(100).fn('height').toBe(200);
         });
 
         it("should change item's width, " +
@@ -301,10 +265,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
 
             expect(layerOneItems.length).toBe(1);
 
-            expect(itemOne.xPoint()).toBe(50);
-            expect(itemOne.yPoint()).toBe(100);
-            expect(itemOne.width()).toBe(150);
-            expect(itemOne.height()).toBe(100);
+            expectItem(itemOne).fn('xPoint').toBe(50).fn('yPoint').toBe(100).fn('width').toBe(150).fn('height').toBe(100);
         });
 
         it("should change item's height, " +
@@ -325,10 +286,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
 
             expect(layerOneItems.length).toBe(1);
 
-            expect(itemOne.xPoint()).toBe(100);
-            expect(itemOne.yPoint()).toBe(50);
-            expect(itemOne.width()).toBe(100);
-            expect(itemOne.height()).toBe(150);
+            expectItem(itemOne).fn('xPoint').toBe(100).fn('yPoint').toBe(50).fn('width').toBe(100).fn('height').toBe(150);
         });
 
         // ############################## mouse up method:
@@ -352,10 +310,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
 
             expect(layerOneItems.length).toBe(2);
 
-            expect(itemOne.xPoint()).toBe(100);
-            expect(itemOne.yPoint()).toBe(100);
-            expect(itemOne.width()).toBe(100);
-            expect(itemOne.height()).toBe(100);
+            expectItem(itemOne).fn('xPoint').toBe(100).fn('yPoint').toBe(100).fn('width').toBe(100).fn('height').toBe(100);
         });
 
         it("should change nothing on existing item (instead creates a new one), " +
@@ -376,10 +331,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
 
             expect(layerOneItems.length).toBe(2);
 
-            expect(itemOne.xPoint()).toBe(100);
-            expect(itemOne.yPoint()).toBe(100);
-            expect(itemOne.width()).toBe(100);
-            expect(itemOne.height()).toBe(100);
+            expectItem(itemOne).fn('xPoint').toBe(100).fn('yPoint').toBe(100).fn('width').toBe(100).fn('height').toBe(100);
         });
 
         it("should change item's width and height, " +
@@ -400,10 +352,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
 
             expect(layerOneItems.length).toBe(1);
 
-            expect(itemOne.xPoint()).toBe(100);
-            expect(itemOne.yPoint()).toBe(100);
-            expect(itemOne.width()).toBe(200);
-            expect(itemOne.height()).toBe(200);
+            expectItem(itemOne).fn('xPoint').toBe(100).fn('yPoint').toBe(100).fn('width').toBe(200).fn('height').toBe(200);
         });
 
         it("should change item's width and height, " +
@@ -424,10 +373,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
 
             expect(layerOneItems.length).toBe(1);
 
-            expect(itemOne.xPoint()).toBe(50);
-            expect(itemOne.yPoint()).toBe(50);
-            expect(itemOne.width()).toBe(150);
-            expect(itemOne.height()).toBe(150);
+            expectItem(itemOne).fn('xPoint').toBe(50).fn('yPoint').toBe(50).fn('width').toBe(150).fn('height').toBe(150);
         });
 
         it("should change item's width and height, " +
@@ -448,10 +394,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
 
             expect(layerOneItems.length).toBe(1);
 
-            expect(itemOne.xPoint()).toBe(100);
-            expect(itemOne.yPoint()).toBe(50);
-            expect(itemOne.width()).toBe(150);
-            expect(itemOne.height()).toBe(150);
+            expectItem(itemOne).fn('xPoint').toBe(100).fn('yPoint').toBe(50).fn('width').toBe(150).fn('height').toBe(150);
         });
 
         it("should change item's width and height, " +
@@ -472,10 +415,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
 
             expect(layerOneItems.length).toBe(1);
 
-            expect(itemOne.xPoint()).toBe(50);
-            expect(itemOne.yPoint()).toBe(100);
-            expect(itemOne.width()).toBe(150);
-            expect(itemOne.height()).toBe(150);
+            expectItem(itemOne).fn('xPoint').toBe(50).fn('yPoint').toBe(100).fn('width').toBe(150).fn('height').toBe(150);
         });
 
         it("should change item's width, " +
@@ -496,10 +436,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
 
             expect(layerOneItems.length).toBe(1);
 
-            expect(itemOne.xPoint()).toBe(100);
-            expect(itemOne.yPoint()).toBe(100);
-            expect(itemOne.width()).toBe(200);
-            expect(itemOne.height()).toBe(100);
+            expectItem(itemOne).fn('xPoint').toBe(100).fn('yPoint').toBe(100).fn('width').toBe(200).fn('height').toBe(100);
         });
 
         it("should change item's height, " +
@@ -520,10 +457,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
 
             expect(layerOneItems.length).toBe(1);
 
-            expect(itemOne.xPoint()).toBe(100);
-            expect(itemOne.yPoint()).toBe(100);
-            expect(itemOne.width()).toBe(100);
-            expect(itemOne.height()).toBe(200);
+            expectItem(itemOne).fn('xPoint').toBe(100).fn('yPoint').toBe(100).fn('width').toBe(100).fn('height').toBe(200);
         });
 
         it("should change item's width, " +
@@ -544,10 +478,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
 
             expect(layerOneItems.length).toBe(1);
 
-            expect(itemOne.xPoint()).toBe(50);
-            expect(itemOne.yPoint()).toBe(100);
-            expect(itemOne.width()).toBe(150);
-            expect(itemOne.height()).toBe(100);
+            expectItem(itemOne).fn('xPoint').toBe(50).fn('yPoint').toBe(100).fn('width').toBe(150).fn('height').toBe(100);
         });
 
         it("should change item's height, " +
@@ -568,10 +499,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
 
             expect(layerOneItems.length).toBe(1);
 
-            expect(itemOne.xPoint()).toBe(100);
-            expect(itemOne.yPoint()).toBe(50);
-            expect(itemOne.width()).toBe(100);
-            expect(itemOne.height()).toBe(150);
+            expectItem(itemOne).fn('xPoint').toBe(100).fn('yPoint').toBe(50).fn('width').toBe(100).fn('height').toBe(150);
         });
 
         it("should normalize the changed item, " +
@@ -592,10 +520,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
 
             expect(layerOneItems.length).toBe(1);
 
-            expect(itemOne.xPoint()).toBe(50);
-            expect(itemOne.yPoint()).toBe(50);
-            expect(itemOne.width()).toBe(50);
-            expect(itemOne.height()).toBe(50);
+            expectItem(itemOne).fn('xPoint').toBe(50).fn('yPoint').toBe(50).fn('width').toBe(50).fn('height').toBe(50);
         });
 
         it("should change nothing on recently changed item (instead creates a new one), " +
@@ -628,10 +553,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
 
             expect(layerOneItems.length).toBe(2);
 
-            expect(itemOne.xPoint()).toBe(100);
-            expect(itemOne.yPoint()).toBe(100);
-            expect(itemOne.width()).toBe(200);
-            expect(itemOne.height()).toBe(200);
+            expectItem(itemOne).fn('xPoint').toBe(100).fn('yPoint').toBe(100).fn('width').toBe(200).fn('height').toBe(200);
         });
 
         beforeEach(function () {
@@ -669,10 +591,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
 
             expect(layerOneItems.length).toBe(1);
 
-            expect(itemOne.xPoint()).toBe(300);
-            expect(itemOne.yPoint()).toBe(300);
-            expect(itemOne.width()).toBe(100);
-            expect(itemOne.height()).toBe(100);
+            expectItem(itemOne).fn('xPoint').toBe(300).fn('yPoint').toBe(300).fn('width').toBe(100).fn('height').toBe(100);
         });
 
         it("should change item's x & y coordinates, " +
@@ -693,10 +612,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
 
             expect(layerOneItems.length).toBe(1);
 
-            expect(itemOne.xPoint()).toBe(300);
-            expect(itemOne.yPoint()).toBe(300);
-            expect(itemOne.width()).toBe(100);
-            expect(itemOne.height()).toBe(100);
+            expectItem(itemOne).fn('xPoint').toBe(300).fn('yPoint').toBe(300).fn('width').toBe(100).fn('height').toBe(100);
         });
 
         beforeEach(function () {
