@@ -675,6 +675,30 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
             expect(itemOne.height()).toBe(100);
         });
 
+        it("should change item's x & y coordinates, " +
+            "when moving mouse cursor, " +
+            "given one item has been selected " +
+            " and the 'move' action point has been selected", function () {
+
+            itemOne.isSelected(true);
+            var interpretItemAction = function () {
+                return PointerAction.MOVE;
+            };
+
+            var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
+
+            cut.handleDown({clientX: 0, clientY: 0});
+
+            cut.handleUp({clientX: 350, clientY: 350});
+
+            expect(layerOneItems.length).toBe(1);
+
+            expect(itemOne.xPoint()).toBe(300);
+            expect(itemOne.yPoint()).toBe(300);
+            expect(itemOne.width()).toBe(100);
+            expect(itemOne.height()).toBe(100);
+        });
+
         beforeEach(function () {
             layers = ko.observableArray([
                 new Layer('layerOne', ko.observableArray([new Item('onlyItem', 100, 100, 100, 100)]))
