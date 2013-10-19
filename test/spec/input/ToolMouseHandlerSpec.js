@@ -1,8 +1,9 @@
 define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'input/PointerAction', 'spec/input/expectItem'], function (
     ToolMouseHandler, ko, Layer, Item, PointerAction, expectItem) {
 
+    var layers, layerOne, layerOneItems, itemOne, checkPointerItemCollision, interpretItemAction;
+
     describe("as a user I want to draw a new rect", function () {
-        var layers, layerOne, layerOneItems;
 
         it("should create a new item, " +
             "when you start drawing", function () {
@@ -74,8 +75,6 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
     });
 
     describe("as a user I want to resize an existing rect", function () {
-        var layers, layerOne, layerOneItems, itemOne, checkPointerItemCollision, interpretItemAction;
-
         // ############################## mouse move method:
 
         it("should change nothing on existing item (instead creates a new one), " +
@@ -496,30 +495,10 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
             expectItem(itemOne).fn('xPoint').toBe(100).fn('yPoint').toBe(100).fn('width').toBe(200).fn('height').toBe(200);
         });
 
-        beforeEach(function () {
-            layers = ko.observableArray([
-                new Layer('layerOne', ko.observableArray([new Item('onlyItem', 100, 100, 100, 100)]))
-            ]);
-            layerOne = layers()[0];
-            layerOneItems = layerOne.items();
-            itemOne = layerOneItems[0];
-
-            checkPointerItemCollision = function () {
-                return true;
-            };
-        });
-
-        function selectItemAndSetAction(action) {
-            itemOne.isSelected(true);
-
-            interpretItemAction = function () {
-                return action;
-            };
-        }
+        beforeEach(setUpLayersWithOneItemAndCollisionService);
     });
 
     describe("as a user I want to move an existing rect", function () {
-        var layers, layerOne, layerOneItems, itemOne, checkPointerItemCollision;
 
         it("should change item's x & y coordinates, " +
             "when moving mouse cursor, " +
@@ -563,18 +542,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
             expectItem(itemOne).fn('xPoint').toBe(300).fn('yPoint').toBe(300).fn('width').toBe(100).fn('height').toBe(100);
         });
 
-        beforeEach(function () {
-            layers = ko.observableArray([
-                new Layer('layerOne', ko.observableArray([new Item('onlyItem', 100, 100, 100, 100)]))
-            ]);
-            layerOne = layers()[0];
-            layerOneItems = layerOne.items();
-            itemOne = layerOneItems[0];
-
-            checkPointerItemCollision = function () {
-                return true;
-            };
-        });
+        beforeEach(setUpLayersWithOneItemAndCollisionService);
     });
 
     describe('tool click handler handles all click events in case the ui is in edit mode', function () {
@@ -608,15 +576,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
     });
 
     describe('handle mouse down event. with handleDown call. Parameter validation', function () {
-        var layers, layerOne, layerOneItems;
-        beforeEach(function () {
-            layers = ko.observableArray([
-                new Layer('layerOne', ko.observableArray())
-            ]);
-            layerOne = layers()[0];
-            layerOneItems = layerOne.items();
-        });
-
+        beforeEach(setUpLayersWithOneItemAndCollisionService);
 
         it("should throw an exception, " +
             "when it's called with undefined", function () {
@@ -666,20 +626,10 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
             expect(ex).toBeDefined();
             expect(ex).toBe('Illegal argument: ' + {});
         });
-
-
     });
 
     describe('handle mouse move event. with handleMove call. Parameter validation', function () {
-        var layers, layerOne, layerOneItems;
-        beforeEach(function () {
-            layers = ko.observableArray([
-                new Layer('layerOne', ko.observableArray())
-            ]);
-            layerOne = layers()[0];
-            layerOneItems = layerOne.items();
-        });
-
+        beforeEach(setUpLayersWithOneItemAndCollisionService);
 
         it("should throw an exception, " +
             "when it's called with undefined", function () {
@@ -729,20 +679,10 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
             expect(ex).toBeDefined();
             expect(ex).toBe('Illegal argument: ' + {});
         });
-
-
     });
 
     describe('handle mouse up event. with handleUp call. Parameter validation', function () {
-        var layers, layerOne, layerOneItems;
-        beforeEach(function () {
-            layers = ko.observableArray([
-                new Layer('layerOne', ko.observableArray())
-            ]);
-            layerOne = layers()[0];
-            layerOneItems = layerOne.items();
-        });
-
+        beforeEach(setUpLayersWithOneItemAndCollisionService);
 
         it("should throw an exception, " +
             "when it's called with undefined", function () {
@@ -792,8 +732,26 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
             expect(ex).toBeDefined();
             expect(ex).toBe('Illegal argument: ' + {});
         });
-
-
     });
 
+    function selectItemAndSetAction(action) {
+        itemOne.isSelected(true);
+
+        interpretItemAction = function () {
+            return action;
+        };
+    }
+
+    function setUpLayersWithOneItemAndCollisionService() {
+        layers = ko.observableArray([
+            new Layer('layerOne', ko.observableArray([new Item('onlyItem', 100, 100, 100, 100)]))
+        ]);
+        layerOne = layers()[0];
+        layerOneItems = layerOne.items();
+        itemOne = layerOneItems[0];
+
+        checkPointerItemCollision = function () {
+            return true;
+        };
+    }
 });
