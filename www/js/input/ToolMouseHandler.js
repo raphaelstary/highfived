@@ -101,6 +101,9 @@ define(['view/Item', 'lib/knockout', 'input/PointerAction'], function (Item, ko,
 
         } else if (this.activeAction === PointerAction.RESIZE_TOP) {
             this._resizeTop(event);
+
+        } else if (this.activeAction === PointerAction.MOVE) {
+            this._move(event);
         }
     };
 
@@ -120,6 +123,11 @@ define(['view/Item', 'lib/knockout', 'input/PointerAction'], function (Item, ko,
     ToolMouseHandler.prototype._resizeLeft = function (event) {
         this.activeShape.width(this.activeShape.width() - (event.clientX - this.activeShape.xPoint()));
         this.activeShape.xPoint(event.clientX);
+    };
+
+    ToolMouseHandler.prototype._move = function (event) {
+        this.activeShape.xPoint(event.clientX - Math.floor(this.activeShape.width() / 2));
+        this.activeShape.yPoint(event.clientY - Math.floor(this.activeShape.height() / 2));
     };
 
     ToolMouseHandler.prototype._normalizeRect = function (rect) {
