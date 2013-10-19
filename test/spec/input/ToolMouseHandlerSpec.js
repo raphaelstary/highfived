@@ -74,7 +74,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
     });
 
     describe("as a user I want to resize an existing rect", function () {
-        var layers, layerOne, layerOneItems, itemOne, checkPointerItemCollision;
+        var layers, layerOne, layerOneItems, itemOne, checkPointerItemCollision, interpretItemAction;
 
         // ############################## mouse move method:
 
@@ -105,10 +105,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
             "given one item has been selected " +
             " and no action point has been selected", function () {
 
-            var interpretItemAction = function () {
-                return PointerAction.NOTHING;
-            };
-            itemOne.isSelected(true);
+            selectItemAndSetAction(PointerAction.NOTHING);
 
             var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
 
@@ -126,10 +123,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
             "given one item has been selected " +
             " and the 'bottom & right' action point has been selected", function () {
 
-            itemOne.isSelected(true);
-            var interpretItemAction = function () {
-                return PointerAction.RESIZE_BOTTOM_AND_RIGHT;
-            };
+            selectItemAndSetAction(PointerAction.RESIZE_BOTTOM_AND_RIGHT);
 
             var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
 
@@ -147,10 +141,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
             "given one item has been selected " +
             " and the 'top & left' action point has been selected", function () {
 
-            itemOne.isSelected(true);
-            var interpretItemAction = function () {
-                return PointerAction.RESIZE_TOP_AND_LEFT;
-            };
+            selectItemAndSetAction(PointerAction.RESIZE_TOP_AND_LEFT);
 
             var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
 
@@ -168,10 +159,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
             "given one item has been selected " +
             " and the 'top & right' action point has been selected", function () {
 
-            itemOne.isSelected(true);
-            var interpretItemAction = function () {
-                return PointerAction.RESIZE_TOP_AND_RIGHT;
-            };
+            selectItemAndSetAction(PointerAction.RESIZE_TOP_AND_RIGHT);
 
             var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
 
@@ -189,10 +177,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
             "given one item has been selected " +
             " and the 'bottom & left' action point has been selected", function () {
 
-            itemOne.isSelected(true);
-            var interpretItemAction = function () {
-                return PointerAction.RESIZE_BOTTOM_AND_LEFT;
-            };
+            selectItemAndSetAction(PointerAction.RESIZE_BOTTOM_AND_LEFT);
 
             var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
 
@@ -210,10 +195,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
             "given one item has been selected " +
             " and the 'right' action point has been selected", function () {
 
-            itemOne.isSelected(true);
-            var interpretItemAction = function () {
-                return PointerAction.RESIZE_RIGHT;
-            };
+            selectItemAndSetAction(PointerAction.RESIZE_RIGHT);
 
             var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
 
@@ -231,10 +213,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
             "given one item has been selected " +
             " and the 'bottom' action point has been selected", function () {
 
-            itemOne.isSelected(true);
-            var interpretItemAction = function () {
-                return PointerAction.RESIZE_BOTTOM;
-            };
+            selectItemAndSetAction(PointerAction.RESIZE_BOTTOM);
 
             var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
 
@@ -252,10 +231,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
             "given one item has been selected " +
             " and the 'left' action point has been selected", function () {
 
-            itemOne.isSelected(true);
-            var interpretItemAction = function () {
-                return PointerAction.RESIZE_LEFT;
-            };
+            selectItemAndSetAction(PointerAction.RESIZE_LEFT);
 
             var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
 
@@ -273,10 +249,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
             "given one item has been selected " +
             " and the 'top' action point has been selected", function () {
 
-            itemOne.isSelected(true);
-            var interpretItemAction = function () {
-                return PointerAction.RESIZE_TOP;
-            };
+            selectItemAndSetAction(PointerAction.RESIZE_TOP);
 
             var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
 
@@ -318,10 +291,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
             "given one item has been selected " +
             " and no action point has been selected", function () {
 
-            var interpretItemAction = function () {
-                return PointerAction.NOTHING;
-            };
-            itemOne.isSelected(true);
+            selectItemAndSetAction(PointerAction.NOTHING);
 
             var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
 
@@ -339,10 +309,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
             "given one item has been selected " +
             " and the 'bottom & right' action point has been selected", function () {
 
-            itemOne.isSelected(true);
-            var interpretItemAction = function () {
-                return PointerAction.RESIZE_BOTTOM_AND_RIGHT;
-            };
+            selectItemAndSetAction(PointerAction.RESIZE_BOTTOM_AND_RIGHT);
 
             var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
 
@@ -360,10 +327,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
             "given one item has been selected " +
             " and the 'top & left' action point has been selected", function () {
 
-            itemOne.isSelected(true);
-            var interpretItemAction = function () {
-                return PointerAction.RESIZE_TOP_AND_LEFT;
-            };
+            selectItemAndSetAction(PointerAction.RESIZE_TOP_AND_LEFT);
 
             var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
 
@@ -381,10 +345,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
             "given one item has been selected " +
             " and the 'top & right' action point has been selected", function () {
 
-            itemOne.isSelected(true);
-            var interpretItemAction = function () {
-                return PointerAction.RESIZE_TOP_AND_RIGHT;
-            };
+            selectItemAndSetAction(PointerAction.RESIZE_TOP_AND_RIGHT);
 
             var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
 
@@ -402,10 +363,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
             "given one item has been selected " +
             " and the 'bottom & left' action point has been selected", function () {
 
-            itemOne.isSelected(true);
-            var interpretItemAction = function () {
-                return PointerAction.RESIZE_BOTTOM_AND_LEFT;
-            };
+            selectItemAndSetAction(PointerAction.RESIZE_BOTTOM_AND_LEFT);
 
             var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
 
@@ -423,10 +381,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
             "given one item has been selected " +
             " and the 'right' action point has been selected", function () {
 
-            itemOne.isSelected(true);
-            var interpretItemAction = function () {
-                return PointerAction.RESIZE_RIGHT;
-            };
+            selectItemAndSetAction(PointerAction.RESIZE_RIGHT);
 
             var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
 
@@ -444,10 +399,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
             "given one item has been selected " +
             " and the 'bottom' action point has been selected", function () {
 
-            itemOne.isSelected(true);
-            var interpretItemAction = function () {
-                return PointerAction.RESIZE_BOTTOM;
-            };
+            selectItemAndSetAction(PointerAction.RESIZE_BOTTOM);
 
             var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
 
@@ -465,10 +417,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
             "given one item has been selected " +
             " and the 'left' action point has been selected", function () {
 
-            itemOne.isSelected(true);
-            var interpretItemAction = function () {
-                return PointerAction.RESIZE_LEFT;
-            };
+            selectItemAndSetAction(PointerAction.RESIZE_LEFT);
 
             var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
 
@@ -486,10 +435,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
             "given one item has been selected " +
             " and the 'top' action point has been selected", function () {
 
-            itemOne.isSelected(true);
-            var interpretItemAction = function () {
-                return PointerAction.RESIZE_TOP;
-            };
+            selectItemAndSetAction(PointerAction.RESIZE_TOP);
 
             var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
 
@@ -507,10 +453,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
             "given one item has been selected " +
             " and the 'bottom & right' action point has been selected", function () {
 
-            itemOne.isSelected(true);
-            var interpretItemAction = function () {
-                return PointerAction.RESIZE_BOTTOM_AND_RIGHT;
-            };
+            selectItemAndSetAction(PointerAction.RESIZE_BOTTOM_AND_RIGHT);
 
             var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
 
@@ -527,10 +470,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
             "when releasing click button, " +
             "given one item was selected & changed", function () {
 
-            itemOne.isSelected(true);
-            var interpretItemAction = function () {
-                return PointerAction.RESIZE_BOTTOM_AND_RIGHT;
-            };
+            selectItemAndSetAction(PointerAction.RESIZE_BOTTOM_AND_RIGHT);
 
             var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
 
@@ -568,6 +508,14 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
                 return true;
             };
         });
+
+        function selectItemAndSetAction(action) {
+            itemOne.isSelected(true);
+
+            interpretItemAction = function () {
+                return action;
+            };
+        }
     });
 
     describe("as a user I want to move an existing rect", function () {
