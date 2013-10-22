@@ -65,13 +65,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
             expectItem(item).fn('xPoint').toBe(100).fn('yPoint').toBe(100).fn('width').toBe(100).fn('height').toBe(100);
         });
 
-        beforeEach(function () {
-            layers = ko.observableArray([
-                new Layer('layerOne', ko.observableArray())
-            ]);
-            layerOne = layers()[0];
-            layerOneItems = layerOne.items();
-        });
+        beforeEach(setUpLayersWithZeroItems);
     });
 
     describe("as a user I want to resize an existing rect", function () {
@@ -746,12 +740,23 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
         layers = ko.observableArray([
             new Layer('layerOne', ko.observableArray([new Item('onlyItem', 100, 100, 100, 100)]))
         ]);
-        layerOne = layers()[0];
-        layerOneItems = layerOne.items();
-        itemOne = layerOneItems[0];
+        setUpLayerVars();
 
         checkPointerItemCollision = function () {
             return true;
         };
+    }
+
+    function setUpLayersWithZeroItems() {
+        layers = ko.observableArray([
+            new Layer('layerOne', ko.observableArray())
+        ]);
+        setUpLayerVars();
+    }
+
+    function setUpLayerVars() {
+        layerOne = layers()[0];
+        layerOneItems = layerOne.items();
+        itemOne = layerOneItems[0];
     }
 });
