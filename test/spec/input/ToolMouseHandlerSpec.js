@@ -499,10 +499,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
             "given one item has been selected " +
             " and the 'move' action point has been selected", function () {
 
-            itemOne.isSelected(true);
-            var interpretItemAction = function () {
-                return PointerAction.MOVE;
-            };
+            selectItemAndSetAction(PointerAction.MOVE);
 
             var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
 
@@ -520,10 +517,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
             "given one item has been selected " +
             " and the 'move' action point has been selected", function () {
 
-            itemOne.isSelected(true);
-            var interpretItemAction = function () {
-                return PointerAction.MOVE;
-            };
+            selectItemAndSetAction(PointerAction.MOVE);
 
             var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
 
@@ -726,6 +720,97 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
             expect(ex).toBeDefined();
             expect(ex).toBe('Illegal argument: ' + {});
         });
+    });
+
+    describe("handle internal object state, " +
+        "new class -> 1 time 'handleDown' -> 0..n times 'handleMove' -> 1 time 'handleUp' -> " +
+        "1 time 'handleDown'", function () {
+
+        it ("should do nothing to the model, " +
+            "when 'handleMove' is called 1st before 'handleDown' " +
+            "given an item was moved", function () {
+
+            selectItemAndSetAction(PointerAction.MOVE);
+
+            var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
+
+            cut.handleDown({clientX: 0, clientY: 0});
+            cut.handleMove({clientX: 300, clientY: 300});
+            cut.handleUp({clientX: 350, clientY: 350});
+
+            cut.handleMove({clientX: 600, clientY: 600});
+
+            expectItem(itemOne).fn('xPoint').toBe(300).fn('yPoint').toBe(300).fn('width').toBe(100).fn('height').toBe(100);
+        });
+
+        it ("should do nothing to the model, " +
+            "when 'handleMove' is called 1st before 'handleDown' " +
+            "given an item was moved", function () {
+
+            selectItemAndSetAction(PointerAction.MOVE);
+
+            var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
+
+            cut.handleDown({clientX: 0, clientY: 0});
+            cut.handleMove({clientX: 310, clientY: 310});
+            cut.handleMove({clientX: 300, clientY: 300});
+            cut.handleUp({clientX: 350, clientY: 350});
+
+            cut.handleUp({clientX: 600, clientY: 600});
+
+            expectItem(itemOne).fn('xPoint').toBe(300).fn('yPoint').toBe(300).fn('width').toBe(100).fn('height').toBe(100);
+        });
+
+        it ("should do nothing to the model, " +
+            "when 'handleDown' is called " +
+            "given it was already called", function () {
+
+            setUpLayersWithZeroItems();
+            var cut = new ToolMouseHandler(layers);
+
+            cut.handleDown({clientX: 0, clientY: 0});
+            cut.handleDown({clientX: 350, clientY: 350});
+
+            expect(layerOneItems.length).toBe(0);
+        });
+
+        it ("should do nothing to the model, " +
+            "when 'handleDown' is called " +
+            "given a move was not finished", function () {
+
+            selectItemAndSetAction(PointerAction.MOVE);
+
+            var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
+
+            cut.handleDown({clientX: 0, clientY: 0});
+            cut.handleMove({clientX: 350, clientY: 350});
+
+            cut.handleDown({clientX: 600, clientY: 600});
+
+            expect(layerOneItems.length).toBe(1);
+            //todo when new rect was created but not finished than delete new rect,
+            // when rect was changed but not finished than revert rect
+            // add expect.length 1 to created and so on ITs
+            expectItem(itemOne).fn('xPoint').toBe(300).fn('yPoint').toBe(300).fn('width').toBe(100).fn('height').toBe(100);
+        });
+
+        it ("should do nothing to the model, " +
+            "when 'handleDown' is called " +
+            "given an item was created but not finished", function () {
+
+            setUpLayersWithZeroItems();
+
+            var cut = new ToolMouseHandler(layers);
+
+            cut.handleDown({clientX: 0, clientY: 0});
+            cut.handleMove({clientX: 350, clientY: 350});
+
+            cut.handleDown({clientX: 600, clientY: 600});
+
+            expect(layerOneItems.length).toBe(0);
+        });
+
+        beforeEach(setUpLayersWithOneItemAndCollisionService);
     });
 
     function selectItemAndSetAction(action) {

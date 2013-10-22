@@ -11,10 +11,17 @@ define(['view/Item', 'lib/knockout', 'input/PointerAction'], function (Item, ko,
         this.counter = 0;
         this.activeShape = null;
         this.activeAction = PointerAction.NOTHING;
+        this.state = State.CLEAR;
     }
 
     ToolMouseHandler.prototype.handleDown = function (event) {
         this._validate(event);
+        if (this.state !== State.CLEAR && this.state !== State.UP) {
+            this.layers()[0].items.remove(this.activeShape);
+            this.state = State.CLEAR;
+            return;
+        }
+        this.state = State.DOWN;
 
         var isPointerShapeCollision = false;
         var isPointerActionPointCollision = false;
@@ -57,11 +64,19 @@ define(['view/Item', 'lib/knockout', 'input/PointerAction'], function (Item, ko,
     ToolMouseHandler.prototype.handleMove = function (event) {
         this._validate(event);
 
+        if (this.state !== State.DOWN) {
+            return;
+        }
+
         this._resizeShape(event);
     };
 
     ToolMouseHandler.prototype.handleUp = function (event) {
         this._validate(event);
+        if (this.state !== State.DOWN) {
+            return;
+        }
+        this.state = State.UP;
 
         this._resizeShape(event);
 
@@ -139,6 +154,13 @@ define(['view/Item', 'lib/knockout', 'input/PointerAction'], function (Item, ko,
             rect.yPoint(rect.yPoint() + rect.height());
             rect.height(Math.abs(rect.height()));
         }
+    };
+
+    var State = {
+        CLEAR: -1,
+        DOWN: 0,
+        MOVE: 1,
+        UP: 2
     };
 
     return ToolMouseHandler;
