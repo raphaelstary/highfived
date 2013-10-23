@@ -11,17 +11,27 @@ define(['view/Item', 'lib/knockout', 'input/PointerAction'], function (Item, ko,
         this.counter = 0;
         this.activeShape = null;
         this.activeAction = PointerAction.NOTHING;
-        this.state = State.CLEAR;
+        this.state = State.CAN_START;
+        this.oldItem = {};
     }
 
     ToolMouseHandler.prototype.handleDown = function (event) {
         this._validate(event);
-        if (this.state !== State.CLEAR && this.state !== State.UP) {
-            this.layers()[0].items.remove(this.activeShape);
-            this.state = State.CLEAR;
+        if (this.state !== State.CAN_START) {
+
+            if (this.activeAction === PointerAction.CREATE_NEW) {
+                this.layers()[0].items.remove(this.activeShape);
+            } else {
+                this.activeShape.xPoint(this.oldItem.xPoint);
+                this.activeShape.yPoint(this.oldItem.yPoint);
+                this.activeShape.width(this.oldItem.width);
+                this.activeShape.height(this.oldItem.height);
+            }
+
+            this.state = State.CAN_START;
             return;
         }
-        this.state = State.DOWN;
+        this.state = State.STARTED;
 
         var isPointerShapeCollision = false;
         var isPointerActionPointCollision = false;
@@ -47,6 +57,11 @@ define(['view/Item', 'lib/knockout', 'input/PointerAction'], function (Item, ko,
                         isPointerActionPointCollision = true;
                         self.activeShape = item;
                         self.activeAction = tempAction;
+
+                        self.oldItem.xPoint = item.xPoint();
+                        self.oldItem.yPoint = item.yPoint();
+                        self.oldItem.width = item.width();
+                        self.oldItem.height = item.height();
                     }
                 }
             });
@@ -56,7 +71,7 @@ define(['view/Item', 'lib/knockout', 'input/PointerAction'], function (Item, ko,
             return;
 
         this.activeShape = new Item('unknown ' + this.counter++, event.clientX, event.clientY, 10, 10);
-        this.activeAction = PointerAction.RESIZE_BOTTOM_AND_RIGHT;
+        this.activeAction = PointerAction.CREATE_NEW;
 
         this.layers()[0].items.push(this.activeShape);
     };
@@ -64,7 +79,7 @@ define(['view/Item', 'lib/knockout', 'input/PointerAction'], function (Item, ko,
     ToolMouseHandler.prototype.handleMove = function (event) {
         this._validate(event);
 
-        if (this.state !== State.DOWN) {
+        if (this.state !== State.STARTED) {
             return;
         }
 
@@ -73,23 +88,28 @@ define(['view/Item', 'lib/knockout', 'input/PointerAction'], function (Item, ko,
 
     ToolMouseHandler.prototype.handleUp = function (event) {
         this._validate(event);
-        if (this.state !== State.DOWN) {
+
+        if (this.state !== State.STARTED) {
             return;
         }
-        this.state = State.UP;
 
         this._resizeShape(event);
 
         this._normalizeRect(this.activeShape);
+
+        this.state = State.CAN_START;
     };
 
     ToolMouseHandler.prototype._validate = function (event) {
-        if (event == null || event.clientX == null || event.clientY == null)
+        if (event == null || event.clientX == null || event.clientY == null ||
+            event.clientX < 0 || event.clientY < 0 ||
+            typeof event.clientX !== 'number' || typeof event.clientY !== 'number')
             throw "Illegal argument: " + event;
     };
 
     ToolMouseHandler.prototype._resizeShape = function (event) {
-        if (this.activeAction === PointerAction.RESIZE_BOTTOM_AND_RIGHT) {
+        if (this.activeAction === PointerAction.RESIZE_BOTTOM_AND_RIGHT ||
+            this.activeAction === PointerAction.CREATE_NEW) {
             this._resizeRight(event);
             this._resizeBottom(event);
 
@@ -157,10 +177,8 @@ define(['view/Item', 'lib/knockout', 'input/PointerAction'], function (Item, ko,
     };
 
     var State = {
-        CLEAR: -1,
-        DOWN: 0,
-        MOVE: 1,
-        UP: 2
+        CAN_START: -1,
+        STARTED: 1
     };
 
     return ToolMouseHandler;

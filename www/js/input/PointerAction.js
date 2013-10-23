@@ -9,6 +9,7 @@ define(function () {
         RESIZE_RIGHT: 5,
         RESIZE_BOTTOM_AND_LEFT: 6,
         RESIZE_BOTTOM: 7,
-        RESIZE_BOTTOM_AND_RIGHT: 8
+        RESIZE_BOTTOM_AND_RIGHT: 8,
+        CREATE_NEW: 9
     }
 });

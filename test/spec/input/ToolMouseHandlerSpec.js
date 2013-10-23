@@ -614,6 +614,36 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
             expect(ex).toBeDefined();
             expect(ex).toBe('Illegal argument: ' + {});
         });
+
+        it("should throw an exception, " +
+            "when it's called and the parameter object properties clientX & clientY are no positive numbers", function () {
+
+            var toolMouseHandler = new ToolMouseHandler(layers);
+            var ex;
+            try {
+                toolMouseHandler.handleDown({clientX: -1, clientY: -1});
+            } catch (e) {
+                ex = e;
+            }
+
+            expect(ex).toBeDefined();
+            expect(ex).toBe('Illegal argument: ' + {});
+        });
+
+        it("should throw an exception, " +
+            "when it's called and the parameter object properties clientX & clientY are not of type numeric", function () {
+
+            var toolMouseHandler = new ToolMouseHandler(layers);
+            var ex;
+            try {
+                toolMouseHandler.handleDown({clientX: true, clientY: true});
+            } catch (e) {
+                ex = e;
+            }
+
+            expect(ex).toBeDefined();
+            expect(ex).toBe('Illegal argument: ' + {});
+        });
     });
 
     describe('handle mouse move event. with handleMove call. Parameter validation', function () {
@@ -667,6 +697,36 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
             expect(ex).toBeDefined();
             expect(ex).toBe('Illegal argument: ' + {});
         });
+
+        it("should throw an exception, " +
+            "when it's called and the parameter object properties clientX & clientY are no positive numbers", function () {
+
+            var toolMouseHandler = new ToolMouseHandler(layers);
+            var ex;
+            try {
+                toolMouseHandler.handleMove({clientX: -1, clientY: -1});
+            } catch (e) {
+                ex = e;
+            }
+
+            expect(ex).toBeDefined();
+            expect(ex).toBe('Illegal argument: ' + {});
+        });
+
+        it("should throw an exception, " +
+            "when it's called and the parameter object properties clientX & clientY are not of type numeric", function () {
+
+            var toolMouseHandler = new ToolMouseHandler(layers);
+            var ex;
+            try {
+                toolMouseHandler.handleMove({clientX: true, clientY: true});
+            } catch (e) {
+                ex = e;
+            }
+
+            expect(ex).toBeDefined();
+            expect(ex).toBe('Illegal argument: ' + {});
+        });
     });
 
     describe('handle mouse up event. with handleUp call. Parameter validation', function () {
@@ -713,6 +773,36 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
             var ex;
             try {
                 toolMouseHandler.handleUp({});
+            } catch (e) {
+                ex = e;
+            }
+
+            expect(ex).toBeDefined();
+            expect(ex).toBe('Illegal argument: ' + {});
+        });
+
+        it("should throw an exception, " +
+            "when it's called and the parameter object properties clientX & clientY are no positive numbers", function () {
+
+            var toolMouseHandler = new ToolMouseHandler(layers);
+            var ex;
+            try {
+                toolMouseHandler.handleUp({clientX: -1, clientY: -1});
+            } catch (e) {
+                ex = e;
+            }
+
+            expect(ex).toBeDefined();
+            expect(ex).toBe('Illegal argument: ' + {});
+        });
+
+        it("should throw an exception, " +
+            "when it's called and the parameter object properties clientX & clientY are not of type numeric", function () {
+
+            var toolMouseHandler = new ToolMouseHandler(layers);
+            var ex;
+            try {
+                toolMouseHandler.handleUp({clientX: true, clientY: true});
             } catch (e) {
                 ex = e;
             }
@@ -788,10 +878,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
             cut.handleDown({clientX: 600, clientY: 600});
 
             expect(layerOneItems.length).toBe(1);
-            //todo when new rect was created but not finished than delete new rect,
-            // when rect was changed but not finished than revert rect
-            // add expect.length 1 to created and so on ITs
-            expectItem(itemOne).fn('xPoint').toBe(300).fn('yPoint').toBe(300).fn('width').toBe(100).fn('height').toBe(100);
+            expectItem(itemOne).fn('xPoint').toBe(100).fn('yPoint').toBe(100).fn('width').toBe(100).fn('height').toBe(100);
         });
 
         it ("should do nothing to the model, " +
