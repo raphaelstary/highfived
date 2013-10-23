@@ -1,4 +1,5 @@
-define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'input/PointerAction', 'spec/input/expectItem'], function (
+define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'input/PointerAction',
+    'spec/input/expectItem'], function (
     ToolMouseHandler, ko, Layer, Item, PointerAction, expectItem) {
 
     var layers, layerOne, layerOneItems, itemOne, checkPointerItemCollision, interpretItemAction;
@@ -746,7 +747,6 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
 
             expect(ex).toBeDefined();
             expect(ex).toBe('Illegal argument: ' + undefined);
-
         });
 
         it("should throw an exception, " +
@@ -763,7 +763,6 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
 
             expect(ex).toBeDefined();
             expect(ex).toBe('Illegal argument: ' + null);
-
         });
 
         it("should throw an exception, " +

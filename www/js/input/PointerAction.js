@@ -1,5 +1,14 @@
 define(function () {
-    return {
+
+    //noinspection UnnecessaryLocalVariableJS
+    /**
+     * Enum for possible actions using shapes in the editor in edit mode
+     *
+     * @enum {number}
+     * @readonly
+     * @public
+     */
+     var PointerAction = {
         NOTHING: -1,
         RESIZE_TOP_AND_LEFT: 0,
         RESIZE_TOP: 1,
@@ -11,5 +20,7 @@ define(function () {
         RESIZE_BOTTOM: 7,
         RESIZE_BOTTOM_AND_RIGHT: 8,
         CREATE_NEW: 9
-    }
+    };
+
+    return PointerAction;
 });
