@@ -1,5 +1,13 @@
 define(['view/Item', 'lib/knockout', 'input/PointerAction'], function (Item, ko, PointerAction) {
-
+    /**
+     * handles {MouseEvent}s when the 'edit' mode in the editor is on
+     *
+     * @param {Object} layers                           the layer model for the whole editor with its items
+     * @param {function} checkPointerShapeCollision     checks if mouse pointer clicked on a shape
+     * @param {function} interpretPointerAction         checks/chooses if mouse pointer hit an 'action point'
+     * @constructor
+     * @public
+     */
     function ToolMouseHandler(layers, checkPointerShapeCollision, interpretPointerAction) {
         if (layers == null)
             throw "Illegal argument: layer model not provided";
@@ -15,24 +23,122 @@ define(['view/Item', 'lib/knockout', 'input/PointerAction'], function (Item, ko,
         this.oldItem = {};
     }
 
+    /**
+     * handles mouse down event
+     *
+     * invariant: {ToolMouseHandler.handleDown} can only be called after the {ToolMouseHandler} initialisation or
+     * after {ToolMouseHandler.handleUp} was called.
+     * (ToolMouseHandler.handleDown ToolMouseHandler.handleMove* ToolMouseHandler.handleDown)*
+     *
+     * @param {MouseEvent} event
+     * @throws {string} Illegal argument: {@link ToolMouseHandler._validate}
+     * @public
+     */
     ToolMouseHandler.prototype.handleDown = function (event) {
         this._validate(event);
+
         if (this.state !== State.CAN_START) {
-
-            if (this.activeAction === PointerAction.CREATE_NEW) {
-                this.layers()[0].items.remove(this.activeShape);
-            } else {
-                this.activeShape.xPoint(this.oldItem.xPoint);
-                this.activeShape.yPoint(this.oldItem.yPoint);
-                this.activeShape.width(this.oldItem.width);
-                this.activeShape.height(this.oldItem.height);
-            }
-
-            this.state = State.CAN_START;
+            this._resolveWrongState();
             return;
         }
+
         this.state = State.STARTED;
 
+        var wasRectOrActionPointSelected = this._selectRectOrStartAction(event);
+        if (wasRectOrActionPointSelected)
+            return;
+
+        this._createNewRect(event);
+    };
+
+    /**
+     * handles mouse move event
+     *
+     * invariant: {ToolMouseHandler.handleMove} can only be called after a {ToolMouseHandler.handleDown} call
+     * width 0..n following {ToolMouseHandler.handleMove} calls.
+     * (ToolMouseHandler.handleDown ToolMouseHandler.handleMove* ToolMouseHandler.handleDown)*
+     *
+     * @param {MouseEvent} event
+     * @throws {string} Illegal argument: {@link ToolMouseHandler._validate}
+     * @public
+     */
+    ToolMouseHandler.prototype.handleMove = function (event) {
+        this._validate(event);
+
+        if (this.state !== State.STARTED)
+            return;
+
+        this._resizeShape(event);
+    };
+
+    /**
+     * handles mouse up event
+     *
+     * invariant: {ToolMouseHandler.handleUp} can only be called after a {ToolMouseHandler.handleDown} call
+     * with 0..n following {ToolMouseHandler.handleMove} calls.
+     * (ToolMouseHandler.handleDown ToolMouseHandler.handleMove* ToolMouseHandler.handleDown)*
+     *
+     * @param {MouseEvent} event
+     * @throws {string} Illegal argument: {@link ToolMouseHandler._validate}
+     * @public
+     */
+    ToolMouseHandler.prototype.handleUp = function (event) {
+        this._validate(event);
+
+        if (this.state !== State.STARTED)
+            return;
+
+        this._resizeShape(event);
+
+        this._normalizeRect(this.activeShape);
+
+        this.state = State.CAN_START;
+    };
+
+    /**
+     *
+     * @param {MouseEvent} event
+     * @throws {string} Illegal argument: when event is undefined or null or event.clientX or event.clientY
+     *      are undefined or event.clientX and event.clientY are not positive numbers
+     * @private
+     */
+    ToolMouseHandler.prototype._validate = function (event) {
+        if (event == null || event.clientX == null || event.clientY == null ||
+            event.clientX < 0 || event.clientY < 0 ||
+            typeof event.clientX !== 'number' || typeof event.clientY !== 'number')
+            throw "Illegal argument: " + event;
+    };
+
+    ToolMouseHandler.prototype._createNewRect = function (event) {
+        this.activeShape = new Item('unknown ' + this.counter++, event.clientX, event.clientY, 10, 10);
+        this.activeAction = PointerAction.CREATE_NEW;
+
+        this.layers()[0].items.push(this.activeShape);
+    };
+
+    ToolMouseHandler.prototype._resolveWrongState = function () {
+        if (this.activeAction === PointerAction.CREATE_NEW) {
+            this._removeStartedRect();
+
+        } else {
+            this._revertChangedRect();
+        }
+
+        this.state = State.CAN_START;
+    };
+
+    ToolMouseHandler.prototype._removeStartedRect = function () {
+        this.layers()[0].items.remove(this.activeShape);
+    };
+
+    ToolMouseHandler.prototype._revertChangedRect = function () {
+        this.activeShape.xPoint(this.oldItem.xPoint);
+        this.activeShape.yPoint(this.oldItem.yPoint);
+        this.activeShape.width(this.oldItem.width);
+        this.activeShape.height(this.oldItem.height);
+    };
+
+    ToolMouseHandler.prototype._selectRectOrStartAction = function (event) {
         var isPointerShapeCollision = false;
         var isPointerActionPointCollision = false;
 
@@ -67,44 +173,7 @@ define(['view/Item', 'lib/knockout', 'input/PointerAction'], function (Item, ko,
             });
         });
 
-        if (isPointerShapeCollision || isPointerActionPointCollision)
-            return;
-
-        this.activeShape = new Item('unknown ' + this.counter++, event.clientX, event.clientY, 10, 10);
-        this.activeAction = PointerAction.CREATE_NEW;
-
-        this.layers()[0].items.push(this.activeShape);
-    };
-
-    ToolMouseHandler.prototype.handleMove = function (event) {
-        this._validate(event);
-
-        if (this.state !== State.STARTED) {
-            return;
-        }
-
-        this._resizeShape(event);
-    };
-
-    ToolMouseHandler.prototype.handleUp = function (event) {
-        this._validate(event);
-
-        if (this.state !== State.STARTED) {
-            return;
-        }
-
-        this._resizeShape(event);
-
-        this._normalizeRect(this.activeShape);
-
-        this.state = State.CAN_START;
-    };
-
-    ToolMouseHandler.prototype._validate = function (event) {
-        if (event == null || event.clientX == null || event.clientY == null ||
-            event.clientX < 0 || event.clientY < 0 ||
-            typeof event.clientX !== 'number' || typeof event.clientY !== 'number')
-            throw "Illegal argument: " + event;
+        return isPointerActionPointCollision || isPointerActionPointCollision;
     };
 
     ToolMouseHandler.prototype._resizeShape = function (event) {
@@ -176,6 +245,13 @@ define(['view/Item', 'lib/knockout', 'input/PointerAction'], function (Item, ko,
         }
     };
 
+    /**
+     * defines the inner state of {ToolMouseHandler}
+     *
+     * @enum {number}
+     * @readonly
+     * @private
+     */
     var State = {
         CAN_START: -1,
         STARTED: 1
