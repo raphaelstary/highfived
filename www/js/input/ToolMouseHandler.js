@@ -1,4 +1,5 @@
-define(['view/Item', 'lib/knockout', 'input/PointerAction'], function (Item, ko, PointerAction) {
+define(['view/Item', 'lib/knockout', 'input/PointerAction', 'input/ABRectangle', 'input/Point'], function (Item, ko,
+    PointerAction, ABRectangle, Point) {
     /**
      * handles {MouseEvent}s when the 'edit' mode in the editor is on
      *
@@ -142,6 +143,12 @@ define(['view/Item', 'lib/knockout', 'input/PointerAction'], function (Item, ko,
         var isPointerShapeCollision = false;
         var isPointerActionPointCollision = false;
 
+        const OFF_SET = 2;
+        var pointer = new ABRectangle(
+            new Point(event.clientX - OFF_SET, event.clientY - OFF_SET),
+            new Point(event.clientX + OFF_SET, event.clientY + OFF_SET)
+        );
+
         var self = this;
         ko.utils.arrayForEach(this.layers(), function (layer) {
             if (isPointerShapeCollision || isPointerActionPointCollision)
@@ -151,13 +158,13 @@ define(['view/Item', 'lib/knockout', 'input/PointerAction'], function (Item, ko,
                 if (isPointerShapeCollision || isPointerActionPointCollision || item.isHidden())
                     return;
 
-                if (!item.isSelected() && self._checkCollision(event, item)) {
+                if (!item.isSelected() && self._checkCollision(pointer, self._getABRect(item))) {
                     item.isSelected(true);
                     isPointerShapeCollision = true;
                     self.activeShape = item;
 
                 } else if (item.isSelected()) {
-                    var tempAction = self._interpretAction(event, item);
+                    var tempAction = self._interpretAction(pointer, item);
 
                     if (tempAction !== PointerAction.NOTHING) {
                         isPointerActionPointCollision = true;
@@ -243,6 +250,12 @@ define(['view/Item', 'lib/knockout', 'input/PointerAction'], function (Item, ko,
             rect.yPoint(rect.yPoint() + rect.height());
             rect.height(Math.abs(rect.height()));
         }
+    };
+
+    ToolMouseHandler.prototype._getABRect = function (item) {
+        return new ABRectangle(
+            new Point(item.xPoint(), item.yPoint()),
+            new Point(item.xPoint() + item.width(), item.yPoint() + item.height()));
     };
 
     /**
