@@ -5,6 +5,7 @@ define(function () {
      * @param {ABRectangle} pointer
      * @param {ABRectangle} rectangle
      * @public
+     * @function
      */
     function checkCollision(pointer, rectangle) {
         return !(isLeftOutside(pointer, rectangle) || isInsideBorders(pointer, rectangle) ||

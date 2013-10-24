@@ -1,6 +1,7 @@
 define(['input/checkCollision', 'input/ABRectangle', 'input/Point'], function (checkCollision, ABRectangle, Point) {
-    describe("as an InputHandler I want to know if a pointer collides with a shape's border.", function () {
-        // rectangle's left side
+
+    describe("as a caller I want to check If a pointer hits the left side of an empty rect", function () {
+
         it("should return 'false', " +
             "when pointer misses shape on the left outer side", function () {
 
@@ -44,8 +45,10 @@ define(['input/checkCollision', 'input/ABRectangle', 'input/Point'], function (c
 
             expect(actual).toBeFalsy();
         });
+    });
 
-        // rectangle's right side
+    describe("as a caller I want to check If a pointer hits the right side of an empty rect", function () {
+
         it("should return 'false', " +
             "when pointer misses shape on the right inner side", function () {
 
@@ -89,8 +92,9 @@ define(['input/checkCollision', 'input/ABRectangle', 'input/Point'], function (c
 
             expect(actual).toBeFalsy();
         });
+    });
 
-        // rectangle's top side
+    describe("as a caller I want to check If a pointer hits the top side of an empty rect", function () {
 
         it("should return 'false', " +
             "when pointer misses shape on the top outer side", function () {
@@ -135,8 +139,10 @@ define(['input/checkCollision', 'input/ABRectangle', 'input/Point'], function (c
 
             expect(actual).toBeFalsy();
         });
+    });
 
-        // rectangle's bottom side
+    describe("as a caller I want to check If a pointer hits the bottom side of an empty rect", function () {
+
         it("should return 'false', " +
             "when pointer misses shape on the bottom inner side", function () {
 
