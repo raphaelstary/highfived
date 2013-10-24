@@ -103,37 +103,82 @@ define(['input/checkCollision', 'input/ABRectangle', 'input/Point'], function (c
             expect(actual).toBeFalsy();
         });
 
-//        it("should return 'true', " +
-//            "when pointer touches shape on the left outer side", function () {
-//
-//            var pointer = new ABRectangle(new Point(1, 1), new Point(5, 5));
-//            var rectangle = new ABRectangle(new Point(5, 0), new Point(100, 100));
-//
-//            var actual = checkCollision(pointer, rectangle);
-//
-//            expect(actual).toBeTruthy();
-//        });
-//
-//        it("should return 'true', " +
-//            "when pointer touches shape on the left inner side", function () {
-//
-//            var pointer = new ABRectangle(new Point(5, 5), new Point(10, 10));
-//            var rectangle = new ABRectangle(new Point(5, 0), new Point(100, 100));
-//
-//            var actual = checkCollision(pointer, rectangle);
-//
-//            expect(actual).toBeTruthy();
-//        });
-//
-//        it("should return 'false', " +
-//            "when pointer misses shape on the left inner side", function () {
-//
-//            var pointer = new ABRectangle(new Point(6, 6), new Point(10, 10));
-//            var rectangle = new ABRectangle(new Point(5, 0), new Point(100, 100));
-//
-//            var actual = checkCollision(pointer, rectangle);
-//
-//            expect(actual).toBeFalsy();
-//        });
+        it("should return 'true', " +
+            "when pointer touches shape on the top outer side", function () {
+
+            var pointer = new ABRectangle(new Point(50, 0), new Point(55, 5));
+            var rectangle = new ABRectangle(new Point(0, 5), new Point(100, 100));
+
+            var actual = checkCollision(pointer, rectangle);
+
+            expect(actual).toBeTruthy();
+        });
+
+        it("should return 'true', " +
+            "when pointer touches shape on the top inner side", function () {
+
+            var pointer = new ABRectangle(new Point(50, 0), new Point(55, 5));
+            var rectangle = new ABRectangle(new Point(0, 0), new Point(100, 100));
+
+            var actual = checkCollision(pointer, rectangle);
+
+            expect(actual).toBeTruthy();
+        });
+
+        it("should return 'false', " +
+            "when pointer misses shape on the top inner side", function () {
+
+            var pointer = new ABRectangle(new Point(50, 1), new Point(55, 6));
+            var rectangle = new ABRectangle(new Point(0, 0), new Point(100, 100));
+
+            var actual = checkCollision(pointer, rectangle);
+
+            expect(actual).toBeFalsy();
+        });
+
+        // rectangle's bottom side
+        it("should return 'false', " +
+            "when pointer misses shape on the bottom inner side", function () {
+
+            var pointer = new ABRectangle(new Point(50, 94), new Point(55, 99));
+            var rectangle = new ABRectangle(new Point(0, 0), new Point(100, 100));
+
+            var actual = checkCollision(pointer, rectangle);
+
+            expect(actual).toBeFalsy();
+        });
+
+        it("should return 'true', " +
+            "when pointer touches shape on the bottom inner side", function () {
+
+            var pointer = new ABRectangle(new Point(50, 95), new Point(55, 100));
+            var rectangle = new ABRectangle(new Point(0, 0), new Point(100, 100));
+
+            var actual = checkCollision(pointer, rectangle);
+
+            expect(actual).toBeTruthy();
+        });
+
+        it("should return 'true', " +
+            "when pointer touches shape on the bottom outer side", function () {
+
+            var pointer = new ABRectangle(new Point(50, 100), new Point(55, 105));
+            var rectangle = new ABRectangle(new Point(0, 0), new Point(100, 100));
+
+            var actual = checkCollision(pointer, rectangle);
+
+            expect(actual).toBeTruthy();
+        });
+
+        it("should return 'false', " +
+            "when pointer misses shape on the bottom outer side", function () {
+
+            var pointer = new ABRectangle(new Point(50, 101), new Point(55, 106));
+            var rectangle = new ABRectangle(new Point(0, 0), new Point(100, 100));
+
+            var actual = checkCollision(pointer, rectangle);
+
+            expect(actual).toBeFalsy();
+        });
     });
 });
