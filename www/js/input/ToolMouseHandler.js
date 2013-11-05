@@ -1,5 +1,6 @@
 define(['view/Item', 'lib/knockout', 'input/PointerAction', 'input/ABRectangle', 'input/Point'], function (Item, ko,
     PointerAction, ABRectangle, Point) {
+
     /**
      * handles {MouseEvent}s when the 'edit' mode in the editor is on
      *

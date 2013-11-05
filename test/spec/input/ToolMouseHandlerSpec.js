@@ -1,6 +1,5 @@
 define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'input/PointerAction',
-    'spec/input/expectItem'], function (
-    ToolMouseHandler, ko, Layer, Item, PointerAction, expectItem) {
+    'spec/input/expectItem'], function (ToolMouseHandler, ko, Layer, Item, PointerAction, expectItem) {
 
     var layers, layerOne, layerOneItems, itemOne, checkPointerItemCollision, interpretItemAction;
 
@@ -473,7 +472,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
             cut.handleMove({clientX: 275, clientY: 275});
             cut.handleUp({clientX: 300, clientY: 300});
 
-            cut._checkCollision = function() {
+            cut._checkCollision = function () {
                 return false;
             };
             cut._interpretAction = function () {
@@ -815,7 +814,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
         "new class -> 1 time 'handleDown' -> 0..n times 'handleMove' -> 1 time 'handleUp' -> " +
         "1 time 'handleDown'", function () {
 
-        it ("should do nothing to the model, " +
+        it("should do nothing to the model, " +
             "when 'handleMove' is called 1st before 'handleDown' " +
             "given an item was moved", function () {
 
@@ -832,7 +831,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
             expectItem(itemOne).fn('xPoint').toBe(300).fn('yPoint').toBe(300).fn('width').toBe(100).fn('height').toBe(100);
         });
 
-        it ("should do nothing to the model, " +
+        it("should do nothing to the model, " +
             "when 'handleMove' is called 1st before 'handleDown' " +
             "given an item was moved", function () {
 
@@ -850,7 +849,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
             expectItem(itemOne).fn('xPoint').toBe(300).fn('yPoint').toBe(300).fn('width').toBe(100).fn('height').toBe(100);
         });
 
-        it ("should do nothing to the model, " +
+        it("should do nothing to the model, " +
             "when 'handleDown' is called " +
             "given it was already called", function () {
 
@@ -863,7 +862,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
             expect(layerOneItems.length).toBe(0);
         });
 
-        it ("should do nothing to the model, " +
+        it("should do nothing to the model, " +
             "when 'handleDown' is called " +
             "given a move was not finished", function () {
 
@@ -880,7 +879,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
             expectItem(itemOne).fn('xPoint').toBe(100).fn('yPoint').toBe(100).fn('width').toBe(100).fn('height').toBe(100);
         });
 
-        it ("should do nothing to the model, " +
+        it("should do nothing to the model, " +
             "when 'handleDown' is called " +
             "given an item was created but not finished", function () {
 
