@@ -1,16 +1,13 @@
 require(['view/MainView', 'input/ToolMouseHandler', 'input/CollisionDetector', 'input/ActionInterpreter',
+    'render/getRequestAnimationFrame', 'render/Loop', 'render/Renderer',
     'lib/domReady', 'lib/bootstrap'],
-    function (MainView, ToolMouseHandler, CollisionDetector, ActionInterpreter) {
+    function (MainView, ToolMouseHandler, CollisionDetector, ActionInterpreter, getAnimFrame, Loop, Renderer) {
 
         var inputLayers = [
             {
                 id: 'event',
                 name: 'event area',
-                items: [
-                    {id: '0', name: 'entry explosion', xPoint: 1, yPoint: 2, width: 3, height: 4},
-                    {id: '1', name: 'trap', xPoint: 1, yPoint: 2, width: 3, height: 4},
-                    {id: '2', name: 'another event', xPoint: 1, yPoint: 2, width: 3, height: 4}
-                ]
+                items: []
             },
             {
                 id: 'physic',
@@ -57,6 +54,10 @@ require(['view/MainView', 'input/ToolMouseHandler', 'input/CollisionDetector', '
         canvas.addEventListener('mousedown', toolMouseHandler.handleDown.bind(toolMouseHandler));
         canvas.addEventListener('mousemove', toolMouseHandler.handleMove.bind(toolMouseHandler));
         canvas.addEventListener('mouseup', toolMouseHandler.handleUp.bind(toolMouseHandler));
+
+        var renderer = new Renderer(canvas, canvas.getContext('2d'), canvas.width, canvas.height, layerModel);
+        var loop = new Loop(getAnimFrame(window), renderer);
+        loop.run();
 
         // - rectangle screen entity
         // - normalize drawn rect data
