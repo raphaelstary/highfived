@@ -2,19 +2,11 @@ define(['lib/knockout'], function (ko) {
     /**
      *
      * @param {string} name
-     * @param {number} xPoint
-     * @param {number} yPoint
-     * @param {number} width
-     * @param {number} height
      * @constructor
      * @public
      */
-    function Item(name, xPoint, yPoint, width, height) {
+    function Item(name) {
         this.name = ko.observable(name);
-        this.xPoint = ko.observable(xPoint);
-        this.yPoint = ko.observable(yPoint);
-        this.width = ko.observable(width);
-        this.height = ko.observable(height);
 
         this.isSelected = ko.observable(false);
         this.showControls = ko.observable(false);

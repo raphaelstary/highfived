@@ -1,4 +1,4 @@
-define(['view/Item', 'lib/knockout', 'input/PointerAction', 'input/ABRectangle', 'input/Point'], function (Item, ko,
+define(['model/Rectangle', 'lib/knockout', 'input/PointerAction', 'input/ABRectangle', 'input/Point'], function (Rectangle, ko,
     PointerAction, ABRectangle, Point) {
 
     /**
@@ -112,7 +112,7 @@ define(['view/Item', 'lib/knockout', 'input/PointerAction', 'input/ABRectangle',
     };
 
     ToolMouseHandler.prototype._createNewRect = function (event) {
-        this.activeShape = new Item('unknown ' + this.counter++, event.clientX, event.clientY, 10, 10);
+        this.activeShape = new Rectangle('unknown ' + this.counter++, event.clientX, event.clientY, 10, 10);
         this.activeAction = PointerAction.CREATE_NEW;
 
         this.layers()[0].items.push(this.activeShape);

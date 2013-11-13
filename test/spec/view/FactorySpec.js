@@ -1,4 +1,4 @@
-define(['view/Factory', 'lib/knockout', 'view/Layer', 'view/Item'], function (Factory, ko, Layer, Item) {
+define(['view/Factory', 'lib/knockout', 'view/Layer', 'model/Rectangle'], function (Factory, ko, Layer, Rectangle) {
 
     describe('view model creation, method call of createLayerModel', function () {
 
@@ -157,7 +157,7 @@ define(['view/Factory', 'lib/knockout', 'view/Layer', 'view/Item'], function (Fa
             expect(layer.items().length).toBe(1);
 
             var item = layer.items()[0];
-            expect(item instanceof Item).toBeTruthy();
+            expect(item instanceof Rectangle).toBeTruthy();
             expect(item.name()).toBe('itemOne');
 
         });
@@ -186,11 +186,11 @@ define(['view/Factory', 'lib/knockout', 'view/Layer', 'view/Item'], function (Fa
             expect(layer.items().length).toBe(2);
 
             var item = layer.items()[0];
-            expect(item instanceof Item).toBeTruthy();
+            expect(item instanceof Rectangle).toBeTruthy();
             expect(item.name()).toBe('itemOne');
 
             var item2 = layer.items()[1];
-            expect(item2 instanceof Item).toBeTruthy();
+            expect(item2 instanceof Rectangle).toBeTruthy();
             expect(item2.name()).toBe('itemTwo');
         });
     });

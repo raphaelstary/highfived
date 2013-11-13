@@ -1,5 +1,5 @@
-define(['input/ActionInterpreter', 'input/PointerAction', 'view/Item'], function (
-    ActionInterpreter, PointerAction, Item) {
+define(['input/ActionInterpreter', 'input/PointerAction', 'model/Rectangle'], function (
+    ActionInterpreter, PointerAction, Rectangle) {
 
     describe("as a user I click on the 'top left' action point to start the edit action", function () {
 
@@ -12,7 +12,7 @@ define(['input/ActionInterpreter', 'input/PointerAction', 'view/Item'], function
 
             var cut = new ActionInterpreter(checkCollision);
 
-            var item = new Item('itemOne', 100, 100, 100, 100);
+            var item = new Rectangle('itemOne', 100, 100, 100, 100);
 
             var actual = cut.interpret({}, item);
 
@@ -28,7 +28,7 @@ define(['input/ActionInterpreter', 'input/PointerAction', 'view/Item'], function
 
             var cut = new ActionInterpreter(checkCollision);
 
-            var item = new Item('itemOne', 100, 100, 100, 100);
+            var item = new Rectangle('itemOne', 100, 100, 100, 100);
 
             var actual = cut.interpret({}, item);
 
@@ -47,7 +47,7 @@ define(['input/ActionInterpreter', 'input/PointerAction', 'view/Item'], function
 
             var cut = new ActionInterpreter(checkCollision);
 
-            var item = new Item('itemOne', 100, 100, 100, 100);
+            var item = new Rectangle('itemOne', 100, 100, 100, 100);
 
             var actual = cut.interpret({}, item);
 
@@ -66,7 +66,7 @@ define(['input/ActionInterpreter', 'input/PointerAction', 'view/Item'], function
 
             var cut = new ActionInterpreter(checkCollision);
 
-            var item = new Item('itemOne', 100, 100, 100, 100);
+            var item = new Rectangle('itemOne', 100, 100, 100, 100);
 
             var actual = cut.interpret({}, item);
 
@@ -85,7 +85,7 @@ define(['input/ActionInterpreter', 'input/PointerAction', 'view/Item'], function
 
             var cut = new ActionInterpreter(checkCollision);
 
-            var item = new Item('itemOne', 100, 100, 100, 100);
+            var item = new Rectangle('itemOne', 100, 100, 100, 100);
 
             var actual = cut.interpret({}, item);
 
@@ -104,7 +104,7 @@ define(['input/ActionInterpreter', 'input/PointerAction', 'view/Item'], function
 
             var cut = new ActionInterpreter(checkCollision);
 
-            var item = new Item('itemOne', 100, 100, 100, 100);
+            var item = new Rectangle('itemOne', 100, 100, 100, 100);
 
             var actual = cut.interpret({}, item);
 
@@ -123,7 +123,7 @@ define(['input/ActionInterpreter', 'input/PointerAction', 'view/Item'], function
 
             var cut = new ActionInterpreter(checkCollision);
 
-            var item = new Item('itemOne', 100, 100, 100, 100);
+            var item = new Rectangle('itemOne', 100, 100, 100, 100);
 
             var actual = cut.interpret({}, item);
 
@@ -142,7 +142,7 @@ define(['input/ActionInterpreter', 'input/PointerAction', 'view/Item'], function
 
             var cut = new ActionInterpreter(checkCollision);
 
-            var item = new Item('itemOne', 100, 100, 100, 100);
+            var item = new Rectangle('itemOne', 100, 100, 100, 100);
 
             var actual = cut.interpret({}, item);
 
@@ -161,7 +161,7 @@ define(['input/ActionInterpreter', 'input/PointerAction', 'view/Item'], function
 
             var cut = new ActionInterpreter(checkCollision);
 
-            var item = new Item('itemOne', 100, 100, 100, 100);
+            var item = new Rectangle('itemOne', 100, 100, 100, 100);
 
             var actual = cut.interpret({}, item);
 
@@ -180,7 +180,7 @@ define(['input/ActionInterpreter', 'input/PointerAction', 'view/Item'], function
 
             var cut = new ActionInterpreter(checkCollision);
 
-            var item = new Item('itemOne', 100, 100, 100, 100);
+            var item = new Rectangle('itemOne', 100, 100, 100, 100);
 
             var actual = cut.interpret({}, item);
 

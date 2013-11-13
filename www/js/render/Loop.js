@@ -5,7 +5,7 @@ define(function () {
     }
 
     Loop.prototype.start = function () {
-        this.requestAnimationFrame(this.run.bind(this));
+        this.requestAnimationFrame(this.start.bind(this));
 
         this.renderer.drawScene();
     };

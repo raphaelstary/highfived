@@ -1,4 +1,4 @@
-define(['render/Renderer', 'view/Layer', 'view/Item', 'lib/knockout'], function (Renderer, Layer, Item, ko) {
+define(['render/Renderer', 'view/Layer', 'model/Rectangle', 'lib/knockout'], function (Renderer, Layer, Rectangle, ko) {
 
     describe('as a caller I want to render rectangles & active rectangles on the screen', function () {
         var layers, itemOne, CANVAS_WIDTH, CANVAS_HEIGHT;
@@ -82,9 +82,31 @@ define(['render/Renderer', 'view/Layer', 'view/Item', 'lib/knockout'], function 
             expect(contextCalled).toBeFalsy();
         });
 
+        it('should draw nothing - no rectangle, ' +
+            'when I call drawScene, ' +
+            'given valid layer model with one rect in one hidden layer', function () {
+
+            layers()[0].isHidden(true);
+
+            var contextCalled = false;
+
+            var context = {
+                clearRect: function () {},
+                strokeRect: function () {
+                    contextCalled = true;
+                }
+            };
+
+            var renderer = new Renderer(null, context, CANVAS_WIDTH, CANVAS_HEIGHT, layers);
+
+            renderer.drawScene();
+
+            expect(contextCalled).toBeFalsy();
+        });
+
         beforeEach(function () {
             layers = ko.observableArray([
-                new Layer('layerOne', ko.observableArray([new Item('onlyItem', 100, 100, 100, 100)]))
+                new Layer('layerOne', ko.observableArray([new Rectangle('onlyItem', 100, 100, 100, 100)]))
             ]);
             itemOne = layers()[0].items()[0];
             CANVAS_WIDTH = 500;

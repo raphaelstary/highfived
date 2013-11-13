@@ -1,4 +1,4 @@
-define(['lib/knockout', 'view/Layer', 'view/Item'], function (ko, Layer, Item) {
+define(['lib/knockout', 'view/Layer', 'model/Rectangle'], function (ko, Layer, Rectangle) {
     function Factory(list) {
         this.list = list;
     }
@@ -16,7 +16,7 @@ define(['lib/knockout', 'view/Layer', 'view/Item'], function (ko, Layer, Item) {
             if (layer.items !== undefined && layer.items !== null && layer.items.length > 0) {
 
                 layer.items.forEach(function(item) {
-                    items.push(new Item(item.name, item.xPoint, item.yPoint, item.width, item.height));
+                    items.push(new Rectangle(item.name, item.xPoint, item.yPoint, item.width, item.height));
                 });
             }
 

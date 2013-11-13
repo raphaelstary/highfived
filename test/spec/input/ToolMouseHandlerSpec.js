@@ -1,5 +1,5 @@
-define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'input/PointerAction',
-    'spec/input/expectItem'], function (ToolMouseHandler, ko, Layer, Item, PointerAction, expectItem) {
+define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'model/Rectangle', 'input/PointerAction',
+    'spec/input/expectItem'], function (ToolMouseHandler, ko, Layer, Rectangle, PointerAction, expectItem) {
 
     var layers, layerOne, layerOneItems, itemOne, checkPointerItemCollision, interpretItemAction;
 
@@ -18,7 +18,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
 
             var item = layerOneItems[0];
             expect(item).toBeDefined();
-            expect(item instanceof Item).toBeTruthy();
+            expect(item instanceof Rectangle).toBeTruthy();
 
             expectItem(item).fn('xPoint').toBe(0).fn('yPoint').toBe(0).fn('width').toBe(10).fn('height').toBe(10);
         });
@@ -908,7 +908,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'view/Item', 'in
 
     function setUpLayersWithOneItemAndCollisionService() {
         layers = ko.observableArray([
-            new Layer('layerOne', ko.observableArray([new Item('onlyItem', 100, 100, 100, 100)]))
+            new Layer('layerOne', ko.observableArray([new Rectangle('onlyItem', 100, 100, 100, 100)]))
         ]);
         setUpLayerVars();
 

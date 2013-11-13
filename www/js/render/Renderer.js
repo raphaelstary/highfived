@@ -25,16 +25,18 @@ define(['lib/knockout'], function (ko) {
 
         var self = this;
         ko.utils.arrayForEach(this.layers(), function (layer) {
-            ko.utils.arrayForEach(layer.items(), function (item) {
+            if (!layer.isHidden()) {
+                ko.utils.arrayForEach(layer.items(), function (item) {
 
-                if (!item.isHidden()) {
-                    if (item.isSelected()) {
-                        self._drawActiveRectangle(item.xPoint(), item.yPoint(), item.width(), item.height(), 'red');
-                    } else {
-                        self._drawRectangle(item.xPoint(), item.yPoint(), item.width(), item.height());
+                    if (!item.isHidden()) {
+                        if (item.isSelected()) {
+                            self._drawActiveRectangle(item.xPoint(), item.yPoint(), item.width(), item.height(), 'red');
+                        } else {
+                            self._drawRectangle(item.xPoint(), item.yPoint(), item.width(), item.height());
+                        }
                     }
-                }
-            });
+                });
+            }
         });
     };
 

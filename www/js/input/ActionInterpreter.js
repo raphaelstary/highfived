@@ -14,7 +14,7 @@ define(['input/PointerAction', 'input/ABRectangle', 'input/Point'], function (Po
      * checks if an given pointer hits an action point and returns the action
      *
      * @param {ABRectangle} pointer
-     * @param {Item} item
+     * @param {Rectangle} item
      * @returns {PointerAction}
      * @public
      */
