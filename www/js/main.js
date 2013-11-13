@@ -57,7 +57,7 @@ require(['view/MainView', 'input/ToolMouseHandler', 'input/CollisionDetector', '
 
         var renderer = new Renderer(canvas, canvas.getContext('2d'), canvas.width, canvas.height, layerModel);
         var loop = new Loop(getAnimFrame(window), renderer);
-        loop.run();
+        loop.start();
 
         // - rectangle screen entity
         // - normalize drawn rect data

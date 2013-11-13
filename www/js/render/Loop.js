@@ -4,7 +4,7 @@ define(function () {
         this.renderer = renderer;
     }
 
-    Loop.prototype.run = function () {
+    Loop.prototype.start = function () {
         this.requestAnimationFrame(this.run.bind(this));
 
         this.renderer.drawScene();
