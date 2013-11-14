@@ -1,4 +1,4 @@
-define(['render/Renderer', 'view/Layer', 'model/Rectangle', 'lib/knockout'], function (Renderer, Layer, Rectangle, ko) {
+define(['render/Renderer', 'model/Layer', 'model/Rectangle', 'lib/knockout'], function (Renderer, Layer, Rectangle, ko) {
 
     describe('as a caller I want to render rectangles & active rectangles on the screen', function () {
         var layers, itemOne, CANVAS_WIDTH, CANVAS_HEIGHT;
@@ -105,9 +105,17 @@ define(['render/Renderer', 'view/Layer', 'model/Rectangle', 'lib/knockout'], fun
         });
 
         beforeEach(function () {
+            function forEach(fn) {
+                ko.utils.arrayForEach(this(), fn);
+            }
+
+            var items = ko.observableArray([new Rectangle('onlyItem', 100, 100, 100, 100)]);
             layers = ko.observableArray([
-                new Layer('layerOne', ko.observableArray([new Rectangle('onlyItem', 100, 100, 100, 100)]))
+                new Layer('layerOne', items)
             ]);
+            items.forEach = forEach;
+            layers.forEach = forEach;
+
             itemOne = layers()[0].items()[0];
             CANVAS_WIDTH = 500;
             CANVAS_HEIGHT = 500;

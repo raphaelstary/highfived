@@ -1,4 +1,4 @@
-define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'model/Rectangle', 'input/PointerAction',
+define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangle', 'input/PointerAction',
     'spec/input/expectItem'], function (ToolMouseHandler, ko, Layer, Rectangle, PointerAction, expectItem) {
 
     var layers, layerOne, layerOneItems, itemOne, checkPointerItemCollision, interpretItemAction;
@@ -898,8 +898,41 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'model/Rectangle
         beforeEach(setUpLayersWithOneItemAndCollisionService);
     });
 
+    describe("in standard editing only the last item with which I interact is activated", function () {
+
+        it("should create a new item which is active, " +
+            "when 'handleDown' is called", function () {
+            setUpLayersWithZeroItems();
+
+            var cut = new ToolMouseHandler(layers);
+
+            cut.handleDown({clientX: 0, clientY: 0});
+
+            var item = layerOneItems[0];
+            expect(item.isActive()).toBeTruthy();
+        });
+
+        it("should deactivate all active shapes, " +
+            "when a new item started " +
+            "given there is an active item", function () {
+
+            setUpLayersWithOneItemAndCollisionService();
+            selectItemAndSetAction(PointerAction.NOTHING);
+            itemOne.isActive(true);
+            checkPointerItemCollision = function () {
+                return false;
+            };
+
+            var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
+
+            cut.handleDown({clientX: 0, clientY: 0});
+
+            expect(itemOne.isActive()).toBeFalsy();
+        });
+    });
+
     function selectItemAndSetAction(action) {
-        itemOne.isSelected(true);
+        itemOne.isActive(true);
 
         interpretItemAction = function () {
             return action;
@@ -928,5 +961,16 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'view/Layer', 'model/Rectangle
         layerOne = layers()[0];
         layerOneItems = layerOne.items();
         itemOne = layerOneItems[0];
+
+        setupForEach();
+    }
+
+    function setupForEach() {
+        function forEach(fn) {
+            ko.utils.arrayForEach(this(), fn);
+        }
+
+        layers.forEach = forEach;
+        layerOne.items.forEach = forEach;
     }
 });

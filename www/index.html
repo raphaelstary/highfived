@@ -16,13 +16,13 @@
     </div>
     <div class="panel-body">
         <ul class="list-group" data-bind="foreach: layers">
-            <li class="list-group-item">
+            <li class="list-group-item" data-bind="css: {'active': isActive, 'selected': isSelected}">
                 <span class="badge" data-bind="text: itemCount"></span>
 
                 <div class="list-group-item-heading"
                      data-bind="event: {mouseover: $root.toggleLayerControls, mouseout: $root.toggleLayerControls}">
 
-                    <a href="#" data-bind="click: $root.toggleSelectLayer">
+                    <a href="#" data-bind="click: $root.toggleSelectLayer.bind($root)">
                         <span data-bind="html: isSelected() ? '&#9660;': '&#9656;'"></span>
                         <span data-bind="text: name"></span>
                     </a>
@@ -40,7 +40,7 @@
                     <li class="list-group-item"
                         data-bind="event: {mouseover: $root.toggleItemControls, mouseout: $root.toggleItemControls}">
 
-                        <a href="#" data-bind="text: name, click: $root.toggleSelectItem, visible: !isEditOn()"></a>
+                        <a href="#" data-bind="text: name, click: $root.toggleSelectItem.bind($root), visible: !isEditOn()"></a>
 
                         <input type="text" class="form-control input-sm" placeholder="name"
                                 data-bind="value: name, visible: isEditOn">

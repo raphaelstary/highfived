@@ -1,4 +1,4 @@
-define(['model/Rectangle', 'lib/knockout', 'input/PointerAction', 'input/ABRectangle', 'input/Point'], function (Rectangle, ko,
+define(['model/Rectangle', 'input/PointerAction', 'input/ABRectangle', 'input/Point'], function (Rectangle,
     PointerAction, ABRectangle, Point) {
 
     /**
@@ -113,6 +113,8 @@ define(['model/Rectangle', 'lib/knockout', 'input/PointerAction', 'input/ABRecta
 
     ToolMouseHandler.prototype._createNewRect = function (event) {
         this.activeShape = new Rectangle('unknown ' + this.counter++, event.clientX, event.clientY, 10, 10);
+        this.activeShape.isActive(true);
+
         this.activeAction = PointerAction.CREATE_NEW;
 
         this.layers()[0].items.push(this.activeShape);
@@ -151,20 +153,20 @@ define(['model/Rectangle', 'lib/knockout', 'input/PointerAction', 'input/ABRecta
         );
 
         var self = this;
-        ko.utils.arrayForEach(this.layers(), function (layer) {
+        this.layers.forEach(function (layer) {
             if (isPointerShapeCollision || isPointerActionPointCollision)
                 return;
 
-            ko.utils.arrayForEach(layer.items(), function (item) {
+            layer.items.forEach(function (item) {
                 if (isPointerShapeCollision || isPointerActionPointCollision || item.isHidden())
                     return;
 
-                if (!item.isSelected() && self._checkCollision(pointer, self._getABRect(item))) {
-                    item.isSelected(true);
+                if (!item.isActive() && self._checkCollision(pointer, self._getABRect(item))) {
+                    item.isActive(true);
                     isPointerShapeCollision = true;
                     self.activeShape = item;
 
-                } else if (item.isSelected()) {
+                } else if (item.isActive()) {
                     var tempAction = self._interpretAction(pointer, item);
 
                     if (tempAction !== PointerAction.NOTHING) {

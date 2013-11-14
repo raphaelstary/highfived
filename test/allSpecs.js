@@ -1,5 +1,5 @@
 // list _here_ all spec modules
-define(['spec/view/FactorySpec.js',
+define(['spec/model/FactorySpec.js',
     'spec/view/LayerItemFilterSpec.js',
     'spec/input/ToolMouseHandlerSpec.js',
     'spec/input/CollisionDetectorSpec.js',

@@ -13,6 +13,17 @@ define(['lib/knockout'], function(ko) {
 
     LayerToolView.prototype.toggleSelectLayer = function (layer) {
         layer.isSelected(!layer.isSelected());
+
+        if (layer.isSelected()) {
+
+            if (this.activeLayer != null) {
+                this.activeLayer.isActive(false);
+            }
+
+            layer.isActive(true);
+
+            this.activeLayer = layer;
+        }
     };
 
     LayerToolView.prototype.toggleHideLayer = function (layer) {
@@ -25,6 +36,19 @@ define(['lib/knockout'], function(ko) {
 
     LayerToolView.prototype.toggleSelectItem = function (item) {
         item.isSelected(!item.isSelected());
+
+        if (item.isSelected()) {
+
+            if (this.activeItem != null) {
+                this.activeItem.isActive(false);
+            }
+
+            item.isActive(true);
+
+            this.activeItem = item;
+            //todo have to change to iterate over every item and deactivate it, or find data-model
+            // in common with renderer/tool mouse handler
+        }
     };
 
     LayerToolView.prototype.toggleEditItemName = function (item) {
@@ -33,6 +57,20 @@ define(['lib/knockout'], function(ko) {
 
     LayerToolView.prototype.toggleHideItem = function (item) {
         item.isHidden(!item.isHidden());
+    };
+
+    LayerToolView.prototype.toggleSelectAllLayers = function () {
+        ko.utils.arrayForEach(this.layers(), function (layer) {
+            layer.isSelected(false);
+        });
+    };
+
+    LayerToolView.prototype.toggleSelectAllItems = function () {
+        ko.utils.arrayForEach(this.layers(), function (layer) {
+            ko.utils.arrayForEach(layer.items(), function (item) {
+                item.isSelected(false);
+            });
+        });
     };
 
     LayerToolView.prototype.linkItem = function (item) {

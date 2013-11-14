@@ -1,4 +1,4 @@
-define(['lib/knockout', 'view/ControlBarView', 'view/LayerToolView', 'view/Factory', 'view/LayerItemFilter'],
+define(['lib/knockout', 'view/ControlBarView', 'view/LayerToolView', 'model/Factory', 'view/LayerItemFilter'],
     function (ko, ControlBarView, LayerToolView, Factory, LayerItemFilter) {
 
         function MainView(inputLayers) {

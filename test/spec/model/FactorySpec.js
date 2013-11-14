@@ -1,4 +1,4 @@
-define(['view/Factory', 'lib/knockout', 'view/Layer', 'model/Rectangle'], function (Factory, ko, Layer, Rectangle) {
+define(['model/Factory', 'lib/knockout', 'model/Layer', 'model/Rectangle'], function (Factory, ko, Layer, Rectangle) {
 
     describe('view model creation, method call of createLayerModel', function () {
 
@@ -192,6 +192,58 @@ define(['view/Factory', 'lib/knockout', 'view/Layer', 'model/Rectangle'], functi
             var item2 = layer.items()[1];
             expect(item2 instanceof Rectangle).toBeTruthy();
             expect(item2.name()).toBe('itemTwo');
+        });
+    });
+
+    describe("as a user I want to iterate over the created domain model like a normal array", function () {
+
+        it('should get a forEach method, ' +
+            'when I call create, ' +
+            'given an array with one layer', function () {
+
+            var input = [
+                {
+                    name: 'one'
+                }
+            ];
+            var factory = new Factory(input);
+            var actual = factory.createLayerModel();
+
+            expect(actual.forEach).toBeDefined();
+
+            var called = false;
+            actual.forEach(function (layer) {
+                called = true;
+                expect(layer.name()).toBe('one');
+            });
+
+            expect(called).toBeTruthy();
+        });
+
+        it('should get a forEach method, ' +
+            'when I call create, ' +
+            'given an array with one layer and one item', function () {
+
+            var input = [
+                {
+                    name: 'one',
+                    items: [{
+                        name: 'itemOne'
+                    }]
+                }
+            ];
+            var factory = new Factory(input);
+            var actual = factory.createLayerModel()()[0].items;
+
+            expect(actual.forEach).toBeDefined();
+
+            var called = false;
+            actual.forEach(function (item) {
+                called = true;
+                expect(item.name()).toBe('itemOne');
+            });
+
+            expect(called).toBeTruthy();
         });
     });
 });

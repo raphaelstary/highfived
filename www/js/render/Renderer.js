@@ -1,4 +1,4 @@
-define(['lib/knockout'], function (ko) {
+define(function () {
     /**
      * main editor render class
      *
@@ -24,12 +24,12 @@ define(['lib/knockout'], function (ko) {
         this._clearScreen();
 
         var self = this;
-        ko.utils.arrayForEach(this.layers(), function (layer) {
+        this.layers.forEach(function (layer) {
             if (!layer.isHidden()) {
-                ko.utils.arrayForEach(layer.items(), function (item) {
+                layer.items.forEach(function (item) {
 
                     if (!item.isHidden()) {
-                        if (item.isSelected()) {
+                        if (item.isActive()) {
                             self._drawActiveRectangle(item.xPoint(), item.yPoint(), item.width(), item.height(), 'red');
                         } else {
                             self._drawRectangle(item.xPoint(), item.yPoint(), item.width(), item.height());
