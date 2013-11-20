@@ -1,4 +1,5 @@
-define(['lib/knockout', 'model/Layer', 'model/Rectangle'], function (ko, Layer, Rectangle) {
+define(['lib/knockout', 'model/Layer', 'model/Rectangle', 'model/LayerBucket'], function (ko, Layer, Rectangle,
+    LayerBucket) {
     function Factory(list) {
         this.list = list;
     }
@@ -12,7 +13,7 @@ define(['lib/knockout', 'model/Layer', 'model/Rectangle'], function (ko, Layer, 
         result.forEach = forEach;
 
         if (this.list === undefined || this.list === null || this.list.length === 0) {
-            return result;
+            return new LayerBucket(result);
         }
 
         this.list.forEach(function (layer) {
@@ -29,7 +30,7 @@ define(['lib/knockout', 'model/Layer', 'model/Rectangle'], function (ko, Layer, 
             result.push(new Layer(layer.name, items));
         });
 
-        return result;
+        return new LayerBucket(result);
     };
 
     return Factory;

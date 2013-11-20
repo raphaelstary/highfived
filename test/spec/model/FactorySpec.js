@@ -1,4 +1,4 @@
-define(['model/Factory', 'lib/knockout', 'model/Layer', 'model/Rectangle'], function (Factory, ko, Layer, Rectangle) {
+define(['model/Factory', 'model/Layer', 'model/Rectangle'], function (Factory, Layer, Rectangle) {
 
     describe('view model creation, method call of createLayerModel', function () {
 
@@ -7,7 +7,7 @@ define(['model/Factory', 'lib/knockout', 'model/Layer', 'model/Rectangle'], func
             'given undefined', function () {
             var factory = new Factory();
 
-            var actual = factory.createLayerModel();
+            var actual = factory.createLayerModel().layers;
 
             expect(actual().length).toBe(0);
         });
@@ -17,7 +17,7 @@ define(['model/Factory', 'lib/knockout', 'model/Layer', 'model/Rectangle'], func
             'given null', function () {
             var factory = new Factory(null);
 
-            var actual = factory.createLayerModel();
+            var actual = factory.createLayerModel().layers;
 
             expect(actual().length).toBe(0);
         });
@@ -27,7 +27,7 @@ define(['model/Factory', 'lib/knockout', 'model/Layer', 'model/Rectangle'], func
             'given an empty array', function () {
             var factory = new Factory([]);
 
-            var actual = factory.createLayerModel();
+            var actual = factory.createLayerModel().layers;
 
             expect(actual().length).toBe(0);
         });
@@ -37,7 +37,7 @@ define(['model/Factory', 'lib/knockout', 'model/Layer', 'model/Rectangle'], func
             'given undefined', function () {
             var factory = new Factory();
 
-            var actual = factory.createLayerModel();
+            var actual = factory.createLayerModel().layers;
 
             expect(actual().length).toBe(0);
         });
@@ -54,7 +54,7 @@ define(['model/Factory', 'lib/knockout', 'model/Layer', 'model/Rectangle'], func
 
             var factory = new Factory(input);
 
-            var actual = factory.createLayerModel();
+            var actual = factory.createLayerModel().layers;
 
             expect(actual().length).toBe(1);
             expect(actual()[0]).toBeDefined();
@@ -77,7 +77,7 @@ define(['model/Factory', 'lib/knockout', 'model/Layer', 'model/Rectangle'], func
 
             var factory = new Factory(input);
 
-            var actual = factory.createLayerModel();
+            var actual = factory.createLayerModel().layers;
 
             expect(actual().length).toBe(2);
 
@@ -97,7 +97,7 @@ define(['model/Factory', 'lib/knockout', 'model/Layer', 'model/Rectangle'], func
                 }
             ];
             var factory = new Factory(input);
-            var actual = factory.createLayerModel();
+            var actual = factory.createLayerModel().layers;
             var layer = actual()[0];
 
             expect(layer.items).toBeDefined();
@@ -114,7 +114,7 @@ define(['model/Factory', 'lib/knockout', 'model/Layer', 'model/Rectangle'], func
                 }
             ];
             var factory = new Factory(input);
-            var actual = factory.createLayerModel();
+            var actual = factory.createLayerModel().layers;
             var layer = actual()[0];
 
             expect(layer.items).toBeDefined();
@@ -131,7 +131,7 @@ define(['model/Factory', 'lib/knockout', 'model/Layer', 'model/Rectangle'], func
                 }
             ];
             var factory = new Factory(input);
-            var actual = factory.createLayerModel();
+            var actual = factory.createLayerModel().layers;
             var layer = actual()[0];
 
             expect(layer.items).toBeDefined();
@@ -150,7 +150,7 @@ define(['model/Factory', 'lib/knockout', 'model/Layer', 'model/Rectangle'], func
                 }
             ];
             var factory = new Factory(input);
-            var actual = factory.createLayerModel();
+            var actual = factory.createLayerModel().layers;
             var layer = actual()[0];
 
             expect(layer.items).toBeDefined();
@@ -179,7 +179,7 @@ define(['model/Factory', 'lib/knockout', 'model/Layer', 'model/Rectangle'], func
                 }
             ];
             var factory = new Factory(input);
-            var actual = factory.createLayerModel();
+            var actual = factory.createLayerModel().layers;
             var layer = actual()[0];
 
             expect(layer.items).toBeDefined();
@@ -207,7 +207,7 @@ define(['model/Factory', 'lib/knockout', 'model/Layer', 'model/Rectangle'], func
                 }
             ];
             var factory = new Factory(input);
-            var actual = factory.createLayerModel();
+            var actual = factory.createLayerModel().layers;
 
             expect(actual.forEach).toBeDefined();
 
@@ -233,7 +233,7 @@ define(['model/Factory', 'lib/knockout', 'model/Layer', 'model/Rectangle'], func
                 }
             ];
             var factory = new Factory(input);
-            var actual = factory.createLayerModel()()[0].items;
+            var actual = factory.createLayerModel().layers()[0].items;
 
             expect(actual.forEach).toBeDefined();
 
