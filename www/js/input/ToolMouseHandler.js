@@ -4,17 +4,17 @@ define(['model/Rectangle', 'input/PointerAction', 'input/ABRectangle', 'input/Po
     /**
      * handles {MouseEvent}s when the 'edit' mode in the editor is on
      *
-     * @param {Object} layers                           the layer model for the whole editor with its items
+     * @param {Object} layerBucket                           the layer model for the whole editor with its items
      * @param {function} checkPointerShapeCollision     checks if mouse pointer clicked on a shape
      * @param {function} interpretPointerAction         checks/chooses if mouse pointer hit an 'action point'
      * @constructor
      * @public
      */
-    function ToolMouseHandler(layers, checkPointerShapeCollision, interpretPointerAction) {
-        if (layers == null)
+    function ToolMouseHandler(layerBucket, checkPointerShapeCollision, interpretPointerAction) {
+        if (layerBucket == null || layerBucket.layers == null)
             throw "Illegal argument: layer model not provided";
 
-        this.layers = layers;
+        this.layerBucket = layerBucket;
         this._checkCollision = checkPointerShapeCollision;
         this._interpretAction = interpretPointerAction;
 
@@ -112,12 +112,12 @@ define(['model/Rectangle', 'input/PointerAction', 'input/ABRectangle', 'input/Po
     };
 
     ToolMouseHandler.prototype._createNewRect = function (event) {
-        this.activeShape = new Rectangle('unknown ' + this.counter++, event.clientX, event.clientY, 10, 10);
-        this.activeShape.isActive(true);
+        this._deactivateActiveItem();
+        this._activateItem(new Rectangle('unknown ' + this.counter++, event.clientX, event.clientY, 10, 10));
 
         this.activeAction = PointerAction.CREATE_NEW;
 
-        this.layers()[0].items.push(this.activeShape);
+        this.layerBucket.layers()[0].items.push(this.activeShape);
     };
 
     ToolMouseHandler.prototype._resolveWrongState = function () {
@@ -132,7 +132,7 @@ define(['model/Rectangle', 'input/PointerAction', 'input/ABRectangle', 'input/Po
     };
 
     ToolMouseHandler.prototype._removeStartedRect = function () {
-        this.layers()[0].items.remove(this.activeShape);
+        this.layerBucket.layers()[0].items.remove(this.activeShape);
     };
 
     ToolMouseHandler.prototype._revertChangedRect = function () {
@@ -153,7 +153,7 @@ define(['model/Rectangle', 'input/PointerAction', 'input/ABRectangle', 'input/Po
         );
 
         var self = this;
-        this.layers.forEach(function (layer) {
+        this.layerBucket.layers.forEach(function (layer) {
             if (isPointerShapeCollision || isPointerActionPointCollision)
                 return;
 
@@ -162,9 +162,10 @@ define(['model/Rectangle', 'input/PointerAction', 'input/ABRectangle', 'input/Po
                     return;
 
                 if (!item.isActive() && self._checkCollision(pointer, self._getABRect(item))) {
-                    item.isActive(true);
+                    self._deactivateActiveItem();
+                    self._activateItem(item);
+
                     isPointerShapeCollision = true;
-                    self.activeShape = item;
 
                 } else if (item.isActive()) {
                     var tempAction = self._interpretAction(pointer, item);
@@ -183,7 +184,19 @@ define(['model/Rectangle', 'input/PointerAction', 'input/ABRectangle', 'input/Po
             });
         });
 
-        return isPointerActionPointCollision || isPointerActionPointCollision;
+        return isPointerShapeCollision || isPointerActionPointCollision;
+    };
+
+    ToolMouseHandler.prototype._activateItem = function (item) {
+        this.layerBucket.activeItem = item;
+        item.isActive(true);
+        this.activeShape = item;
+    };
+
+    ToolMouseHandler.prototype._deactivateActiveItem = function () {
+        if (this.layerBucket.activeItem != null) {
+            this.layerBucket.activeItem.isActive(false);
+        }
     };
 
     ToolMouseHandler.prototype._resizeShape = function (event) {

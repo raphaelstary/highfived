@@ -1,14 +1,15 @@
 define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangle', 'input/PointerAction',
-    'spec/input/expectItem'], function (ToolMouseHandler, ko, Layer, Rectangle, PointerAction, expectItem) {
+    'spec/input/expectItem', 'model/LayerBucket'], function (ToolMouseHandler, ko, Layer, Rectangle, PointerAction,
+                                                             expectItem, LayerBucket) {
 
-    var layers, layerOne, layerOneItems, itemOne, checkPointerItemCollision, interpretItemAction;
+    var layerBucket, layers, layerOne, layerOneItems, itemOne, checkPointerItemCollision, interpretItemAction;
 
     describe("as a user I want to draw a new rect", function () {
 
         it("should create a new item, " +
             "when you start drawing", function () {
 
-            var cut = new ToolMouseHandler(layers);
+            var cut = new ToolMouseHandler(layerBucket);
 
             expect(layerOneItems.length).toBe(0);
 
@@ -27,7 +28,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
             "when moving mouse cursor, " +
             "given new item was created", function () {
 
-            var cut = new ToolMouseHandler(layers);
+            var cut = new ToolMouseHandler(layerBucket);
 
             cut.handleDown({clientX: 0, clientY: 0});
             var item = layerOneItems[0];
@@ -41,7 +42,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
             "when moving mouse cursor has arrived at its end position, " +
             "given new item was created", function () {
 
-            var cut = new ToolMouseHandler(layers);
+            var cut = new ToolMouseHandler(layerBucket);
 
             cut.handleDown({clientX: 0, clientY: 0});
             var item = layerOneItems[0];
@@ -55,7 +56,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
             "when moving mouse cursor has arrived at its end position, " +
             "given new item was created", function () {
 
-            var cut = new ToolMouseHandler(layers);
+            var cut = new ToolMouseHandler(layerBucket);
 
             cut.handleDown({clientX: 200, clientY: 200});
             var item = layerOneItems[0];
@@ -82,7 +83,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
                 return PointerAction.RESIZE_BOTTOM_AND_RIGHT;
             };
 
-            var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
+            var cut = new ToolMouseHandler(layerBucket, checkPointerItemCollision, interpretItemAction);
 
             cut.handleDown({clientX: 0, clientY: 0});
 
@@ -100,7 +101,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
 
             selectItemAndSetAction(PointerAction.NOTHING);
 
-            var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
+            var cut = new ToolMouseHandler(layerBucket, checkPointerItemCollision, interpretItemAction);
 
             cut.handleDown({clientX: 0, clientY: 0});
 
@@ -118,7 +119,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
 
             selectItemAndSetAction(PointerAction.RESIZE_BOTTOM_AND_RIGHT);
 
-            var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
+            var cut = new ToolMouseHandler(layerBucket, checkPointerItemCollision, interpretItemAction);
 
             cut.handleDown({clientX: 0, clientY: 0});
 
@@ -136,7 +137,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
 
             selectItemAndSetAction(PointerAction.RESIZE_TOP_AND_LEFT);
 
-            var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
+            var cut = new ToolMouseHandler(layerBucket, checkPointerItemCollision, interpretItemAction);
 
             cut.handleDown({clientX: 0, clientY: 0});
 
@@ -154,7 +155,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
 
             selectItemAndSetAction(PointerAction.RESIZE_TOP_AND_RIGHT);
 
-            var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
+            var cut = new ToolMouseHandler(layerBucket, checkPointerItemCollision, interpretItemAction);
 
             cut.handleDown({clientX: 0, clientY: 0});
 
@@ -172,7 +173,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
 
             selectItemAndSetAction(PointerAction.RESIZE_BOTTOM_AND_LEFT);
 
-            var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
+            var cut = new ToolMouseHandler(layerBucket, checkPointerItemCollision, interpretItemAction);
 
             cut.handleDown({clientX: 0, clientY: 0});
 
@@ -190,7 +191,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
 
             selectItemAndSetAction(PointerAction.RESIZE_RIGHT);
 
-            var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
+            var cut = new ToolMouseHandler(layerBucket, checkPointerItemCollision, interpretItemAction);
 
             cut.handleDown({clientX: 0, clientY: 0});
 
@@ -208,7 +209,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
 
             selectItemAndSetAction(PointerAction.RESIZE_BOTTOM);
 
-            var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
+            var cut = new ToolMouseHandler(layerBucket, checkPointerItemCollision, interpretItemAction);
 
             cut.handleDown({clientX: 0, clientY: 0});
 
@@ -226,7 +227,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
 
             selectItemAndSetAction(PointerAction.RESIZE_LEFT);
 
-            var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
+            var cut = new ToolMouseHandler(layerBucket, checkPointerItemCollision, interpretItemAction);
 
             cut.handleDown({clientX: 0, clientY: 0});
 
@@ -244,7 +245,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
 
             selectItemAndSetAction(PointerAction.RESIZE_TOP);
 
-            var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
+            var cut = new ToolMouseHandler(layerBucket, checkPointerItemCollision, interpretItemAction);
 
             cut.handleDown({clientX: 0, clientY: 0});
 
@@ -268,7 +269,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
                 return PointerAction.RESIZE_BOTTOM_AND_RIGHT;
             };
 
-            var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
+            var cut = new ToolMouseHandler(layerBucket, checkPointerItemCollision, interpretItemAction);
 
             cut.handleDown({clientX: 0, clientY: 0});
 
@@ -286,7 +287,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
 
             selectItemAndSetAction(PointerAction.NOTHING);
 
-            var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
+            var cut = new ToolMouseHandler(layerBucket, checkPointerItemCollision, interpretItemAction);
 
             cut.handleDown({clientX: 0, clientY: 0});
 
@@ -304,7 +305,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
 
             selectItemAndSetAction(PointerAction.RESIZE_BOTTOM_AND_RIGHT);
 
-            var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
+            var cut = new ToolMouseHandler(layerBucket, checkPointerItemCollision, interpretItemAction);
 
             cut.handleDown({clientX: 0, clientY: 0});
 
@@ -322,7 +323,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
 
             selectItemAndSetAction(PointerAction.RESIZE_TOP_AND_LEFT);
 
-            var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
+            var cut = new ToolMouseHandler(layerBucket, checkPointerItemCollision, interpretItemAction);
 
             cut.handleDown({clientX: 0, clientY: 0});
 
@@ -340,7 +341,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
 
             selectItemAndSetAction(PointerAction.RESIZE_TOP_AND_RIGHT);
 
-            var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
+            var cut = new ToolMouseHandler(layerBucket, checkPointerItemCollision, interpretItemAction);
 
             cut.handleDown({clientX: 0, clientY: 0});
 
@@ -358,7 +359,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
 
             selectItemAndSetAction(PointerAction.RESIZE_BOTTOM_AND_LEFT);
 
-            var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
+            var cut = new ToolMouseHandler(layerBucket, checkPointerItemCollision, interpretItemAction);
 
             cut.handleDown({clientX: 0, clientY: 0});
 
@@ -376,7 +377,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
 
             selectItemAndSetAction(PointerAction.RESIZE_RIGHT);
 
-            var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
+            var cut = new ToolMouseHandler(layerBucket, checkPointerItemCollision, interpretItemAction);
 
             cut.handleDown({clientX: 0, clientY: 0});
 
@@ -394,7 +395,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
 
             selectItemAndSetAction(PointerAction.RESIZE_BOTTOM);
 
-            var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
+            var cut = new ToolMouseHandler(layerBucket, checkPointerItemCollision, interpretItemAction);
 
             cut.handleDown({clientX: 0, clientY: 0});
 
@@ -412,7 +413,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
 
             selectItemAndSetAction(PointerAction.RESIZE_LEFT);
 
-            var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
+            var cut = new ToolMouseHandler(layerBucket, checkPointerItemCollision, interpretItemAction);
 
             cut.handleDown({clientX: 0, clientY: 0});
 
@@ -430,7 +431,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
 
             selectItemAndSetAction(PointerAction.RESIZE_TOP);
 
-            var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
+            var cut = new ToolMouseHandler(layerBucket, checkPointerItemCollision, interpretItemAction);
 
             cut.handleDown({clientX: 0, clientY: 0});
 
@@ -448,7 +449,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
 
             selectItemAndSetAction(PointerAction.RESIZE_BOTTOM_AND_RIGHT);
 
-            var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
+            var cut = new ToolMouseHandler(layerBucket, checkPointerItemCollision, interpretItemAction);
 
             cut.handleDown({clientX: 0, clientY: 0});
 
@@ -465,7 +466,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
 
             selectItemAndSetAction(PointerAction.RESIZE_BOTTOM_AND_RIGHT);
 
-            var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
+            var cut = new ToolMouseHandler(layerBucket, checkPointerItemCollision, interpretItemAction);
 
             cut.handleDown({clientX: 200, clientY: 200});
             cut.handleMove({clientX: 250, clientY: 250});
@@ -501,7 +502,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
 
             selectItemAndSetAction(PointerAction.MOVE);
 
-            var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
+            var cut = new ToolMouseHandler(layerBucket, checkPointerItemCollision, interpretItemAction);
 
             cut.handleDown({clientX: 0, clientY: 0});
 
@@ -519,7 +520,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
 
             selectItemAndSetAction(PointerAction.MOVE);
 
-            var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
+            var cut = new ToolMouseHandler(layerBucket, checkPointerItemCollision, interpretItemAction);
 
             cut.handleDown({clientX: 0, clientY: 0});
 
@@ -561,6 +562,20 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
             expect(ex).toBeDefined();
             expect(ex).toBe("Illegal argument: layer model not provided");
         });
+
+        it("should throw an exception, " +
+            "when it's initialized with layer model with null layers", function () {
+
+            var ex;
+            try {
+                new ToolMouseHandler(new LayerBucket());
+            } catch (e) {
+                ex = e;
+            }
+
+            expect(ex).toBeDefined();
+            expect(ex).toBe("Illegal argument: layer model not provided");
+        });
     });
 
     describe('handle mouse down event. with handleDown call. Parameter validation', function () {
@@ -569,7 +584,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
         it("should throw an exception, " +
             "when it's called with undefined", function () {
 
-            var toolMouseHandler = new ToolMouseHandler(layers);
+            var toolMouseHandler = new ToolMouseHandler(layerBucket);
 
             var ex;
             try {
@@ -586,7 +601,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
         it("should throw an exception, " +
             "when it's called with null", function () {
 
-            var toolMouseHandler = new ToolMouseHandler(layers);
+            var toolMouseHandler = new ToolMouseHandler(layerBucket);
 
             var ex;
             try {
@@ -603,7 +618,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
         it("should throw an exception, " +
             "when it's called and the parameter object doesn't hold clientX & clientY values", function () {
 
-            var toolMouseHandler = new ToolMouseHandler(layers);
+            var toolMouseHandler = new ToolMouseHandler(layerBucket);
             var ex;
             try {
                 toolMouseHandler.handleDown({});
@@ -618,7 +633,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
         it("should throw an exception, " +
             "when it's called and the parameter object properties clientX & clientY are no positive numbers", function () {
 
-            var toolMouseHandler = new ToolMouseHandler(layers);
+            var toolMouseHandler = new ToolMouseHandler(layerBucket);
             var ex;
             try {
                 toolMouseHandler.handleDown({clientX: -1, clientY: -1});
@@ -633,7 +648,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
         it("should throw an exception, " +
             "when it's called and the parameter object properties clientX & clientY are not of type numeric", function () {
 
-            var toolMouseHandler = new ToolMouseHandler(layers);
+            var toolMouseHandler = new ToolMouseHandler(layerBucket);
             var ex;
             try {
                 toolMouseHandler.handleDown({clientX: true, clientY: true});
@@ -652,7 +667,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
         it("should throw an exception, " +
             "when it's called with undefined", function () {
 
-            var toolMouseHandler = new ToolMouseHandler(layers);
+            var toolMouseHandler = new ToolMouseHandler(layerBucket);
 
             var ex;
             try {
@@ -669,7 +684,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
         it("should throw an exception, " +
             "when it's called with null", function () {
 
-            var toolMouseHandler = new ToolMouseHandler(layers);
+            var toolMouseHandler = new ToolMouseHandler(layerBucket);
 
             var ex;
             try {
@@ -686,7 +701,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
         it("should throw an exception, " +
             "when it's called and the parameter object doesn't hold clientX & clientY values", function () {
 
-            var toolMouseHandler = new ToolMouseHandler(layers);
+            var toolMouseHandler = new ToolMouseHandler(layerBucket);
             var ex;
             try {
                 toolMouseHandler.handleMove({});
@@ -701,7 +716,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
         it("should throw an exception, " +
             "when it's called and the parameter object properties clientX & clientY are no positive numbers", function () {
 
-            var toolMouseHandler = new ToolMouseHandler(layers);
+            var toolMouseHandler = new ToolMouseHandler(layerBucket);
             var ex;
             try {
                 toolMouseHandler.handleMove({clientX: -1, clientY: -1});
@@ -716,7 +731,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
         it("should throw an exception, " +
             "when it's called and the parameter object properties clientX & clientY are not of type numeric", function () {
 
-            var toolMouseHandler = new ToolMouseHandler(layers);
+            var toolMouseHandler = new ToolMouseHandler(layerBucket);
             var ex;
             try {
                 toolMouseHandler.handleMove({clientX: true, clientY: true});
@@ -735,7 +750,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
         it("should throw an exception, " +
             "when it's called with undefined", function () {
 
-            var toolMouseHandler = new ToolMouseHandler(layers);
+            var toolMouseHandler = new ToolMouseHandler(layerBucket);
 
             var ex;
             try {
@@ -751,7 +766,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
         it("should throw an exception, " +
             "when it's called with null", function () {
 
-            var toolMouseHandler = new ToolMouseHandler(layers);
+            var toolMouseHandler = new ToolMouseHandler(layerBucket);
 
             var ex;
             try {
@@ -767,7 +782,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
         it("should throw an exception, " +
             "when it's called and the parameter object doesn't hold clientX & clientY values", function () {
 
-            var toolMouseHandler = new ToolMouseHandler(layers);
+            var toolMouseHandler = new ToolMouseHandler(layerBucket);
             var ex;
             try {
                 toolMouseHandler.handleUp({});
@@ -782,7 +797,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
         it("should throw an exception, " +
             "when it's called and the parameter object properties clientX & clientY are no positive numbers", function () {
 
-            var toolMouseHandler = new ToolMouseHandler(layers);
+            var toolMouseHandler = new ToolMouseHandler(layerBucket);
             var ex;
             try {
                 toolMouseHandler.handleUp({clientX: -1, clientY: -1});
@@ -797,7 +812,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
         it("should throw an exception, " +
             "when it's called and the parameter object properties clientX & clientY are not of type numeric", function () {
 
-            var toolMouseHandler = new ToolMouseHandler(layers);
+            var toolMouseHandler = new ToolMouseHandler(layerBucket);
             var ex;
             try {
                 toolMouseHandler.handleUp({clientX: true, clientY: true});
@@ -820,7 +835,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
 
             selectItemAndSetAction(PointerAction.MOVE);
 
-            var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
+            var cut = new ToolMouseHandler(layerBucket, checkPointerItemCollision, interpretItemAction);
 
             cut.handleDown({clientX: 0, clientY: 0});
             cut.handleMove({clientX: 300, clientY: 300});
@@ -837,7 +852,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
 
             selectItemAndSetAction(PointerAction.MOVE);
 
-            var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
+            var cut = new ToolMouseHandler(layerBucket, checkPointerItemCollision, interpretItemAction);
 
             cut.handleDown({clientX: 0, clientY: 0});
             cut.handleMove({clientX: 310, clientY: 310});
@@ -854,7 +869,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
             "given it was already called", function () {
 
             setUpLayersWithZeroItems();
-            var cut = new ToolMouseHandler(layers);
+            var cut = new ToolMouseHandler(layerBucket);
 
             cut.handleDown({clientX: 0, clientY: 0});
             cut.handleDown({clientX: 350, clientY: 350});
@@ -868,7 +883,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
 
             selectItemAndSetAction(PointerAction.MOVE);
 
-            var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
+            var cut = new ToolMouseHandler(layerBucket, checkPointerItemCollision, interpretItemAction);
 
             cut.handleDown({clientX: 0, clientY: 0});
             cut.handleMove({clientX: 350, clientY: 350});
@@ -885,7 +900,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
 
             setUpLayersWithZeroItems();
 
-            var cut = new ToolMouseHandler(layers);
+            var cut = new ToolMouseHandler(layerBucket);
 
             cut.handleDown({clientX: 0, clientY: 0});
             cut.handleMove({clientX: 350, clientY: 350});
@@ -904,7 +919,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
             "when 'handleDown' is called", function () {
             setUpLayersWithZeroItems();
 
-            var cut = new ToolMouseHandler(layers);
+            var cut = new ToolMouseHandler(layerBucket);
 
             cut.handleDown({clientX: 0, clientY: 0});
 
@@ -918,21 +933,43 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
 
             setUpLayersWithOneItemAndCollisionService();
             selectItemAndSetAction(PointerAction.NOTHING);
-            itemOne.isActive(true);
+
             checkPointerItemCollision = function () {
                 return false;
             };
 
-            var cut = new ToolMouseHandler(layers, checkPointerItemCollision, interpretItemAction);
+            var cut = new ToolMouseHandler(layerBucket, checkPointerItemCollision, interpretItemAction);
 
             cut.handleDown({clientX: 0, clientY: 0});
 
             expect(itemOne.isActive()).toBeFalsy();
         });
+
+        it("should deactivate all active shapes and activate one, " +
+            "when a new item is selected " +
+            "given there is an active item", function () {
+
+            setUpLayersWithOneItemAndCollisionService();
+            selectItemAndSetAction(PointerAction.NOTHING);
+            var itemTwo = new Rectangle('onlyItem', 300, 300, 100, 100);
+            layerOneItems.push(itemTwo);
+
+            checkPointerItemCollision = function (pointer, abRect) {
+                return abRect.pointA.xPoint == itemTwo.xPoint() && abRect.pointA.yPoint == itemTwo.yPoint();
+            };
+
+            var cut = new ToolMouseHandler(layerBucket, checkPointerItemCollision, interpretItemAction);
+
+            cut.handleDown({clientX: 300, clientY: 300});
+
+            expect(itemOne.isActive()).toBeFalsy();
+            expect(itemTwo.isActive()).toBeTruthy();
+        });
     });
 
     function selectItemAndSetAction(action) {
         itemOne.isActive(true);
+        layerBucket.activeItem = itemOne;
 
         interpretItemAction = function () {
             return action;
@@ -943,6 +980,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
         layers = ko.observableArray([
             new Layer('layerOne', ko.observableArray([new Rectangle('onlyItem', 100, 100, 100, 100)]))
         ]);
+        layerBucket = new LayerBucket(layers);
         setUpLayerVars();
 
         checkPointerItemCollision = function () {
@@ -954,6 +992,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
         layers = ko.observableArray([
             new Layer('layerOne', ko.observableArray())
         ]);
+        layerBucket = new LayerBucket(layers);
         setUpLayerVars();
     }
 
