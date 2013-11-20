@@ -914,7 +914,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
     });
 
     describe("in standard editing only the last item with which I interact is activated", function () {
-
+    // as a user I want to select a rect
         it("should create a new item which is active, " +
             "when 'handleDown' is called", function () {
             setUpLayersWithZeroItems();
@@ -964,6 +964,62 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
 
             expect(itemOne.isActive()).toBeFalsy();
             expect(itemTwo.isActive()).toBeTruthy();
+        });
+
+        it("should select an new active item, " +
+            "when 'handleDown' is called", function () {
+            setUpLayersWithZeroItems();
+
+            var cut = new ToolMouseHandler(layerBucket);
+
+            cut.handleDown({clientX: 0, clientY: 0});
+
+            var item = layerOneItems[0];
+            expect(item.isSelected).toBeTruthy();
+        });
+
+        it("should select an item, " +
+            "when it gets active " +
+            "given there is an item", function () {
+
+            setUpLayersWithOneItemAndCollisionService();
+
+            checkPointerItemCollision = function () {
+                return true;
+            };
+
+            var cut = new ToolMouseHandler(layerBucket, checkPointerItemCollision, interpretItemAction);
+
+            cut.handleDown({clientX: 100, clientY: 100});
+
+            expect(itemOne.isActive()).toBeTruthy();
+            expect(itemOne.isSelected()).toBeTruthy();
+        });
+
+        it("shouldn't change its values " +
+            "when an item gets selected/active " +
+            "given there are two items", function () {
+
+            setUpLayersWithZeroItems();
+            checkPointerItemCollision = function (pointer) {
+                return pointer.pointA.xPoint == 198 && pointer.pointA.yPoint == 148;
+            };
+
+            var cut = new ToolMouseHandler(layerBucket, checkPointerItemCollision, interpretItemAction);
+            // create 1st rect
+            cut.handleDown({clientX: 100, clientY: 100});
+            cut.handleUp({clientX: 200, clientY: 200});
+
+            // create 2nd rect
+            cut.handleDown({clientX: 300, clientY: 300});
+            cut.handleUp({clientX: 400, clientY: 400});
+
+            // select 1st rect
+            cut.handleDown({clientX: 200, clientY: 150});
+            cut.handleUp({clientX: 200, clientY: 150});
+
+            expect(layerOneItems[0].width()).toBe(100);
+            expect(layerOneItems[0].height()).toBe(100);
         });
     });
 

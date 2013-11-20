@@ -190,6 +190,7 @@ define(['model/Rectangle', 'input/PointerAction', 'input/ABRectangle', 'input/Po
     ToolMouseHandler.prototype._activateItem = function (item) {
         this.layerBucket.activeItem = item;
         item.isActive(true);
+        item.isSelected(true);
         this.activeShape = item;
     };
 

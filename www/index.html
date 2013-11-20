@@ -15,7 +15,7 @@
                 data-bind="value: filter, valueUpdate: 'afterkeydown'">
     </div>
     <div class="panel-body">
-        <ul class="list-group" data-bind="foreach: layers">
+        <ul class="list-group" data-bind="foreach: layerBucket.layers">
             <li class="list-group-item" data-bind="css: {'active': isActive, 'selected': isSelected}">
                 <span class="badge" data-bind="text: itemCount"></span>
 
