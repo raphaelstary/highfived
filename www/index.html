@@ -38,7 +38,8 @@
                 <ul class="list-group" data-bind="foreach: items, visible: showItems">
 
                     <li class="list-group-item"
-                        data-bind="event: {mouseover: $root.toggleItemControls, mouseout: $root.toggleItemControls}">
+                        data-bind="event: {mouseover: $root.toggleItemControls, mouseout: $root.toggleItemControls},
+                        css: {selected: isActive}">
 
                         <a href="#" data-bind="text: name, click: $root.toggleSelectItem.bind($root), visible: !isEditOn()"></a>
 

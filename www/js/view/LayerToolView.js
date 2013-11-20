@@ -38,15 +38,13 @@ define(['lib/knockout'], function(ko) {
 
         if (item.isSelected()) {
 
-            if (this.activeItem != null) {
-                this.activeItem.isActive(false);
+            if (this.layerBucket.activeItem != null) {
+                this.layerBucket.activeItem.isActive(false);
             }
 
             item.isActive(true);
 
-            this.activeItem = item;
-            //todo have to change to iterate over every item and deactivate it, or find data-model
-            // in common with renderer/tool mouse handler
+            this.layerBucket.activeItem = item;
         }
     };
 
