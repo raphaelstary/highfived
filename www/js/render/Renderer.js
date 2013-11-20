@@ -6,15 +6,15 @@ define(function () {
      * @param {CanvasRenderingContext2D} screenCtx      context of screen
      * @param {number} width                            screen html element's width
      * @param {number} height                           screen html element's height
-     * @param {Object} layers                           the layer model for the whole editor with its items
+     * @param {LayerBucket} layerBucket                           the layer model for the whole editor with its items
      * @constructor
      */
-    function Renderer(screen, screenCtx, width, height, layers) {
+    function Renderer(screen, screenCtx, width, height, layerBucket) {
         this.screen = screen;
         this.screenCtx = screenCtx;
         this.screenWidth = width;
         this.screenHeight = height;
-        this.layers = layers;
+        this.layerBucket = layerBucket;
     }
 
     /**
@@ -24,7 +24,7 @@ define(function () {
         this._clearScreen();
 
         var self = this;
-        this.layers.forEach(function (layer) {
+        this.layerBucket.layers.forEach(function (layer) {
             if (!layer.isHidden()) {
                 layer.items.forEach(function (item) {
 

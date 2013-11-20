@@ -1,7 +1,8 @@
-define(['render/Renderer', 'model/Layer', 'model/Rectangle', 'lib/knockout'], function (Renderer, Layer, Rectangle, ko) {
+define(['render/Renderer', 'model/Layer', 'model/Rectangle', 'model/LayerBucket', 'lib/knockout'], function (Renderer,
+    Layer, Rectangle, LayerBucket, ko) {
 
     describe('as a caller I want to render rectangles & active rectangles on the screen', function () {
-        var layers, itemOne, CANVAS_WIDTH, CANVAS_HEIGHT;
+        var layerBucket, layers, itemOne, CANVAS_WIDTH, CANVAS_HEIGHT;
 
         it('should draw a normal rectangle, ' +
             'when I call drawScene, ' +
@@ -20,7 +21,7 @@ define(['render/Renderer', 'model/Layer', 'model/Rectangle', 'lib/knockout'], fu
                 }
             };
 
-            var renderer = new Renderer(null, context, CANVAS_WIDTH, CANVAS_HEIGHT, layers);
+            var renderer = new Renderer(null, context, CANVAS_WIDTH, CANVAS_HEIGHT, layerBucket);
 
             renderer.drawScene();
 
@@ -53,7 +54,7 @@ define(['render/Renderer', 'model/Layer', 'model/Rectangle', 'lib/knockout'], fu
                 }
             };
 
-            var renderer = new Renderer(null, context, CANVAS_WIDTH, CANVAS_HEIGHT, layers);
+            var renderer = new Renderer(null, context, CANVAS_WIDTH, CANVAS_HEIGHT, layerBucket);
 
             renderer.drawScene();
 
@@ -75,7 +76,7 @@ define(['render/Renderer', 'model/Layer', 'model/Rectangle', 'lib/knockout'], fu
                 }
             };
 
-            var renderer = new Renderer(null, context, CANVAS_WIDTH, CANVAS_HEIGHT, layers);
+            var renderer = new Renderer(null, context, CANVAS_WIDTH, CANVAS_HEIGHT, layerBucket);
 
             renderer.drawScene();
 
@@ -97,7 +98,7 @@ define(['render/Renderer', 'model/Layer', 'model/Rectangle', 'lib/knockout'], fu
                 }
             };
 
-            var renderer = new Renderer(null, context, CANVAS_WIDTH, CANVAS_HEIGHT, layers);
+            var renderer = new Renderer(null, context, CANVAS_WIDTH, CANVAS_HEIGHT, layerBucket);
 
             renderer.drawScene();
 
@@ -113,6 +114,8 @@ define(['render/Renderer', 'model/Layer', 'model/Rectangle', 'lib/knockout'], fu
             layers = ko.observableArray([
                 new Layer('layerOne', items)
             ]);
+            layerBucket = new LayerBucket(layers);
+
             items.forEach = forEach;
             layers.forEach = forEach;
 

@@ -1,8 +1,7 @@
 define(['lib/knockout'], function(ko) {
 
-    function LayerToolView(layers, showLayerTool) {
-
-        this.layers = layers;
+    function LayerToolView(layerBucket, showLayerTool) {
+        this.layerBucket = layerBucket;
         this.showLayerTool = showLayerTool;
         this.filter = ko.observable();
     }
@@ -60,14 +59,14 @@ define(['lib/knockout'], function(ko) {
     };
 
     LayerToolView.prototype.toggleSelectAllLayers = function () {
-        ko.utils.arrayForEach(this.layers(), function (layer) {
+        this.layerBucket.layers.forEach(function (layer) {
             layer.isSelected(false);
         });
     };
 
     LayerToolView.prototype.toggleSelectAllItems = function () {
-        ko.utils.arrayForEach(this.layers(), function (layer) {
-            ko.utils.arrayForEach(layer.items(), function (item) {
+        this.layerBucket.layers.forEach(function (layer) {
+            layer.items.forEach(function (item) {
                 item.isSelected(false);
             });
         });
