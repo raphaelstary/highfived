@@ -164,6 +164,7 @@ define(['model/Rectangle', 'input/PointerAction', 'input/ABRectangle', 'input/Po
                 if (!item.isActive() && self._checkCollision(pointer, self._getABRect(item))) {
                     self._deactivateActiveItem();
                     self._activateItem(item);
+                    self.activeAction = PointerAction.NOTHING;
 
                     isPointerShapeCollision = true;
 
