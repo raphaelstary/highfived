@@ -139,7 +139,11 @@ define(['model/Rectangle', 'input/PointerAction', 'input/ABRectangle', 'input/Po
     };
 
     ToolMouseHandler.prototype._removeStartedRect = function () {
-        this.layerBucket.layers()[0].items.remove(this.activeShape);
+        var self = this;
+        this.layerBucket.layers.forEach(function (layer) {
+            if (layer.isActive())
+                layer.items.remove(self.activeShape);
+        });
     };
 
     ToolMouseHandler.prototype._revertChangedRect = function () {

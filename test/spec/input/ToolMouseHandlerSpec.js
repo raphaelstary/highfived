@@ -928,6 +928,27 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
             expect(layerOneItems.length).toBe(0);
         });
 
+        it("should do nothing to the model, " +
+            "when 'handleDown' is called " +
+            "given an item was created but not finished with two layers", function () {
+
+            setUpLayersWithZeroItems();
+            var layerTwo = new Layer('layerTwo', ko.observableArray());
+            layerOne.isActive(false);
+            layerTwo.isActive(true);
+            layerBucket.layers.push(layerTwo);
+            layerTwo.items.forEach = forEach;
+
+            var cut = new ToolMouseHandler(layerBucket);
+
+            cut.handleDown({clientX: 0, clientY: 0});
+            cut.handleMove({clientX: 350, clientY: 350});
+
+            cut.handleDown({clientX: 600, clientY: 600});
+
+            expect(layerTwo.items().length).toBe(0);
+        });
+
         beforeEach(setUpLayersWithOneItemAndCollisionService);
     });
 
