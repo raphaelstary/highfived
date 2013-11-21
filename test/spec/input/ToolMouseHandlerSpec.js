@@ -66,6 +66,23 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
             expectItem(item).fn('xPoint').toBe(100).fn('yPoint').toBe(100).fn('width').toBe(100).fn('height').toBe(100);
         });
 
+        it("should draw a new item in the active layer, " +
+            "when I create one with the mouse cursor " +
+            "given two layers", function () {
+
+            var layerTwo = new Layer('layerTwo', ko.observableArray());
+            layerTwo.isActive(true);
+            layerBucket.layers.push(layerTwo);
+            layerTwo.items.forEach = forEach;
+
+            var cut = new ToolMouseHandler(layerBucket);
+
+            cut.handleDown({clientX: 200, clientY: 200});
+
+            expect(layerOneItems.length).toBe(0);
+            expect(layerTwo.items().length).toBe(1);
+        });
+
         beforeEach(setUpLayersWithZeroItems);
     });
 
@@ -1083,11 +1100,11 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
     }
 
     function setupForEach() {
-        function forEach(fn) {
-            ko.utils.arrayForEach(this(), fn);
-        }
-
         layers.forEach = forEach;
         layerOne.items.forEach = forEach;
+    }
+
+    function forEach(fn) {
+        ko.utils.arrayForEach(this(), fn);
     }
 });
