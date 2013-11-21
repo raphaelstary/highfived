@@ -71,6 +71,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
             "given two layers", function () {
 
             var layerTwo = new Layer('layerTwo', ko.observableArray());
+            layerOne.isActive(false);
             layerTwo.isActive(true);
             layerBucket.layers.push(layerTwo);
             layerTwo.items.forEach = forEach;
@@ -1093,6 +1094,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
 
     function setUpLayerVars() {
         layerOne = layers()[0];
+        layerOne.isActive(true);
         layerOneItems = layerOne.items();
         itemOne = layerOneItems[0];
 

@@ -120,7 +120,11 @@ define(['model/Rectangle', 'input/PointerAction', 'input/ABRectangle', 'input/Po
 
         this.activeAction = PointerAction.CREATE_NEW;
 
-        this.layerBucket.layers()[0].items.push(this.activeShape);
+        var self = this;
+        this.layerBucket.layers.forEach(function (layer) {
+            if (layer.isActive())
+                layer.items.push(self.activeShape);
+        });
     };
 
     ToolMouseHandler.prototype._resolveWrongState = function () {
