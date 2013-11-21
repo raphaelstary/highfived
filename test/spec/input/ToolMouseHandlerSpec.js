@@ -1021,6 +1021,24 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
             expect(layerOneItems[0].width()).toBe(100);
             expect(layerOneItems[0].height()).toBe(100);
         });
+
+        it("shouldn't create a new item, " +
+            "when I want to select an existing item and mistakenly miss it with my pointer " +
+            "given there is an item", function () {
+
+            setUpLayersWithOneItem();
+
+            checkPointerItemCollision = function () {
+                return false;
+            };
+
+            var cut = new ToolMouseHandler(layerBucket, checkPointerItemCollision, interpretItemAction);
+
+            cut.handleDown({clientX: 210, clientY: 150});
+            cut.handleUp({clientX: 210, clientY: 150});
+
+            expect(layerOneItems.length).toBe(1);
+        });
     });
 
     function selectItemAndSetAction(action) {
@@ -1033,15 +1051,19 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
     }
 
     function setUpLayersWithOneItemAndCollisionService() {
+        setUpLayersWithOneItem();
+
+        checkPointerItemCollision = function () {
+            return true;
+        };
+    }
+
+    function setUpLayersWithOneItem() {
         layers = ko.observableArray([
             new Layer('layerOne', ko.observableArray([new Rectangle('onlyItem', 100, 100, 100, 100)]))
         ]);
         layerBucket = new LayerBucket(layers);
         setUpLayerVars();
-
-        checkPointerItemCollision = function () {
-            return true;
-        };
     }
 
     function setUpLayersWithZeroItems() {

@@ -94,7 +94,10 @@ define(['model/Rectangle', 'input/PointerAction', 'input/ABRectangle', 'input/Po
 
         this._normalizeRect(this.activeShape);
 
-        this.state = State.CAN_START;
+        if (this.activeShape.width() == 0 || this.activeShape.height == 0)
+            this._resolveWrongState();
+        else
+            this.state = State.CAN_START;
     };
 
     /**
