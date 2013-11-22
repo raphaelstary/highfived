@@ -4,6 +4,8 @@ define(['lib/knockout'], function(ko) {
         this.layerBucket = layerBucket;
         this.showLayerTool = showLayerTool;
         this.filter = ko.observable();
+
+        this.MAX_RANGE = 1000;
     }
 
     LayerToolView.prototype.toggleLayerControls = function (layer) {
@@ -37,14 +39,7 @@ define(['lib/knockout'], function(ko) {
         item.isSelected(!item.isSelected());
 
         if (item.isSelected()) {
-
-            if (this.layerBucket.activeItem != null) {
-                this.layerBucket.activeItem.isActive(false);
-            }
-
-            item.isActive(true);
-
-            this.layerBucket.activeItem = item;
+            this.activateItem(item);
         }
     };
 
@@ -72,6 +67,16 @@ define(['lib/knockout'], function(ko) {
 
     LayerToolView.prototype.linkItem = function (item) {
         console.log('link item');
+    };
+
+    LayerToolView.prototype.activateItem = function (item) {
+        if (this.layerBucket.activeItem != null) {
+            this.layerBucket.activeItem.isActive(false);
+        }
+
+        item.isActive(true);
+
+        this.layerBucket.activeItem = item;
     };
 
     return LayerToolView;

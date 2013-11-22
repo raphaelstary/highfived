@@ -39,9 +39,10 @@
 
                     <li class="list-group-item"
                         data-bind="event: {mouseover: $root.toggleItemControls, mouseout: $root.toggleItemControls},
-                        css: {selected: isActive}">
+                        css: {selected: isActive}, click: $root.activateItem.bind($root)">
 
-                        <a href="#" data-bind="text: name, click: $root.toggleSelectItem.bind($root), visible: !isEditOn()"></a>
+                        <a href="#" data-bind="text: name, click: $root.toggleSelectItem.bind($root),
+                        visible: !isEditOn(), clickBubble: false"></a>
 
                         <input type="text" class="form-control input-sm" placeholder="name"
                                 data-bind="value: name, visible: isEditOn">
@@ -52,7 +53,7 @@
                             </span>
                         </a>
 
-                        <a href="#" data-bind="click: $root.toggleHideItem, visible: showHide">
+                        <a href="#" data-bind="click: $root.toggleHideItem, visible: showHide, clickBubble: false">
                             <span class="glyphicon"
                                     data-bind="css: {'glyphicon-eye-open': !isHidden(), 'glyphicon-eye-close': isHidden,
                                                 'active-light': !showControls()}">
@@ -63,44 +64,64 @@
                             <span class="glyphicon glyphicon-link"></span>
                         </a>
 
-                        <a href="#" data-bind="click: $parent.deleteItem, visible: showControls">
+                        <a href="#" data-bind="click: $parent.deleteItem, visible: showControls, clickBubble: false">
                             <span class="glyphicon glyphicon-trash"></span>
                         </a>
 
                         <form class="form-horizontal list-group-item-text"
                               data-bind="visible: isSelected">
 
-                            <div class="form-group">
+                            <div class="form-group"
+                                 data-bind="event: {mouseover: toggleRangeXPoint, mouseout: toggleRangeXPoint}">
+
                                 <label class="control-label col-xs-4 input-sm" for="xpoint">x</label>
 
                                 <div class="col-xs-8">
                                     <input id="xpoint" type="text" class="form-control input-sm" placeholder="x"
                                            data-bind="value: xPoint">
                                 </div>
+                                <input id="xpointrange" type="range" style="width: 90%"
+                                       data-bind="visible: showRangeXPoint, value: xPoint, attr: {max: $root.MAX_RANGE},
+                                       event: {click: $root.activateItem.bind($root)}">
                             </div>
-                            <div class="form-group">
+
+                            <div class="form-group"
+                                 data-bind="event: {mouseover: toggleRangeYPoint, mouseout: toggleRangeYPoint}">
                                 <label class="control-label col-xs-4 input-sm" for="ypoint">y</label>
 
                                 <div class="col-xs-8">
                                     <input id="ypoint" type="text" class="form-control input-sm" placeholder="y"
                                            data-bind="value: yPoint">
                                 </div>
+                                <input id="ypointrange" type="range" style="width: 90%"
+                                       data-bind="visible: showRangeYPoint, value: yPoint, attr: {max: $root.MAX_RANGE},
+                                       event: {click: $root.activateItem.bind($root)}">
                             </div>
-                            <div class="form-group">
+
+                            <div class="form-group"
+                                 data-bind="event: {mouseover: toggleRangeWidth, mouseout: toggleRangeWidth}">
                                 <label class="control-label col-xs-4 input-sm" for="width">width</label>
 
                                 <div class="col-xs-8">
                                     <input id="width" type="text" class="form-control input-sm" placeholder="width"
                                            data-bind="value: width">
                                 </div>
+                                <input id="widthrange" type="range" style="width: 90%"
+                                       data-bind="visible: showRangeWidth, value: width, attr: {max: $root.MAX_RANGE},
+                                       event: {click: $root.activateItem.bind($root)}">
                             </div>
-                            <div class="form-group">
+
+                            <div class="form-group"
+                                 data-bind="event: {mouseover: toggleRangeHeight, mouseout: toggleRangeHeight}">
                                 <label class="control-label col-xs-4 input-sm" for="height">height</label>
 
                                 <div class="col-xs-8">
                                     <input id="height" type="text" class="form-control input-sm" placeholder="height"
                                            data-bind="value: height">
                                 </div>
+                                <input id="heightrange" type="range" style="width: 90%"
+                                       data-bind="visible: showRangeHeight, value: height, attr: {max: $root.MAX_RANGE},
+                                       event: {click: $root.activateItem.bind($root)}">
                             </div>
 
                         </form>
