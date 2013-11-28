@@ -1,6 +1,6 @@
 define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangle', 'input/PointerAction',
-    'spec/input/expectItem', 'model/LayerBucket'], function (ToolMouseHandler, ko, Layer, Rectangle, PointerAction,
-                                                             expectItem, LayerBucket) {
+    'spec/input/expectItem', 'model/LayerBucket', 'model/Line'], function (ToolMouseHandler, ko, Layer, Rectangle,
+    PointerAction, expectItem, LayerBucket, Line) {
 
     var layerBucket, layers, layerOne, layerOneItems, itemOne, checkPointerItemCollision, interpretItemAction;
 
@@ -70,10 +70,11 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
             "when I create one with the mouse cursor " +
             "given two layers", function () {
 
-            var layerTwo = new Layer('layerTwo', ko.observableArray());
+            var layerTwo = new Layer('layerTwo', ko.observableArray(), 'rectangle');
             layerOne.isActive(false);
             layerTwo.isActive(true);
             layerBucket.layers.push(layerTwo);
+            layerBucket.activeLayer = layerTwo;
             layerTwo.items.forEach = forEach;
 
             var cut = new ToolMouseHandler(layerBucket);
@@ -85,6 +86,33 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
         });
 
         beforeEach(setUpLayersWithZeroItems);
+    });
+
+    describe("as a user I want to create a new line", function () {
+
+        it("should create a new item, " +
+            "when you start drawing", function () {
+
+            setUpOneLineLayerWithZeroItems();
+
+            var cut = new ToolMouseHandler(layerBucket);
+
+            expect(layerOneItems.length).toBe(0);
+
+            cut.handleDown({clientX: 0, clientY: 0});
+
+            expect(layerOneItems.length).toBe(1);
+
+            var item = layerOneItems[0];
+            expect(item).toBeDefined();
+            expect(item instanceof Line).toBeTruthy();
+
+            expectItem(item).fn('xPointA').toBe(0).fn('yPointA').toBe(0);
+        });
+    });
+
+    describe("as a user I want to create a new circle", function () {
+
     });
 
     describe("as a user I want to resize an existing rect", function () {
@@ -1099,7 +1127,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
 
     function setUpLayersWithOneItem() {
         layers = ko.observableArray([
-            new Layer('layerOne', ko.observableArray([new Rectangle('onlyItem', 100, 100, 100, 100)]))
+            new Layer('layerOne', ko.observableArray([new Rectangle('onlyItem', 100, 100, 100, 100)]), 'rectangle')
         ]);
         layerBucket = new LayerBucket(layers);
         setUpLayerVars();
@@ -1107,7 +1135,15 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
 
     function setUpLayersWithZeroItems() {
         layers = ko.observableArray([
-            new Layer('layerOne', ko.observableArray())
+            new Layer('layerOne', ko.observableArray(), 'rectangle')
+        ]);
+        layerBucket = new LayerBucket(layers);
+        setUpLayerVars();
+    }
+
+    function setUpOneLineLayerWithZeroItems() {
+        layers = ko.observableArray([
+            new Layer('layerOne', ko.observableArray(), 'line')
         ]);
         layerBucket = new LayerBucket(layers);
         setUpLayerVars();
@@ -1116,6 +1152,8 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
     function setUpLayerVars() {
         layerOne = layers()[0];
         layerOne.isActive(true);
+        layerBucket.activeLayer = layerOne;
+
         layerOneItems = layerOne.items();
         itemOne = layerOneItems[0];
 

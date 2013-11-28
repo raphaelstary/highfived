@@ -1,7 +1,8 @@
 define(['lib/knockout'], function (ko) {
-    function Layer(name, items) {
+    function Layer(name, items, initialType) {
         this.name = ko.observable(name);
         this.items = items;
+        this.type = initialType;
 
         this.isSelected = ko.observable(false);
         this.isActive = ko.observable(false);

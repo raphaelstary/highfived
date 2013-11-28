@@ -1,5 +1,5 @@
-define(['model/Rectangle', 'input/PointerAction', 'input/ABRectangle', 'input/Point'], function (Rectangle,
-    PointerAction, ABRectangle, Point) {
+define(['model/Line', 'model/Rectangle', 'input/PointerAction', 'input/ABRectangle', 'input/Point'], function (Line,
+    Rectangle, PointerAction, ABRectangle, Point) {
 
     /**
      * handles {MouseEvent}s when the 'edit' mode in the editor is on
@@ -50,7 +50,7 @@ define(['model/Rectangle', 'input/PointerAction', 'input/ABRectangle', 'input/Po
         if (wasRectOrActionPointSelected)
             return;
 
-        this._createNewRect(event);
+        this._createNewShape(event);
     };
 
     /**
@@ -114,17 +114,30 @@ define(['model/Rectangle', 'input/PointerAction', 'input/ABRectangle', 'input/Po
             throw "Illegal argument: " + event;
     };
 
-    ToolMouseHandler.prototype._createNewRect = function (event) {
+    ToolMouseHandler.prototype._createNewShape = function (event) {
+        if (this.layerBucket.activeLayer == null) {
+            //todo test case
+            this.state = State.CAN_START;
+            return;
+        }
+
+        var item;
+        if (this.layerBucket.activeLayer.type === 'rectangle') {
+            item = new Rectangle('unknown ' + this.counter++, event.clientX, event.clientY, 10, 10);
+        } else if (this.layerBucket.activeLayer.type === 'line') {
+            item = new Line('unknown ' + this.counter++, event.clientX, event.clientY, event.clientX, event.clientY)
+        } else {
+            //todo test case
+            this.state = State.CAN_START;
+            return;
+        }
+
         this._deactivateActiveItem();
-        this._activateItem(new Rectangle('unknown ' + this.counter++, event.clientX, event.clientY, 10, 10));
+        this._activateItem(item);
 
         this.activeAction = PointerAction.CREATE_NEW;
 
-        var self = this;
-        this.layerBucket.layers.forEach(function (layer) {
-            if (layer.isActive())
-                layer.items.push(self.activeShape);
-        });
+        this.layerBucket.activeLayer.items.push(item);
     };
 
     ToolMouseHandler.prototype._resolveWrongState = function () {
