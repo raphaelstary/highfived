@@ -1,6 +1,6 @@
 define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangle', 'input/PointerAction',
-    'spec/input/expectItem', 'model/LayerBucket', 'model/Line'], function (ToolMouseHandler, ko, Layer, Rectangle,
-    PointerAction, expectItem, LayerBucket, Line) {
+    'spec/input/expectItem', 'model/LayerBucket', 'model/Line', 'model/Circle'], function (ToolMouseHandler, ko, Layer, Rectangle,
+    PointerAction, expectItem, LayerBucket, Line, Circle) {
 
     var layerBucket, layers, layerOne, layerOneItems, itemOne, checkPointerItemCollision, interpretItemAction;
 
@@ -142,7 +142,25 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
     });
 
     describe("as a user I want to create a new circle", function () {
+        it("should create a new item, " +
+            "when you start drawing", function () {
 
+            var cut = new ToolMouseHandler(layerBucket);
+
+            expect(layerOneItems.length).toBe(0);
+
+            cut.handleDown({clientX: 3, clientY: 2});
+
+            expect(layerOneItems.length).toBe(1);
+
+            var item = layerOneItems[0];
+            expect(item).toBeDefined();
+            expect(item instanceof Circle).toBeTruthy();
+
+            expectItem(item).fn('xPoint').toBe(3).fn('yPoint').toBe(2);
+        });
+
+        beforeEach(setUpOneCircleLayerWithZeroItems);
     });
 
     describe("as a user I want to resize an existing rect", function () {
@@ -1174,6 +1192,14 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
     function setUpOneLineLayerWithZeroItems() {
         layers = ko.observableArray([
             new Layer('layerOne', ko.observableArray(), 'line')
+        ]);
+        layerBucket = new LayerBucket(layers);
+        setUpLayerVars();
+    }
+
+    function setUpOneCircleLayerWithZeroItems() {
+        layers = ko.observableArray([
+            new Layer('layerOne', ko.observableArray(), 'circle')
         ]);
         layerBucket = new LayerBucket(layers);
         setUpLayerVars();

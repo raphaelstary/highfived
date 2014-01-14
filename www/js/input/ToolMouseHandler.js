@@ -1,5 +1,5 @@
-define(['model/Line', 'model/Rectangle', 'input/PointerAction', 'input/ABRectangle', 'input/Point'], function (Line,
-    Rectangle, PointerAction, ABRectangle, Point) {
+define(['model/Line', 'model/Rectangle', 'model/Circle', 'input/PointerAction', 'input/ABRectangle',
+    'input/Point'], function (Line, Rectangle, Circle, PointerAction, ABRectangle, Point) {
 
     /**
      * handles {MouseEvent}s when the 'edit' mode in the editor is on
@@ -130,6 +130,9 @@ define(['model/Line', 'model/Rectangle', 'input/PointerAction', 'input/ABRectang
         } else if (this.layerBucket.activeLayer.type === LINE) {
             item = new Line('unknown ' + this.counter++, event.clientX, event.clientY, event.clientX, event.clientY)
 
+        } else if (this.layerBucket.activeLayer.type === CIRCLE) {
+            item = new Circle('unknown ' + this.counter++, event.clientX, event.clientY, 10, 10);
+
         } else {
             //todo test case
             this.state = State.CAN_START;
@@ -235,9 +238,22 @@ define(['model/Line', 'model/Rectangle', 'input/PointerAction', 'input/ABRectang
 
         } else if (this.layerBucket.activeLayer.type === LINE) {
             this._resizeLine(event);
-        }
+
+        }// else if (this.layerBucket.activeLayer.type === CIRCLE) {
+//            this._resizeCircle(event);
+//        }
 
     };
+
+//    ToolMouseHandler.prototype._resizeCircle = function (event) {
+//        this._resizeRadius(event);
+//    };
+
+//    ToolMouseHandler.prototype._resizeRadius = function (event) {
+//        var radius = Math.sqrt(Math.pow(event.clientX - this.activeShape.xPoint(), 2) +
+//            Math.pow(event.clientY - this.activeShape.yPoint(), 2));
+//        this.activeShape.radius(radius);
+//    };
 
     ToolMouseHandler.prototype._resizeLine = function (event) {
         this._changePointB(event);
@@ -337,6 +353,7 @@ define(['model/Line', 'model/Rectangle', 'input/PointerAction', 'input/ABRectang
 
     const RECTANGLE = 'rectangle';
     const LINE = 'line';
+    const CIRCLE = 'circle';
 
     return ToolMouseHandler;
 });
