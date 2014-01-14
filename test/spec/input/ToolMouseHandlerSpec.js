@@ -109,6 +109,23 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
 
             expectItem(item).fn('xPointA').toBe(0).fn('yPointA').toBe(0);
         });
+
+        it("should change item's 2nd point coordinates, " +
+            "when moving the mouse cursor " +
+            "given a new item was created", function () {
+
+            setUpOneLineLayerWithZeroItems();
+
+            var cut = new ToolMouseHandler(layerBucket);
+
+            cut.handleDown({clientX: 0, clientY: 0});
+            cut.handleMove({clientX: 50, clientY: 50});
+
+            var item = layerOneItems[0];
+
+            expectItem(item).fn('xPointA').toBe(0).fn('yPointA').toBe(0)
+                .fn('xPointB').toBe(50).fn('yPointB').toBe(50);
+        });
     });
 
     describe("as a user I want to create a new circle", function () {

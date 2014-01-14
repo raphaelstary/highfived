@@ -124,8 +124,10 @@ define(['model/Line', 'model/Rectangle', 'input/PointerAction', 'input/ABRectang
         var item;
         if (this.layerBucket.activeLayer.type === 'rectangle') {
             item = new Rectangle('unknown ' + this.counter++, event.clientX, event.clientY, 10, 10);
+
         } else if (this.layerBucket.activeLayer.type === 'line') {
             item = new Line('unknown ' + this.counter++, event.clientX, event.clientY, event.clientX, event.clientY)
+
         } else {
             //todo test case
             this.state = State.CAN_START;
@@ -226,6 +228,25 @@ define(['model/Line', 'model/Rectangle', 'input/PointerAction', 'input/ABRectang
     };
 
     ToolMouseHandler.prototype._resizeShape = function (event) {
+        if (this.layerBucket.activeLayer.type === 'rectangle') {
+            this._resizeRect(event);
+
+        } else if (this.layerBucket.activeLayer.type === 'line') {
+            this._resizeLine(event);
+        }
+
+    };
+
+    ToolMouseHandler.prototype._resizeLine = function (event) {
+        this._changePointB(event);
+    };
+
+    ToolMouseHandler.prototype._changePointB = function (event) {
+        this.activeShape.xPointB(event.clientX);
+        this.activeShape.yPointB(event.clientY);
+    };
+
+    ToolMouseHandler.prototype._resizeRect = function (event) {
         if (this.activeAction === PointerAction.RESIZE_BOTTOM_AND_RIGHT ||
             this.activeAction === PointerAction.CREATE_NEW) {
             this._resizeRight(event);
