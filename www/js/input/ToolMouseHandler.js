@@ -239,21 +239,21 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'input/PointerAction', 
         } else if (this.layerBucket.activeLayer.type === LINE) {
             this._resizeLine(event);
 
-        }// else if (this.layerBucket.activeLayer.type === CIRCLE) {
-//            this._resizeCircle(event);
-//        }
+        } else if (this.layerBucket.activeLayer.type === CIRCLE) {
+            this._resizeCircle(event);
+        }
 
     };
 
-//    ToolMouseHandler.prototype._resizeCircle = function (event) {
-//        this._resizeRadius(event);
-//    };
+    ToolMouseHandler.prototype._resizeCircle = function (event) {
+        this._resizeRadius(event);
+    };
 
-//    ToolMouseHandler.prototype._resizeRadius = function (event) {
-//        var radius = Math.sqrt(Math.pow(event.clientX - this.activeShape.xPoint(), 2) +
-//            Math.pow(event.clientY - this.activeShape.yPoint(), 2));
-//        this.activeShape.radius(radius);
-//    };
+    ToolMouseHandler.prototype._resizeRadius = function (event) {
+        var radius = Math.sqrt(Math.pow(event.clientX - this.activeShape.xPoint(), 2) +
+            Math.pow(event.clientY - this.activeShape.yPoint(), 2));
+        this.activeShape.radius(radius);
+    };
 
     ToolMouseHandler.prototype._resizeLine = function (event) {
         this._changePointB(event);

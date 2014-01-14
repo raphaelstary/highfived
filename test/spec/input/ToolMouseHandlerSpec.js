@@ -160,6 +160,20 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
             expectItem(item).fn('xPoint').toBe(3).fn('yPoint').toBe(2);
         });
 
+        it("should change item's radius length, " +
+            "when moving the mouse cursor " +
+            "given a new item was created", function () {
+
+            var cut = new ToolMouseHandler(layerBucket);
+
+            cut.handleDown({clientX: 100, clientY: 100});
+            var item = layerOneItems[0];
+
+            cut.handleMove({clientX: 150, clientY: 100});
+
+            expectItem(item).fn('xPoint').toBe(100).fn('yPoint').toBe(100).fn('radius').toBe(50);
+        });
+
         beforeEach(setUpOneCircleLayerWithZeroItems);
     });
 
