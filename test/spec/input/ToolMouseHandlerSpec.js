@@ -93,8 +93,6 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
         it("should create a new item, " +
             "when you start drawing", function () {
 
-            setUpOneLineLayerWithZeroItems();
-
             var cut = new ToolMouseHandler(layerBucket);
 
             expect(layerOneItems.length).toBe(0);
@@ -114,8 +112,6 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
             "when moving the mouse cursor " +
             "given a new item was created", function () {
 
-            setUpOneLineLayerWithZeroItems();
-
             var cut = new ToolMouseHandler(layerBucket);
 
             cut.handleDown({clientX: 0, clientY: 0});
@@ -131,8 +127,6 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
             "when moving mouse cursor has arrived at its end position, " +
             "given new item was created", function () {
 
-            setUpOneLineLayerWithZeroItems();
-
             var cut = new ToolMouseHandler(layerBucket);
 
             cut.handleDown({clientX: 5, clientY: 15});
@@ -144,6 +138,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
                 .fn('xPointB').toBe(55).fn('yPointB').toBe(20);
         });
 
+        beforeEach(setUpOneLineLayerWithZeroItems);
     });
 
     describe("as a user I want to create a new circle", function () {
