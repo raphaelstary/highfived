@@ -17,13 +17,13 @@ define(['lib/knockout'], function(ko) {
 
         if (layer.isSelected()) {
 
-            if (this.activeLayer != null) {
-                this.activeLayer.isActive(false);
+            if (this.layerBucket.activeLayer != null) {
+                this.layerBucket.activeLayer.isActive(false);
             }
 
             layer.isActive(true);
 
-            this.activeLayer = layer;
+            this.layerBucket.activeLayer = layer;
         }
     };
 

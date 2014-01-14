@@ -27,7 +27,7 @@ define(['lib/knockout', 'model/Layer', 'model/Rectangle', 'model/LayerBucket'], 
                 });
             }
 
-            result.push(new Layer(layer.name, items));
+            result.push(new Layer(layer.name, items, layer.type));
         });
 
         return new LayerBucket(result);

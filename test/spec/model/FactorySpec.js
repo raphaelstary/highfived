@@ -48,18 +48,22 @@ define(['model/Factory', 'model/Layer', 'model/Rectangle'], function (Factory, L
 
             var input = [
                 {
-                    name: 'one'
+                    name: 'one',
+                    type: 'testType'
                 }
             ];
 
             var factory = new Factory(input);
 
-            var actual = factory.createLayerModel().layers;
+            var actual = factory.createLayerModel().layers();
 
-            expect(actual().length).toBe(1);
-            expect(actual()[0]).toBeDefined();
-            expect(actual()[0] instanceof Layer).toBeTruthy();
-            expect(actual()[0].name()).toBe('one');
+            expect(actual.length).toBe(1);
+            var layer = actual[0];
+            expect(layer).toBeDefined();
+            expect(layer instanceof Layer).toBeTruthy();
+
+            expect(layer.name()).toBe('one');
+            expect(layer.type).toBe('testType');
         });
 
         it('should create an observable array containing two layers, ' +

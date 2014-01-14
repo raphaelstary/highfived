@@ -8,47 +8,47 @@ require(['view/MainView', 'input/ToolMouseHandler', 'input/CollisionDetector', '
                 id: 'event',
                 name: 'event area',
                 items: [],
-                item: 'rectangle'
+                type: 'rectangle'
             },
             {
                 id: 'physic',
                 name: 'physics body',
-                item: 'rectangle'
+                type: 'rectangle'
             },
             {
                 id: 'collision',
                 name: 'collision area',
-                item: 'rectangle'
+                type: 'rectangle'
             },
             {
                 id: 'animated',
                 name: 'animated object',
-                item: 'rectangle'
+                type: 'rectangle'
             },
             {
                 id: 'transition',
                 name: 'transition path',
-                item: 'line'
+                type: 'line'
             },
             {
                 id: 'ai',
                 name: 'AI point',
-                item: 'circle'
+                type: 'circle'
             },
             {
                 id: 'static',
                 name: 'static image',
-                item: 'rectangle'
+                type: 'rectangle'
             },
             {
                 id: 'vector',
                 name: 'vector field',
-                item: 'rectangle'
+                type: 'rectangle'
             },
             {
                 id: 'touch',
                 name: 'touch area',
-                item: 'rectangle'
+                type: 'rectangle'
             }
         ];
 
