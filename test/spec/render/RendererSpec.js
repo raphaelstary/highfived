@@ -106,6 +106,31 @@ define(['render/Renderer', 'model/Layer', 'model/Rectangle', 'model/Line', 'mode
             expect(ctx.strokeStyle).toBe('blue');
         });
 
+        it('should draw nothing - no line, ' +
+            'when I call drawScene, ' +
+            'given valid layer model with one hidden line', function () {
+
+            itemOne.isHidden(true);
+
+            var called = false;
+
+            var ctx = {
+                clearRect: function () {},
+                beginPath: function () {},
+                moveTo: function () {},
+                lineTo: function () {},
+                stroke: function () {
+                    called = true;
+                }
+            };
+
+            var renderer = new Renderer(null, ctx, CANVAS_WIDTH, CANVAS_HEIGHT, layerBucket);
+
+            renderer.drawScene();
+
+            expect(called).toBeFalsy();
+        });
+
         beforeEach(initLine);
     });
 
