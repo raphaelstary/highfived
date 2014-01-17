@@ -51,11 +51,28 @@ define(function () {
 
                 } else if (layer.type === 'circle') {
                     layer.items.forEach(function (item) {
-                        self._drawCircle(item.xPoint(), item.yPoint(), item.radius());
+                        if (!item.isHidden()) {
+                            if (item.isActive()) {
+                                self._drawActiveCircle(item.xPoint(), item.yPoint(), item.radius(), 'green');
+                            } else {
+                                self._drawCircle(item.xPoint(), item.yPoint(), item.radius());
+                            }
+                        }
                     });
                 }
             }
         });
+    };
+
+    Renderer.prototype._drawActiveCircle = function (xPoint, yPoint, radius, color) {
+        this.screenCtx.save();
+
+        this._setColor(color);
+        this._drawCircle(xPoint, yPoint, radius);
+        this._drawCirclePoint(xPoint, yPoint);
+        this._drawCirclePoint(xPoint + radius, yPoint);
+
+        this.screenCtx.restore();
     };
 
     Renderer.prototype._drawLine = function (xPointA, yPointA, xPointB, yPointB) {
@@ -102,12 +119,12 @@ define(function () {
         this._drawCircle(xPoint, yPoint, 2, 'white');
     };
 
-    Renderer.prototype._drawCircle = function (xPoint, yPoint, radius, color) {
+    Renderer.prototype._drawCircle = function (xPoint, yPoint, radius, fillColor) {
         this.screenCtx.beginPath();
         this.screenCtx.arc(xPoint, yPoint, radius, 0, 2 * Math.PI, false);
 
-        if (color !== undefined) {
-            this.screenCtx.fillStyle = 'white';
+        if (fillColor !== undefined) {
+            this.screenCtx.fillStyle = fillColor;
             this.screenCtx.fill();
         }
 

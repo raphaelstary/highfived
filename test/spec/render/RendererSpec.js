@@ -36,6 +36,73 @@ define(['render/Renderer', 'model/Layer', 'model/Rectangle', 'model/Line', 'mode
             expect(strokeCalled).toBeTruthy();
         });
 
+        it('should draw an active circle ' +
+            'when I call drawScene ' +
+            'given a valid layer model containing one active circle', function () {
+
+            itemOne.isActive(true);
+
+            var beginPathCalled = false, arcCalled = false, strokeCalled = false, fillCalled = false;
+
+            var ctx = {
+                save: function () {},
+                restore: function () {},
+                clearRect: function () {},
+                beginPath: function () {
+                    beginPathCalled = true;
+                },
+                arc: function (x, y) {
+                    expectValidPixelCoordinate(x, 0, CANVAS_WIDTH);
+                    expectValidPixelCoordinate(y, 0, CANVAS_HEIGHT);
+
+                    arcCalled = true;
+                },
+                stroke: function () {
+                    strokeCalled = true;
+                },
+                fill: function () {
+                    fillCalled = true;
+                }
+            };
+
+            var renderer = new Renderer(null, ctx, CANVAS_WIDTH, CANVAS_HEIGHT, layerBucket);
+
+            renderer.drawScene();
+
+            expect(beginPathCalled).toBeTruthy();
+            expect(arcCalled).toBeTruthy();
+            expect(strokeCalled).toBeTruthy();
+            expect(fillCalled).toBeTruthy();
+
+            expect(ctx.fillStyle).toBe('white');
+            expect(ctx.strokeStyle).toBe('green');
+        });
+
+        it('should draw nothing - no circle, ' +
+            'when I call drawScene, ' +
+            'given valid layer model with one hidden circle', function () {
+
+            itemOne.isHidden(true);
+
+            var called = false;
+
+            var ctx = {
+                clearRect: function () {},
+                beginPath: function () {},
+                moveTo: function () {},
+                lineTo: function () {},
+                stroke: function () {
+                    called = true;
+                }
+            };
+
+            var renderer = new Renderer(null, ctx, CANVAS_WIDTH, CANVAS_HEIGHT, layerBucket);
+
+            renderer.drawScene();
+
+            expect(called).toBeFalsy();
+        });
+
         beforeEach(initCircle);
     });
 
@@ -84,7 +151,7 @@ define(['render/Renderer', 'model/Layer', 'model/Rectangle', 'model/Line', 'mode
 
         it('should draw an active line ' +
             'when I call drawScene ' +
-            'given a valid layer model containing one selected line', function () {
+            'given a valid layer model containing one active line', function () {
 
             itemOne.isActive(true);
 
@@ -200,7 +267,7 @@ define(['render/Renderer', 'model/Layer', 'model/Rectangle', 'model/Line', 'mode
 
         it('should draw active rectangle, ' +
             'when I call drawScene, ' +
-            'given valid layer model with one selected rect', function () {
+            'given valid layer model with one active rect', function () {
 
             itemOne.isActive(true);
 
