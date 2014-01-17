@@ -26,18 +26,47 @@ define(function () {
         var self = this;
         this.layerBucket.layers.forEach(function (layer) {
             if (!layer.isHidden()) {
-                layer.items.forEach(function (item) {
-
-                    if (!item.isHidden()) {
-                        if (item.isActive()) {
-                            self._drawActiveRectangle(item.xPoint(), item.yPoint(), item.width(), item.height(), 'red');
-                        } else {
-                            self._drawRectangle(item.xPoint(), item.yPoint(), item.width(), item.height());
+                if (layer.type === 'rectangle') {
+                    layer.items.forEach(function (item) {
+                        if (!item.isHidden()) {
+                            if (item.isActive()) {
+                                self._drawActiveRectangle(item.xPoint(), item.yPoint(), item.width(), item.height(), 'red');
+                            } else {
+                                self._drawRectangle(item.xPoint(), item.yPoint(), item.width(), item.height());
+                            }
                         }
-                    }
-                });
+                    });
+                } else if (layer.type === 'line') {
+                    layer.items.forEach(function (item) {
+                        if (!item.isHidden()) {
+                            if (item.isActive()) {
+                                self._drawActiveLine(item.xPointA(), item.yPointA(), item.xPointB(), item.yPointB(), 'blue');
+                            } else {
+                                self._drawLine(item.xPointA(), item.yPointA(), item.xPointB(), item.yPointB());
+                            }
+                        }
+                    });
+                }
             }
         });
+    };
+
+    Renderer.prototype._drawLine = function (xPointA, yPointA, xPointB, yPointB) {
+        this.screenCtx.beginPath();
+        this.screenCtx.moveTo(xPointA, yPointA);
+        this.screenCtx.lineTo(xPointB, yPointB);
+        this.screenCtx.stroke();
+    };
+
+    Renderer.prototype._drawActiveLine = function (xPointA, yPointA, xPointB, yPointB, color) {
+        this.screenCtx.save();
+
+        this._setColor(color);
+        this._drawLine(xPointA, yPointA, xPointB, yPointB);
+        this._drawCircle(xPointA, yPointA);
+        this._drawCircle(xPointB, yPointB);
+
+        this.screenCtx.restore();
     };
 
     Renderer.prototype._clearScreen = function () {
