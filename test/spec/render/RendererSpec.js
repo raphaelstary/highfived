@@ -1,12 +1,50 @@
-define(['render/Renderer', 'model/Layer', 'model/Rectangle', 'model/Line', 'model/LayerBucket',
-    'lib/knockout'], function (Renderer, Layer, Rectangle, Line, LayerBucket, ko) {
+define(['render/Renderer', 'model/Layer', 'model/Rectangle', 'model/Line', 'model/Circle', 'model/LayerBucket',
+    'lib/knockout'], function (Renderer, Layer, Rectangle, Line, Circle, LayerBucket, ko) {
 
     var layerBucket, layers, items, itemOne, CANVAS_WIDTH, CANVAS_HEIGHT;
 
+    describe('as a caller I want to render circles & active circles on the screen', function () {
+
+        it('should draw a normal circle ' +
+            'when I call drawScene ' +
+            'given a valid layer model containing one circle', function () {
+
+            var beginPathCalled = false, arcCalled = false, strokeCalled = false;
+
+            var ctx = {
+                clearRect: function () {},
+                beginPath: function () {
+                    beginPathCalled = true;
+                },
+                arc: function (x, y) {
+                    expectValidPixelCoordinate(x, 0, CANVAS_WIDTH);
+                    expectValidPixelCoordinate(y, 0, CANVAS_HEIGHT);
+
+                    arcCalled = true;
+                },
+                stroke: function () {
+                    strokeCalled = true;
+                }
+            };
+
+            var renderer = new Renderer(null, ctx, CANVAS_WIDTH, CANVAS_HEIGHT, layerBucket);
+
+            renderer.drawScene();
+
+            expect(beginPathCalled).toBeTruthy();
+            expect(arcCalled).toBeTruthy();
+            expect(strokeCalled).toBeTruthy();
+        });
+
+        beforeEach(initCircle);
+    });
+
     describe('as a caller I want to render lines & active lines on the screen', function () {
+
         it('should draw a normal line ' +
             'when I call drawScene ' +
             'given a valid layer model containing one line', function () {
+
             var moveToCalled = false;
             var lineToCalled = false;
             var beginPathCalled = false;
@@ -253,6 +291,15 @@ define(['render/Renderer', 'model/Layer', 'model/Rectangle', 'model/Line', 'mode
     function expectValidWithOrHeight(value) {
         expect(typeof value).toBe('number');
         expect(value).toBeGreaterThan(0);
+    }
+
+    function initCircle() {
+        items = ko.observableArray([new Circle('onlyItem', 50, 50, 100)]);
+        layers = ko.observableArray([
+            new Layer('layerOne', items, 'circle')
+        ]);
+
+        init();
     }
 
     function initLine() {

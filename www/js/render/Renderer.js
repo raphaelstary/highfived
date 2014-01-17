@@ -26,6 +26,7 @@ define(function () {
         var self = this;
         this.layerBucket.layers.forEach(function (layer) {
             if (!layer.isHidden()) {
+
                 if (layer.type === 'rectangle') {
                     layer.items.forEach(function (item) {
                         if (!item.isHidden()) {
@@ -36,6 +37,7 @@ define(function () {
                             }
                         }
                     });
+
                 } else if (layer.type === 'line') {
                     layer.items.forEach(function (item) {
                         if (!item.isHidden()) {
@@ -45,6 +47,11 @@ define(function () {
                                 self._drawLine(item.xPointA(), item.yPointA(), item.xPointB(), item.yPointB());
                             }
                         }
+                    });
+
+                } else if (layer.type === 'circle') {
+                    layer.items.forEach(function (item) {
+                        self._drawCircle(item.xPoint(), item.yPoint(), item.radius());
                     });
                 }
             }
@@ -63,8 +70,8 @@ define(function () {
 
         this._setColor(color);
         this._drawLine(xPointA, yPointA, xPointB, yPointB);
-        this._drawCircle(xPointA, yPointA);
-        this._drawCircle(xPointB, yPointB);
+        this._drawCirclePoint(xPointA, yPointA);
+        this._drawCirclePoint(xPointB, yPointB);
 
         this.screenCtx.restore();
     };
@@ -78,24 +85,32 @@ define(function () {
 
         this._setColor(color);
         this._drawRectangle(xPoint, yPoint, width, height);
-        this._drawCircle(xPoint, yPoint);
-        this._drawCircle(xPoint + width / 2, yPoint);
-        this._drawCircle(xPoint + width, yPoint);
-        this._drawCircle(xPoint, yPoint + height / 2);
-        this._drawCircle(xPoint, yPoint + height);
-        this._drawCircle(xPoint + width, yPoint + height / 2);
-        this._drawCircle(xPoint + width / 2, yPoint + height);
-        this._drawCircle(xPoint + width / 2, yPoint + height / 2);
-        this._drawCircle(xPoint + width, yPoint + height);
+        this._drawCirclePoint(xPoint, yPoint);
+        this._drawCirclePoint(xPoint + width / 2, yPoint);
+        this._drawCirclePoint(xPoint + width, yPoint);
+        this._drawCirclePoint(xPoint, yPoint + height / 2);
+        this._drawCirclePoint(xPoint, yPoint + height);
+        this._drawCirclePoint(xPoint + width, yPoint + height / 2);
+        this._drawCirclePoint(xPoint + width / 2, yPoint + height);
+        this._drawCirclePoint(xPoint + width / 2, yPoint + height / 2);
+        this._drawCirclePoint(xPoint + width, yPoint + height);
 
         this.screenCtx.restore();
     };
 
-    Renderer.prototype._drawCircle = function (xPoint, yPoint) {
+    Renderer.prototype._drawCirclePoint = function (xPoint, yPoint) {
+        this._drawCircle(xPoint, yPoint, 2, 'white');
+    };
+
+    Renderer.prototype._drawCircle = function (xPoint, yPoint, radius, color) {
         this.screenCtx.beginPath();
-        this.screenCtx.arc(xPoint, yPoint, 2, 0, 2 * Math.PI, false);
-        this.screenCtx.fillStyle = 'white';
-        this.screenCtx.fill();
+        this.screenCtx.arc(xPoint, yPoint, radius, 0, 2 * Math.PI, false);
+
+        if (color !== undefined) {
+            this.screenCtx.fillStyle = 'white';
+            this.screenCtx.fill();
+        }
+
         this.screenCtx.stroke();
     };
 
