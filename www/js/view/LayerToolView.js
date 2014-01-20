@@ -1,4 +1,4 @@
-define(['lib/knockout'], function(ko) {
+define(['lib/knockout', 'model/Circle', 'model/Line', 'model/Rectangle'], function(ko, Circle, Line, Rectangle) {
 
     function LayerToolView(layerBucket, showLayerTool) {
         this.layerBucket = layerBucket;
@@ -77,6 +77,18 @@ define(['lib/knockout'], function(ko) {
         item.isActive(true);
 
         this.layerBucket.activeItem = item;
+    };
+
+    LayerToolView.prototype.isRectangle = function (item) {
+        return item instanceof Rectangle;
+    };
+
+    LayerToolView.prototype.isCircle = function (item) {
+        return item instanceof Circle;
+    };
+
+    LayerToolView.prototype.isLine = function (item) {
+        return item instanceof Line;
     };
 
     return LayerToolView;

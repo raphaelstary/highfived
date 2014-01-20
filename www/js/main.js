@@ -1,4 +1,4 @@
-require(['view/MainView', 'input/ToolMouseHandler', 'input/CollisionDetector', 'input/ActionInterpreter',
+require(['view/MainView', 'input/ToolMouseHandler', 'input/RectCollisionDetector', 'input/ActionInterpreter',
     'render/getRequestAnimationFrame', 'render/Loop', 'render/Renderer',
     'lib/domReady', 'lib/bootstrap'],
     function (MainView, ToolMouseHandler, CollisionDetector, ActionInterpreter, getAnimFrame, Loop, Renderer) {
@@ -56,8 +56,8 @@ require(['view/MainView', 'input/ToolMouseHandler', 'input/CollisionDetector', '
 
         var canvas = document.getElementById('editor-ui');
 
-        var actionInterpreter = new ActionInterpreter(CollisionDetector.checkFilledRectangle);
-        var toolMouseHandler = new ToolMouseHandler(layerModel, CollisionDetector.checkRectangle,
+        var actionInterpreter = new ActionInterpreter(RectCollisionDetector.checkFilledRectangle);
+        var toolMouseHandler = new ToolMouseHandler(layerModel, RectCollisionDetector.checkRectangle,
             actionInterpreter.interpret.bind(actionInterpreter));
 
         canvas.addEventListener('mousedown', toolMouseHandler.handleDown.bind(toolMouseHandler));

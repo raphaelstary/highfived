@@ -12,7 +12,7 @@
 <section id="layers-tool" class="panel panel-default" data-bind="visible: showLayerTool">
     <div class="panel-heading">
         <input type="search" class="form-control" placeholder="Search"
-                data-bind="value: filter, valueUpdate: 'afterkeydown'">
+               data-bind="value: filter, valueUpdate: 'afterkeydown'">
     </div>
     <div class="panel-body">
         <ul class="list-group" data-bind="foreach: layerBucket.layers">
@@ -45,17 +45,17 @@
                         visible: !isEditOn(), clickBubble: false"></a>
 
                         <input type="text" class="form-control input-sm" placeholder="name"
-                                data-bind="value: name, visible: isEditOn">
+                               data-bind="value: name, visible: isEditOn">
 
                         <a href="#" data-bind="click: $root.toggleEditItemName, visible: showEdit">
                             <span class="glyphicon glyphicon-pencil"
-                                    data-bind="css: {'active-light': !showControls()}">
+                                  data-bind="css: {'active-light': !showControls()}">
                             </span>
                         </a>
 
                         <a href="#" data-bind="click: $root.toggleHideItem, visible: showHide, clickBubble: false">
                             <span class="glyphicon"
-                                    data-bind="css: {'glyphicon-eye-open': !isHidden(), 'glyphicon-eye-close': isHidden,
+                                  data-bind="css: {'glyphicon-eye-open': !isHidden(), 'glyphicon-eye-close': isHidden,
                                                 'active-light': !showControls()}">
                             </span>
                         </a>
@@ -71,57 +71,142 @@
                         <form class="form-horizontal list-group-item-text"
                               data-bind="visible: isSelected">
 
-                            <div class="form-group"
-                                 data-bind="event: {mouseover: toggleRangeXPoint, mouseout: toggleRangeXPoint}">
+                            <div data-bind="if: $root.isRectangle($data) || $root.isCircle($data)">
+                                <div class="form-group"
+                                     data-bind="event: {mouseover: toggleRangeXPoint, mouseout: toggleRangeXPoint}">
 
-                                <label class="control-label col-xs-4 input-sm" for="xpoint">x</label>
+                                    <label class="control-label col-xs-4 input-sm" for="xpoint">x</label>
 
-                                <div class="col-xs-8">
-                                    <input id="xpoint" type="text" class="form-control input-sm" placeholder="x"
-                                           data-bind="value: xPoint">
-                                </div>
-                                <input id="xpointrange" type="range" style="width: 90%"
-                                       data-bind="visible: showRangeXPoint, value: xPoint, attr: {max: $root.MAX_RANGE},
+                                    <div class="col-xs-8">
+                                        <input id="xpoint" type="text" class="form-control input-sm" placeholder="x"
+                                               data-bind="value: xPoint">
+                                    </div>
+                                    <input id="xpointrange" type="range" style="width: 90%"
+                                           data-bind="visible: showRangeXPoint, value: xPoint, attr: {max: $root.MAX_RANGE},
                                        event: {click: $root.activateItem.bind($root)}">
+                                </div>
                             </div>
 
-                            <div class="form-group"
-                                 data-bind="event: {mouseover: toggleRangeYPoint, mouseout: toggleRangeYPoint}">
-                                <label class="control-label col-xs-4 input-sm" for="ypoint">y</label>
+                            <div data-bind="if: $root.isRectangle($data) || $root.isCircle($data)">
+                                <div class="form-group"
+                                     data-bind="event: {mouseover: toggleRangeYPoint, mouseout: toggleRangeYPoint}">
+                                    <label class="control-label col-xs-4 input-sm" for="ypoint">y</label>
 
-                                <div class="col-xs-8">
-                                    <input id="ypoint" type="text" class="form-control input-sm" placeholder="y"
-                                           data-bind="value: yPoint">
-                                </div>
-                                <input id="ypointrange" type="range" style="width: 90%"
-                                       data-bind="visible: showRangeYPoint, value: yPoint, attr: {max: $root.MAX_RANGE},
+                                    <div class="col-xs-8">
+                                        <input id="ypoint" type="text" class="form-control input-sm" placeholder="y"
+                                               data-bind="value: yPoint">
+                                    </div>
+                                    <input id="ypointrange" type="range" style="width: 90%"
+                                           data-bind="visible: showRangeYPoint, value: yPoint, attr: {max: $root.MAX_RANGE},
                                        event: {click: $root.activateItem.bind($root)}">
+                                </div>
                             </div>
 
-                            <div class="form-group"
-                                 data-bind="event: {mouseover: toggleRangeWidth, mouseout: toggleRangeWidth}">
-                                <label class="control-label col-xs-4 input-sm" for="width">width</label>
+                            <div data-bind="if: $root.isRectangle($data)">
+                                <div class="form-group"
+                                     data-bind="event: {mouseover: toggleRangeWidth, mouseout: toggleRangeWidth}">
+                                    <label class="control-label col-xs-4 input-sm" for="width">width</label>
 
-                                <div class="col-xs-8">
-                                    <input id="width" type="text" class="form-control input-sm" placeholder="width"
-                                           data-bind="value: width">
-                                </div>
-                                <input id="widthrange" type="range" style="width: 90%"
-                                       data-bind="visible: showRangeWidth, value: width, attr: {max: $root.MAX_RANGE},
+                                    <div class="col-xs-8">
+                                        <input id="width" type="text" class="form-control input-sm" placeholder="width"
+                                               data-bind="value: width">
+                                    </div>
+                                    <input id="widthrange" type="range" style="width: 90%"
+                                           data-bind="visible: showRangeWidth, value: width, attr: {max: $root.MAX_RANGE},
                                        event: {click: $root.activateItem.bind($root)}">
+                                </div>
                             </div>
 
-                            <div class="form-group"
-                                 data-bind="event: {mouseover: toggleRangeHeight, mouseout: toggleRangeHeight}">
-                                <label class="control-label col-xs-4 input-sm" for="height">height</label>
+                            <div data-bind="if: $root.isRectangle($data)">
+                                <div class="form-group"
+                                     data-bind="event: {mouseover: toggleRangeHeight, mouseout: toggleRangeHeight}">
+                                    <label class="control-label col-xs-4 input-sm" for="height">height</label>
 
-                                <div class="col-xs-8">
-                                    <input id="height" type="text" class="form-control input-sm" placeholder="height"
-                                           data-bind="value: height">
-                                </div>
-                                <input id="heightrange" type="range" style="width: 90%"
-                                       data-bind="visible: showRangeHeight, value: height, attr: {max: $root.MAX_RANGE},
+                                    <div class="col-xs-8">
+                                        <input id="height" type="text" class="form-control input-sm"
+                                               placeholder="height"
+                                               data-bind="value: height">
+                                    </div>
+                                    <input id="heightrange" type="range" style="width: 90%"
+                                           data-bind="visible: showRangeHeight, value: height, attr: {max: $root.MAX_RANGE},
                                        event: {click: $root.activateItem.bind($root)}">
+                                </div>
+                            </div>
+
+                            <div data-bind="if: $root.isLine($data)">
+                                <div class="form-group"
+                                     data-bind="event: {mouseover: toggleRangeXPointA, mouseout: toggleRangeXPointA}">
+                                    <label class="control-label col-xs-4 input-sm" for="xpointa">A:x</label>
+
+                                    <div class="col-xs-8">
+                                        <input id="xpointa" type="text" class="form-control input-sm"
+                                               data-bind="value: xPointA">
+                                    </div>
+                                    <input id="xpointarange" type="range" style="width: 90%"
+                                           data-bind="visible: showRangeXPointA, value: xPointA, attr: {max: $root.MAX_RANGE},
+                                       event: {click: $root.activateItem.bind($root)}">
+                                </div>
+                            </div>
+
+                            <div data-bind="if: $root.isLine($data)">
+                                <div class="form-group"
+                                     data-bind="event: {mouseover: toggleRangeYPointA, mouseout: toggleRangeYPointA}">
+                                    <label class="control-label col-xs-4 input-sm" for="ypointa">A:y</label>
+
+                                    <div class="col-xs-8">
+                                        <input id="ypointa" type="text" class="form-control input-sm"
+                                               data-bind="value: yPointA">
+                                    </div>
+                                    <input id="ypointarange" type="range" style="width: 90%"
+                                           data-bind="visible: showRangeYPointA, value: yPointA, attr: {max: $root.MAX_RANGE},
+                                       event: {click: $root.activateItem.bind($root)}">
+                                </div>
+                            </div>
+
+                            <div data-bind="if: $root.isLine($data)">
+                                <div class="form-group"
+                                     data-bind="event: {mouseover: toggleRangeXPointB, mouseout: toggleRangeXPointB}">
+                                    <label class="control-label col-xs-4 input-sm" for="xpointb">B:x</label>
+
+                                    <div class="col-xs-8">
+                                        <input id="xpointb" type="text" class="form-control input-sm"
+                                               data-bind="value: xPointB">
+                                    </div>
+                                    <input id="xpointbrange" type="range" style="width: 90%"
+                                           data-bind="visible: showRangeXPointB, value: xPointB, attr: {max: $root.MAX_RANGE},
+                                       event: {click: $root.activateItem.bind($root)}">
+                                </div>
+                            </div>
+
+                            <div data-bind="if: $root.isLine($data)">
+                                <div class="form-group"
+                                     data-bind="event: {mouseover: toggleRangeYPointB, mouseout: toggleRangeYPointB}">
+                                    <label class="control-label col-xs-4 input-sm" for="ypointb">B:y</label>
+
+                                    <div class="col-xs-8">
+                                        <input id="ypointb" type="text" class="form-control input-sm"
+                                               data-bind="value: yPointB">
+                                    </div>
+                                    <input id="ypointbrange" type="range" style="width: 90%"
+                                           data-bind="visible: showRangeYPointB, value: yPointB, attr: {max: $root.MAX_RANGE},
+                                       event: {click: $root.activateItem.bind($root)}">
+                                </div>
+                            </div>
+
+                            <div data-bind="if: $root.isCircle($data)">
+                                <div class="form-group"
+                                     data-bind="event: {mouseover: toggleRangeRadius, mouseout: toggleRangeRadius}">
+                                    <label class="control-label col-xs-4 input-sm" for="radius">radius</label>
+
+                                    <div class="col-xs-8">
+                                        <input id="radius" type="text" class="form-control input-sm"
+                                               placeholder="radius"
+                                               data-bind="value: radius">
+                                    </div>
+                                    <input id="radiusrange" type="range" style="width: 90%"
+                                           data-bind="visible: showRangeRadius, value: radius, attr: {max: $root.MAX_RANGE},
+                                       event: {click: $root.activateItem.bind($root)}">
+                                </div>
                             </div>
 
                         </form>

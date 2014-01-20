@@ -6,7 +6,7 @@ define(function () {
      * @type {{checkRectangle: Function, checkFilledRectangle: Function}}
      * @public
      */
-    var CollisionDetector = {
+    var RectCollisionDetector = {
 
         /**
          * checks if a given pointer hits a given rectangle
@@ -17,7 +17,7 @@ define(function () {
          * @public
          */
         checkRectangle: function (pointer, rectangle) {
-            return CollisionDetector.checkFilledRectangle(pointer, rectangle) && !isInsideBorders(pointer, rectangle);
+            return RectCollisionDetector.checkFilledRectangle(pointer, rectangle) && !isInsideBorders(pointer, rectangle);
         },
 
         /**
@@ -62,5 +62,5 @@ define(function () {
         return pointer.pointA.yPoint > rectangle.pointA.yPoint && pointer.pointB.yPoint < rectangle.pointB.yPoint;
     };
 
-    return CollisionDetector;
+    return RectCollisionDetector;
 });
