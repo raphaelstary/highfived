@@ -3,7 +3,7 @@ define(['input/checkCircleCollision'], function (checkCircleCollision) {
 
         it("should return false " +
             "when the pointer is outside of the circle " +
-            "the distance is bigger than both radii", function () {
+            "the distance is longer than both radii", function () {
 
             var circle = {xPoint: 50, yPoint: 50, radius: 50};
             var pointer = {xPoint: 105, yPoint: 50, radius: 4};
