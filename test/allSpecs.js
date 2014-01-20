@@ -4,5 +4,6 @@ define(['spec/model/FactorySpec.js',
     'spec/input/ToolMouseHandlerSpec.js',
     'spec/input/RectCollisionDetectorSpec.js',
     'spec/input/ActionInterpreterSpec.js',
-    'spec/render/RendererSpec.js'
+    'spec/render/RendererSpec.js',
+    'spec/input/CheckCircleCollisionSpec.js'
 ]);
