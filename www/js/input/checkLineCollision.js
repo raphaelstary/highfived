@@ -22,11 +22,27 @@ define(function () {
             x: pointer.xPoint - line.xPointA,
             y: pointer.yPoint - line.yPointA
         };
+        var pointBToCircleVector = {
+            x: pointer.xPoint - line.xPointB,
+            y: pointer.yPoint - line.yPointB
+        };
 
-        var perpendicularLength = normalLineUnitVector.x * pointAToCircleVector.x +
-            normalLineUnitVector.y * pointAToCircleVector.y;
+        var perpendicularLength = dotProduct(normalLineUnitVector, pointAToCircleVector);
 
-        return perpendicularLength <= pointer.radius;
+        return isInPerpendicularRange(perpendicularLength, pointer.radius) &&
+            isWithinLineSegment(lineVector, pointAToCircleVector, pointBToCircleVector);
+    }
+
+    function dotProduct(a, b) {
+        return a.x * b.x + a.y * b.y;
+    }
+
+    function isInPerpendicularRange(perpendicularLength, radius) {
+        return Math.abs(perpendicularLength) <= radius;
+    }
+
+    function isWithinLineSegment(vectorA, vectorB, vectorC) {
+        return dotProduct(vectorA, vectorB) >= 0 && dotProduct(vectorA, vectorC) <= 0;
     }
 
     return checkLineCollision;
