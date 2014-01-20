@@ -4,7 +4,6 @@ define(function () {
      * checks click collisions
      *
      * @type {{checkRectangle: Function, checkFilledRectangle: Function}}
-     * @public
      */
     var RectCollisionDetector = {
 
@@ -14,7 +13,6 @@ define(function () {
          * @param {ABRectangle} pointer
          * @param {ABRectangle} rectangle
          * @returns {boolean}
-         * @public
          */
         checkRectangle: function (pointer, rectangle) {
             return RectCollisionDetector.checkFilledRectangle(pointer, rectangle) && !isInsideBorders(pointer, rectangle);
@@ -26,7 +24,6 @@ define(function () {
          * @param {ABRectangle} pointer
          * @param {ABRectangle} rectangle
          * @returns {boolean}
-         * @public
          */
         checkFilledRectangle: function (pointer, rectangle) {
             return !(isLeftOutside(pointer, rectangle) || isRightOutside(pointer, rectangle) ||

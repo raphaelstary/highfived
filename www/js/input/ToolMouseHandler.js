@@ -8,7 +8,6 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'input/PointerAction', 
      * @param {function} checkPointerShapeCollision     checks if mouse pointer clicked on a shape
      * @param {function} interpretPointerAction         checks/chooses if mouse pointer hit an 'action point'
      * @constructor
-     * @public
      */
     function ToolMouseHandler(layerBucket, checkPointerShapeCollision, interpretPointerAction) {
         if (layerBucket == null || layerBucket.layers == null)
@@ -34,7 +33,6 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'input/PointerAction', 
      *
      * @param {MouseEvent} event
      * @throws {string} Illegal argument: {@link ToolMouseHandler._validate}
-     * @public
      */
     ToolMouseHandler.prototype.handleDown = function (event) {
         this._validate(event);
@@ -46,7 +44,7 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'input/PointerAction', 
 
         this.state = State.STARTED;
 
-        var wasRectOrActionPointSelected = this._selectRectOrStartAction(event);
+        var wasRectOrActionPointSelected = this._selectShapeOrStartAction(event);
         if (wasRectOrActionPointSelected)
             return;
 
@@ -62,7 +60,6 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'input/PointerAction', 
      *
      * @param {MouseEvent} event
      * @throws {string} Illegal argument: {@link ToolMouseHandler._validate}
-     * @public
      */
     ToolMouseHandler.prototype.handleMove = function (event) {
         this._validate(event);
@@ -82,7 +79,6 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'input/PointerAction', 
      *
      * @param {MouseEvent} event
      * @throws {string} Illegal argument: {@link ToolMouseHandler._validate}
-     * @public
      */
     ToolMouseHandler.prototype.handleUp = function (event) {
         this._validate(event);
@@ -173,7 +169,7 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'input/PointerAction', 
         this.activeShape.height(this.oldItem.height);
     };
 
-    ToolMouseHandler.prototype._selectRectOrStartAction = function (event) {
+    ToolMouseHandler.prototype._selectShapeOrStartAction = function (event) {
         var isPointerShapeCollision = false;
         var isPointerActionPointCollision = false;
 

@@ -3,7 +3,6 @@ define(['lib/knockout'], function (ko) {
      *
      * @param {string} name
      * @constructor
-     * @public
      */
     function Item(name) {
         this.name = ko.observable(name);

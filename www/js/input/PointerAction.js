@@ -6,7 +6,6 @@ define(function () {
      *
      * @enum {number}
      * @readonly
-     * @public
      */
      var PointerAction = {
         NOTHING: -1,

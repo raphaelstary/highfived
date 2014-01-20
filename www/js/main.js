@@ -1,7 +1,7 @@
-require(['view/MainView', 'input/ToolMouseHandler', 'input/RectCollisionDetector', 'input/ActionInterpreter',
+require(['view/MainView', 'input/ToolMouseHandler', 'input/RectCollisionDetector', 'input/RectActionInterpreter',
     'render/getRequestAnimationFrame', 'render/Loop', 'render/Renderer',
     'lib/domReady', 'lib/bootstrap'],
-    function (MainView, ToolMouseHandler, CollisionDetector, ActionInterpreter, getAnimFrame, Loop, Renderer) {
+    function (MainView, ToolMouseHandler, RectCollisionDetector, RectActionInterpreter, getAnimFrame, Loop, Renderer) {
 
         var inputLayers = [
             {
@@ -56,7 +56,7 @@ require(['view/MainView', 'input/ToolMouseHandler', 'input/RectCollisionDetector
 
         var canvas = document.getElementById('editor-ui');
 
-        var actionInterpreter = new ActionInterpreter(RectCollisionDetector.checkFilledRectangle);
+        var actionInterpreter = new RectActionInterpreter(RectCollisionDetector.checkFilledRectangle);
         var toolMouseHandler = new ToolMouseHandler(layerModel, RectCollisionDetector.checkRectangle,
             actionInterpreter.interpret.bind(actionInterpreter));
 

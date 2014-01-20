@@ -1,16 +1,16 @@
-define(['input/ActionInterpreter', 'input/PointerAction', 'model/Rectangle'], function (
-    ActionInterpreter, PointerAction, Rectangle) {
+define(['input/RectActionInterpreter', 'input/PointerAction', 'model/Rectangle'], function (
+    RectActionInterpreter, PointerAction, Rectangle) {
 
     describe("as a user I click on the 'top left' action point to start the edit action", function () {
 
         it("should return 'NOTHING' " +
-            "when I miss the action point",  function () {
+            "when I miss the action point", function () {
 
             var checkCollision = function () {
                 return false;
             };
 
-            var cut = new ActionInterpreter(checkCollision);
+            var cut = new RectActionInterpreter(checkCollision);
 
             var item = new Rectangle('itemOne', 100, 100, 100, 100);
 
@@ -26,7 +26,7 @@ define(['input/ActionInterpreter', 'input/PointerAction', 'model/Rectangle'], fu
                 return isTopLeft(actionPointAsRect, item);
             };
 
-            var cut = new ActionInterpreter(checkCollision);
+            var cut = new RectActionInterpreter(checkCollision);
 
             var item = new Rectangle('itemOne', 100, 100, 100, 100);
 
@@ -45,7 +45,7 @@ define(['input/ActionInterpreter', 'input/PointerAction', 'model/Rectangle'], fu
                 return isTop(actionPointAsRect, item);
             };
 
-            var cut = new ActionInterpreter(checkCollision);
+            var cut = new RectActionInterpreter(checkCollision);
 
             var item = new Rectangle('itemOne', 100, 100, 100, 100);
 
@@ -64,7 +64,7 @@ define(['input/ActionInterpreter', 'input/PointerAction', 'model/Rectangle'], fu
                 return isTopRight(actionPointAsRect, item);
             };
 
-            var cut = new ActionInterpreter(checkCollision);
+            var cut = new RectActionInterpreter(checkCollision);
 
             var item = new Rectangle('itemOne', 100, 100, 100, 100);
 
@@ -83,7 +83,7 @@ define(['input/ActionInterpreter', 'input/PointerAction', 'model/Rectangle'], fu
                 return isLeft(actionPointAsRect, item);
             };
 
-            var cut = new ActionInterpreter(checkCollision);
+            var cut = new RectActionInterpreter(checkCollision);
 
             var item = new Rectangle('itemOne', 100, 100, 100, 100);
 
@@ -102,7 +102,7 @@ define(['input/ActionInterpreter', 'input/PointerAction', 'model/Rectangle'], fu
                 return isCenter(actionPointAsRect, item);
             };
 
-            var cut = new ActionInterpreter(checkCollision);
+            var cut = new RectActionInterpreter(checkCollision);
 
             var item = new Rectangle('itemOne', 100, 100, 100, 100);
 
@@ -121,7 +121,7 @@ define(['input/ActionInterpreter', 'input/PointerAction', 'model/Rectangle'], fu
                 return isRight(actionPointAsRect, item);
             };
 
-            var cut = new ActionInterpreter(checkCollision);
+            var cut = new RectActionInterpreter(checkCollision);
 
             var item = new Rectangle('itemOne', 100, 100, 100, 100);
 
@@ -140,7 +140,7 @@ define(['input/ActionInterpreter', 'input/PointerAction', 'model/Rectangle'], fu
                 return isBottomLeft(actionPointAsRect, item);
             };
 
-            var cut = new ActionInterpreter(checkCollision);
+            var cut = new RectActionInterpreter(checkCollision);
 
             var item = new Rectangle('itemOne', 100, 100, 100, 100);
 
@@ -159,7 +159,7 @@ define(['input/ActionInterpreter', 'input/PointerAction', 'model/Rectangle'], fu
                 return isBottom(actionPointAsRect, item);
             };
 
-            var cut = new ActionInterpreter(checkCollision);
+            var cut = new RectActionInterpreter(checkCollision);
 
             var item = new Rectangle('itemOne', 100, 100, 100, 100);
 
@@ -178,7 +178,7 @@ define(['input/ActionInterpreter', 'input/PointerAction', 'model/Rectangle'], fu
                 return isBottomRight(actionPointAsRect, item);
             };
 
-            var cut = new ActionInterpreter(checkCollision);
+            var cut = new RectActionInterpreter(checkCollision);
 
             var item = new Rectangle('itemOne', 100, 100, 100, 100);
 

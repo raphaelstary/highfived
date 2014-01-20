@@ -6,7 +6,7 @@ define(['input/PointerAction', 'input/ABRectangle', 'input/Point'], function (Po
      * @param checkCollision
      * @constructor
      */
-    function ActionInterpreter(checkCollision) {
+    function RectActionInterpreter(checkCollision) {
         this._checkCollision = checkCollision;
     }
 
@@ -16,9 +16,8 @@ define(['input/PointerAction', 'input/ABRectangle', 'input/Point'], function (Po
      * @param {ABRectangle} pointer
      * @param {Rectangle} item
      * @returns {PointerAction}
-     * @public
      */
-    ActionInterpreter.prototype.interpret = function (pointer, item) {
+    RectActionInterpreter.prototype.interpret = function (pointer, item) {
         if (this._checkCollision(pointer, this._getTopLeftPoint(item))) {
             return PointerAction.RESIZE_TOP_AND_LEFT;
 
@@ -50,65 +49,65 @@ define(['input/PointerAction', 'input/ABRectangle', 'input/Point'], function (Po
         return PointerAction.NOTHING;
     };
 
-    ActionInterpreter.prototype._getTopLeftPoint = function (item) {
+    RectActionInterpreter.prototype._getTopLeftPoint = function (item) {
         return this._getActionPoint(this._getLeftXAxis(item), this._getTopYAxis(item));
     };
 
-    ActionInterpreter.prototype._getTopPoint = function (item) {
+    RectActionInterpreter.prototype._getTopPoint = function (item) {
         return this._getActionPoint(this._getMiddleXAxis(item), this._getTopYAxis(item));
     };
-    ActionInterpreter.prototype._getTopRightPoint = function (item) {
+    RectActionInterpreter.prototype._getTopRightPoint = function (item) {
         return this._getActionPoint(this._getRightXAxis(item), this._getTopYAxis(item));
     };
 
-    ActionInterpreter.prototype._getLeftPoint = function (item) {
+    RectActionInterpreter.prototype._getLeftPoint = function (item) {
         return this._getActionPoint(this._getLeftXAxis(item), this._getMiddleYAxis(item));
     };
 
-    ActionInterpreter.prototype._getCenterPoint = function (item) {
+    RectActionInterpreter.prototype._getCenterPoint = function (item) {
         return this._getActionPoint(this._getMiddleXAxis(item), this._getMiddleYAxis(item));
     };
 
-    ActionInterpreter.prototype._getRightPoint = function (item) {
+    RectActionInterpreter.prototype._getRightPoint = function (item) {
         return this._getActionPoint(this._getRightXAxis(item), this._getMiddleYAxis(item));
     };
-    ActionInterpreter.prototype._getBottomLeftPoint = function (item) {
+    RectActionInterpreter.prototype._getBottomLeftPoint = function (item) {
         return this._getActionPoint(this._getLeftXAxis(item), this._getBottomYAxis(item));
     };
 
-    ActionInterpreter.prototype._getBottomPoint = function (item) {
+    RectActionInterpreter.prototype._getBottomPoint = function (item) {
         return this._getActionPoint(this._getMiddleXAxis(item), this._getBottomYAxis(item));
     };
 
-    ActionInterpreter.prototype._getBottomRightPoint = function (item) {
+    RectActionInterpreter.prototype._getBottomRightPoint = function (item) {
         return this._getActionPoint(this._getRightXAxis(item), this._getBottomYAxis(item));
     };
 
-    ActionInterpreter.prototype._getLeftXAxis = function (item) {
+    RectActionInterpreter.prototype._getLeftXAxis = function (item) {
         return item.xPoint();
     };
 
-    ActionInterpreter.prototype._getMiddleXAxis = function (item) {
+    RectActionInterpreter.prototype._getMiddleXAxis = function (item) {
         return item.xPoint() + (item.width() / 2);
     };
 
-    ActionInterpreter.prototype._getRightXAxis = function (item) {
+    RectActionInterpreter.prototype._getRightXAxis = function (item) {
         return item.xPoint() + item.width();
     };
 
-    ActionInterpreter.prototype._getTopYAxis = function (item) {
+    RectActionInterpreter.prototype._getTopYAxis = function (item) {
         return item.yPoint();
     };
 
-    ActionInterpreter.prototype._getMiddleYAxis = function (item) {
+    RectActionInterpreter.prototype._getMiddleYAxis = function (item) {
         return item.yPoint() + (item.height() / 2);
     };
 
-    ActionInterpreter.prototype._getBottomYAxis = function (item) {
+    RectActionInterpreter.prototype._getBottomYAxis = function (item) {
         return item.yPoint() + item.height();
     };
 
-    ActionInterpreter.prototype._getActionPoint = function (centerXPoint, centerYPoint) {
+    RectActionInterpreter.prototype._getActionPoint = function (centerXPoint, centerYPoint) {
         const OFF_SET = 2;
 
         return new ABRectangle(
@@ -116,5 +115,5 @@ define(['input/PointerAction', 'input/ABRectangle', 'input/Point'], function (Po
             new Point(centerXPoint + OFF_SET, centerYPoint + OFF_SET));
     };
 
-    return ActionInterpreter;
+    return RectActionInterpreter;
 });
