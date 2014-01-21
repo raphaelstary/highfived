@@ -50,5 +50,27 @@ define(['input/CircleActionInterpreter', 'input/PointerAction'], function (Circl
 
     describe("as a user I click on the arc point to start the edit action: change radius", function () {
 
+        it("should return 'RESIZE_RADIUS' " +
+            "when I hit the arc point", function () {
+            var pointer = {
+                xPoint: 150,
+                yPoint: 100,
+                radius: 2
+            };
+            var circle = {
+                xPoint: 100,
+                yPoint: 100,
+                radius: 50
+            };
+            var checkCollision = function (actionPoint, pointer) {
+                return actionPoint.xPoint === circle.xPoint + circle.radius && actionPoint.yPoint === circle.yPoint;
+            };
+
+            var cut = new CircleActionInterpreter(checkCollision);
+
+            var actual = cut.interpret(pointer, circle);
+
+            expect(actual).toBe(PointerAction.RESIZE_RADIUS);
+        });
     });
 });

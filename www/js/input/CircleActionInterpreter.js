@@ -10,6 +10,10 @@ define(['input/PointerAction'], function (PointerAction) {
         if (this._checkCollision({xPoint: circle.xPoint, yPoint: circle.yPoint, radius: OFF_SET}, pointer))
             return PointerAction.MOVE;
 
+        else if (this._checkCollision({xPoint: circle.xPoint + circle.radius, yPoint: circle.yPoint, radius: OFF_SET},
+            pointer))
+            return PointerAction.RESIZE_RADIUS;
+
         return PointerAction.NOTHING;
     };
 
