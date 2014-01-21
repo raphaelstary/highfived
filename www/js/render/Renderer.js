@@ -1,4 +1,4 @@
-define(function () {
+define(['math/Vectors'], function (Vectors) {
     /**
      * main editor render class
      *
@@ -88,7 +88,14 @@ define(function () {
         this._setColor(color);
         this._drawLine(xPointA, yPointA, xPointB, yPointB);
         this._drawCirclePoint(xPointA, yPointA);
-//        this._drawCirclePoint(xPointA ) todo control points
+
+        var vector = Vectors.createVector({xPoint: xPointA, yPoint: yPointA}, {xPoint: xPointB, yPoint: yPointB});
+        var length = Vectors.magnitude(vector) / 3;
+        var unitVector = Vectors.normalize(vector);
+
+        this._drawCirclePoint(xPointA + length * unitVector.x, yPointA + length * unitVector.y);
+        this._drawCirclePoint(xPointB + length * -unitVector.x, yPointB + length * -unitVector.y);
+
         this._drawCirclePoint(xPointB, yPointB);
 
         this.screenCtx.restore();
