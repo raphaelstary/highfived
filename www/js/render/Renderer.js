@@ -88,6 +88,7 @@ define(function () {
         this._setColor(color);
         this._drawLine(xPointA, yPointA, xPointB, yPointB);
         this._drawCirclePoint(xPointA, yPointA);
+//        this._drawCirclePoint(xPointA ) todo control points
         this._drawCirclePoint(xPointB, yPointB);
 
         this.screenCtx.restore();

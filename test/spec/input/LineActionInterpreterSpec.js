@@ -80,6 +80,10 @@ define(['input/LineActionInterpreter', 'input/PointerAction'], function (LineAct
     describe("as a user I click on 'control point A' action point of a line to start the " +
         "edit action: transform to bezier curve", function() {
 
+        it("should return 'TRANSFORM_FROM_POINT_A " +
+            "when I hit control point A", function () {
+
+        });
     });
 
     describe("as a user I click on 'control point B' action point of a line to start the " +

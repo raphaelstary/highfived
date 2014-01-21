@@ -1,4 +1,4 @@
-define(['input/PointerAction', 'input/ABRectangle', 'input/Point'], function (PointerAction, ABRectangle, Point) {
+define(['input/PointerAction', 'input/ABRectangle', 'math/Point'], function (PointerAction, ABRectangle, Point) {
 
     /**
      * checks if an action point was hit

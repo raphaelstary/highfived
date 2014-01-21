@@ -1,4 +1,4 @@
-define(['input/RectCollisionDetector', 'input/ABRectangle', 'input/Point'], function (RectCollisionDetector, ABRectangle,
+define(['input/RectCollisionDetector', 'input/ABRectangle', 'math/Point'], function (RectCollisionDetector, ABRectangle,
                                                                                   Point) {
 
     describe("as a caller I want to check If a pointer hits the left side of an empty rect", function () {

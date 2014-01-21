@@ -1,5 +1,5 @@
 define(['model/Line', 'model/Rectangle', 'model/Circle', 'input/PointerAction', 'input/ABRectangle',
-    'input/Point'], function (Line, Rectangle, Circle, PointerAction, ABRectangle, Point) {
+    'math/Point'], function (Line, Rectangle, Circle, PointerAction, ABRectangle, Point) {
 
     /**
      * handles {MouseEvent}s when the 'edit' mode in the editor is on

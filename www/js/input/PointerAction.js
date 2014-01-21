@@ -21,7 +21,11 @@ define(function () {
         CREATE_NEW: 9,
         RESIZE_RADIUS: 10,
         CHANGE_POINT_A: 11,
-        CHANGE_POINT_B: 12
+        CHANGE_POINT_B: 12,
+        CHANGE_POINT_C: 13,
+        CHANGE_POINT_D: 14,
+        TRANSFORM_FROM_POINT_A: 15,
+        TRANSFORM_FROM_POINT_B: 16
     };
 
     return PointerAction;
