@@ -19,7 +19,9 @@ define(function () {
         RESIZE_BOTTOM: 7,
         RESIZE_BOTTOM_AND_RIGHT: 8,
         CREATE_NEW: 9,
-        RESIZE_RADIUS: 10
+        RESIZE_RADIUS: 10,
+        CHANGE_POINT_A: 11,
+        CHANGE_POINT_B: 12
     };
 
     return PointerAction;
