@@ -6,5 +6,6 @@ define(['spec/model/FactorySpec.js',
     'spec/input/RectActionInterpreterSpec.js',
     'spec/render/RendererSpec.js',
     'spec/input/checkCircleCollisionSpec.js',
-    'spec/input/checkLineCollisionSpec.js'
+    'spec/input/checkLineCollisionSpec.js',
+    'spec/input/CircleActionInterpreterSpec.js'
 ]);
