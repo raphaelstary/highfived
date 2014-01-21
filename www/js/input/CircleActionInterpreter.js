@@ -1,9 +1,15 @@
 define(['input/PointerAction'], function (PointerAction) {
+    var OFF_SET = 2;
+
     function CircleActionInterpreter(checkCollision) {
         this._checkCollision = checkCollision;
     }
 
-    CircleActionInterpreter.prototype.interpret = function () {
+    CircleActionInterpreter.prototype.interpret = function (pointer, circle) {
+
+        if (this._checkCollision({xPoint: circle.xPoint, yPoint: circle.yPoint, radius: OFF_SET}, pointer))
+            return PointerAction.MOVE;
+
         return PointerAction.NOTHING;
     };
 
