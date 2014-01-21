@@ -1,24 +1,41 @@
 define(function () {
 
-    /**
-     * checks if a pointer hits a circle
-     *
-     * @param {Object} circle    given circle
-     * @param {Object} pointer   given pointer as a circle
-     * @returns {boolean} true if there is a collision else false
-     */
-    function checkCircleCollision(circle, pointer) {
-
-        var distance = Math.sqrt(Math.pow(pointer.xPoint - circle.xPoint, 2) +
-            Math.pow(pointer.yPoint - circle.yPoint, 2));
-
-        return distance <= circle.radius + pointer.radius &&
-            distance >= circle.radius - pointer.radius;
+    function calculateDistance(circleA, circleB) {
+        return Math.sqrt(Math.pow(circleB.xPoint - circleA.xPoint, 2) +
+            Math.pow(circleB.yPoint - circleA.yPoint, 2))
     }
 
-    var CircleCollisionDetector = {
-        checkCircle: checkCircleCollision
-    };
+    function isNotOutside(distance, circle, pointer) {
+        return distance <= circle.radius + pointer.radius;
+    }
 
-    return CircleCollisionDetector;
+    function isNotInside(distance, circle, pointer) {
+        return distance >= circle.radius - pointer.radius;
+    }
+
+    return {
+        /**
+         * checks if a pointer hits a circle
+         *
+         * @param {Object} circle    given circle
+         * @param {Object} pointer   given pointer as a circle
+         * @returns {boolean} true if there is a collision else false
+         */
+        checkCircle: function (circle, pointer) {
+            var distance = calculateDistance(circle, pointer);
+
+            return isNotOutside(distance, circle, pointer) && isNotInside(distance, circle, pointer);
+        },
+
+        /**
+         * checks if a pointer hits a filled circle
+         *
+         * @param {Object} circle    given circle
+         * @param {Object} pointer   given pointer as a circle
+         * @returns {boolean} true if there is a collision else false
+         */
+        checkFilledCircle: function (circle, pointer) {
+            return isNotOutside(calculateDistance(circle, pointer), circle, pointer);
+        }
+    };
 });
