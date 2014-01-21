@@ -16,5 +16,9 @@ define(function () {
             distance >= circle.radius - pointer.radius;
     }
 
-    return checkCircleCollision;
+    var CircleCollisionDetector = {
+        checkCircle: checkCircleCollision
+    };
+
+    return CircleCollisionDetector;
 });

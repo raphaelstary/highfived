@@ -1,4 +1,4 @@
-define(['input/checkCircleCollision'], function (checkCircleCollision) {
+define(['input/CircleCollisionDetector'], function (CircleCollisionDetector) {
     describe('as a caller I want to check if a pointer hits a circle', function () {
 
         it("should return false " +
@@ -7,7 +7,7 @@ define(['input/checkCircleCollision'], function (checkCircleCollision) {
             var circle = {xPoint: 50, yPoint: 50, radius: 50};
             var pointer = {xPoint: 105, yPoint: 50, radius: 4};
 
-            var actual = checkCircleCollision(circle, pointer);
+            var actual = CircleCollisionDetector.checkCircle(circle, pointer);
 
             expect(actual).toBe(false);
         });
@@ -18,7 +18,7 @@ define(['input/checkCircleCollision'], function (checkCircleCollision) {
             var circle = {xPoint: 50, yPoint: 50, radius: 50};
             var pointer = {xPoint: 104, yPoint: 50, radius: 4};
 
-            var actual = checkCircleCollision(circle, pointer);
+            var actual = CircleCollisionDetector.checkCircle(circle, pointer);
 
             expect(actual).toBe(true);
 
@@ -30,7 +30,7 @@ define(['input/checkCircleCollision'], function (checkCircleCollision) {
             var circle = {xPoint: 50, yPoint: 50, radius: 50};
             var pointer = {xPoint: 96, yPoint: 50, radius: 4};
 
-            var actual = checkCircleCollision(circle, pointer);
+            var actual = CircleCollisionDetector.checkCircle(circle, pointer);
 
             expect(actual).toBe(true);
         });
@@ -41,7 +41,7 @@ define(['input/checkCircleCollision'], function (checkCircleCollision) {
             var circle = {xPoint: 50, yPoint: 50, radius: 50};
             var pointer = {xPoint: 95, yPoint: 50, radius: 4};
 
-            var actual = checkCircleCollision(circle, pointer);
+            var actual = CircleCollisionDetector.checkCircle(circle, pointer);
 
             expect(actual).toBe(false);
         });
