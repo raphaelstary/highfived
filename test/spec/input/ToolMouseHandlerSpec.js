@@ -743,6 +743,45 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
                 .fn('xPointB').toBe(200).fn('yPointB').toBe(100);
         });
 
+        it("should change item's point b coordinates " +
+            "when moving the mouse cursor " +
+            "given one item was selected " +
+            " and the 'change point b' action point was selected", function () {
+
+            selectItemAndSetAction(PointerAction.CHANGE_POINT_B);
+
+            var cut = new ToolMouseHandler(layerBucket, checkPointerItemCollision, interpretItemAction);
+
+            cut.handleDown({clientX: 200, clientY: 100});
+
+            cut.handleMove({clientX: 300, clientY: 300});
+
+            expect(layerOneItems.length).toBe(1);
+
+            expectItem(itemOne).fn('xPointA').toBe(100).fn('yPointA').toBe(100)
+                .fn('xPointB').toBe(300).fn('yPointB').toBe(300);
+        });
+
+
+        it("should change item's point b coordinates " +
+            "when moving the mouse cursor to its end position " +
+            "given one item was selected " +
+            " and the 'change point b' action point was selected", function () {
+
+            selectItemAndSetAction(PointerAction.CHANGE_POINT_B);
+
+            var cut = new ToolMouseHandler(layerBucket, checkPointerItemCollision, interpretItemAction);
+
+            cut.handleDown({clientX: 200, clientY: 100});
+
+            cut.handleUp({clientX: 350, clientY: 350});
+
+            expect(layerOneItems.length).toBe(1);
+
+            expectItem(itemOne).fn('xPointA').toBe(100).fn('yPointA').toBe(100)
+                .fn('xPointB').toBe(350).fn('yPointB').toBe(350);
+        });
+
         beforeEach(function () {
             setUpLayerWithOneLine();
             setUpCollisionService();

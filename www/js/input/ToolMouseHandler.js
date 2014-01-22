@@ -273,7 +273,7 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'input/PointerAction', 
     ToolMouseHandler.prototype._resizeLine = function (event) {
         if (this.activeAction === PointerAction.CHANGE_POINT_A)
             this._changePointA(event);
-        else if (this.activeAction === PointerAction.CREATE_NEW)
+        else if (this.activeAction === PointerAction.CREATE_NEW || this.activeAction === PointerAction.CHANGE_POINT_B)
             this._changePointB(event);
     };
 
