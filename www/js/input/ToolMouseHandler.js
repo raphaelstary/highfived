@@ -209,12 +209,12 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'input/PointerAction', 
                             self.oldItem.width = item.width();
                             self.oldItem.height = item.height();
 
-                        } else if (item instanceof Circle) {
+//                        } else if (item instanceof Circle) {
 //                            delete self.oldItem.width;
 //                            delete self.oldItem.height;
 
-                            self.oldItem.xPoint = item.xPoint();
-                            self.oldItem.yPoint = item.yPoint();
+//                            self.oldItem.xPoint = item.xPoint();
+//                            self.oldItem.yPoint = item.yPoint();
 //                            self.oldItem.radius = item.radius();
                         }
                     }
@@ -255,7 +255,7 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'input/PointerAction', 
         if (this.activeAction === PointerAction.MOVE)
             this._changeCenterPoint(event);
 
-        else if (this.activeAction === PointerAction.CREATE_NEW)
+        else if (this.activeAction === PointerAction.CREATE_NEW || this.activeAction === PointerAction.RESIZE_RADIUS)
             this._resizeRadius(event);
     };
 

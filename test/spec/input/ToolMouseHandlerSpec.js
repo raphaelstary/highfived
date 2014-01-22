@@ -658,6 +658,50 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
         });
     });
 
+    describe("as a user I want to resize an existing circle", function () {
+
+        it("should change item's radius " +
+            "when moving the mouse cursor " +
+            "given one item was selected " +
+            " and the 'resize radius' action point was selected", function () {
+
+            selectItemAndSetAction(PointerAction.RESIZE_RADIUS);
+
+            var cut = new ToolMouseHandler(layerBucket, checkPointerItemCollision, interpretItemAction);
+
+            cut.handleDown({clientX: 0, clientY: 0});
+
+            cut.handleMove({clientX: 200, clientY: 100});
+
+            expect(layerOneItems.length).toBe(1);
+
+            expectItem(itemOne).fn('xPoint').toBe(100).fn('yPoint').toBe(100).fn('radius').toBe(100);
+        });
+
+        it("should change item's radius " +
+            "when moving the mouse cursor to its end position " +
+            "given one item was selected " +
+            " and the 'resize radius' action point was selected", function () {
+
+            selectItemAndSetAction(PointerAction.RESIZE_RADIUS);
+
+            var cut = new ToolMouseHandler(layerBucket, checkPointerItemCollision, interpretItemAction);
+
+            cut.handleDown({clientX: 0, clientY: 0});
+
+            cut.handleUp({clientX: 250, clientY: 100});
+
+            expect(layerOneItems.length).toBe(1);
+
+            expectItem(itemOne).fn('xPoint').toBe(100).fn('yPoint').toBe(100).fn('radius').toBe(150);
+        });
+
+        beforeEach(function () {
+            setUpLayerWithOneCircle();
+            setUpCollisionService();
+        });
+    });
+
     describe("as a user I want to move an existing rect", function () {
 
         it("should change item's x & y coordinates, " +
