@@ -1229,6 +1229,96 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
         beforeEach(setUpLayersWithOneItemAndCollisionService);
     });
 
+    describe("handle internal object state with circles, " +
+        "new class -> 1 time 'handleDown' -> 0..n times 'handleMove' -> 1 time 'handleUp' -> " +
+        "1 time 'handleDown'", function () {
+
+        it("should do nothing to the model, " +
+            "when 'handleDown' is called " +
+            "given a move was not finished", function () {
+
+            selectItemAndSetAction(PointerAction.MOVE);
+
+            var cut = new ToolMouseHandler(layerBucket, checkPointerItemCollision, interpretItemAction);
+
+            cut.handleDown({clientX: 0, clientY: 0});
+            cut.handleMove({clientX: 350, clientY: 350});
+
+            cut.handleDown({clientX: 600, clientY: 600});
+
+            expect(layerOneItems.length).toBe(1);
+            expectItem(itemOne).fn('xPoint').toBe(100).fn('yPoint').toBe(100).fn('radius').toBe(50);
+        });
+
+        it("should do nothing to the model, " +
+            "when 'handleDown' is called " +
+            "given a move was not finished", function () {
+
+            selectItemAndSetAction(PointerAction.RESIZE_RADIUS);
+
+            var cut = new ToolMouseHandler(layerBucket, checkPointerItemCollision, interpretItemAction);
+
+            cut.handleDown({clientX: 100, clientY: 100});
+            cut.handleMove({clientX: 350, clientY: 350});
+
+            cut.handleDown({clientX: 600, clientY: 600});
+
+            expect(layerOneItems.length).toBe(1);
+            expectItem(itemOne).fn('xPoint').toBe(100).fn('yPoint').toBe(100).fn('radius').toBe(50);
+        });
+
+        beforeEach(function () {
+            setUpLayerWithOneCircle();
+            setUpCollisionService();
+        });
+    });
+
+    describe("handle internal object state with circles, " +
+        "new class -> 1 time 'handleDown' -> 0..n times 'handleMove' -> 1 time 'handleUp' -> " +
+        "1 time 'handleDown'", function () {
+
+        it("should do nothing to the model, " +
+            "when 'handleDown' is called " +
+            "given a move was not finished", function () {
+
+            selectItemAndSetAction(PointerAction.CHANGE_POINT_A);
+
+            var cut = new ToolMouseHandler(layerBucket, checkPointerItemCollision, interpretItemAction);
+
+            cut.handleDown({clientX: 0, clientY: 0});
+            cut.handleMove({clientX: 350, clientY: 350});
+
+            cut.handleDown({clientX: 600, clientY: 600});
+
+            expect(layerOneItems.length).toBe(1);
+            expectItem(itemOne).fn('xPointA').toBe(100).fn('yPointA').toBe(100)
+                .fn('xPointB').toBe(200).fn('yPointB').toBe(100);
+        });
+
+        it("should do nothing to the model, " +
+            "when 'handleDown' is called " +
+            "given a move was not finished", function () {
+
+            selectItemAndSetAction(PointerAction.CHANGE_POINT_B);
+
+            var cut = new ToolMouseHandler(layerBucket, checkPointerItemCollision, interpretItemAction);
+
+            cut.handleDown({clientX: 100, clientY: 100});
+            cut.handleMove({clientX: 350, clientY: 350});
+
+            cut.handleDown({clientX: 600, clientY: 600});
+
+            expect(layerOneItems.length).toBe(1);
+            expectItem(itemOne).fn('xPointA').toBe(100).fn('yPointA').toBe(100)
+                .fn('xPointB').toBe(200).fn('yPointB').toBe(100);
+        });
+
+        beforeEach(function () {
+            setUpLayerWithOneLine();
+            setUpCollisionService();
+        });
+    });
+
     describe("in standard editing only the last item with which I interact is activated", function () {
     // as a user I want to select a rect
         it("should create a new item which is active, " +

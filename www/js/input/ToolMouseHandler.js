@@ -145,16 +145,23 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'input/PointerAction', 
 
     ToolMouseHandler.prototype._resolveWrongState = function () {
         if (this.activeAction === PointerAction.CREATE_NEW) {
-            this._removeStartedRect();
+            this._removeStartedShape();
 
         } else {
-            this._revertChangedRect();
+            if (this.activeShape instanceof Rectangle)
+                this._revertChangedRect();
+
+            else if (this.activeShape instanceof Circle)
+                this._revertChangedCircle();
+
+            else if (this.activeShape instanceof Line)
+                this._revertChangedLine();
         }
 
         this.state = State.CAN_START;
     };
 
-    ToolMouseHandler.prototype._removeStartedRect = function () {
+    ToolMouseHandler.prototype._removeStartedShape = function () {
         var self = this;
         this.layerBucket.layers.forEach(function (layer) {
             if (layer.isActive())
@@ -167,6 +174,19 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'input/PointerAction', 
         this.activeShape.yPoint(this.oldItem.yPoint);
         this.activeShape.width(this.oldItem.width);
         this.activeShape.height(this.oldItem.height);
+    };
+
+    ToolMouseHandler.prototype._revertChangedCircle = function () {
+        this.activeShape.xPoint(this.oldItem.xPoint);
+        this.activeShape.yPoint(this.oldItem.yPoint);
+        this.activeShape.radius(this.oldItem.radius);
+    };
+
+    ToolMouseHandler.prototype._revertChangedLine = function () {
+        this.activeShape.xPointA(this.oldItem.xPointA);
+        this.activeShape.yPointA(this.oldItem.yPointA);
+        this.activeShape.xPointB(this.oldItem.xPointB);
+        this.activeShape.yPointB(this.oldItem.yPointB);
     };
 
     ToolMouseHandler.prototype._selectShapeOrStartAction = function (event) {
@@ -209,13 +229,16 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'input/PointerAction', 
                             self.oldItem.width = item.width();
                             self.oldItem.height = item.height();
 
-//                        } else if (item instanceof Circle) {
-//                            delete self.oldItem.width;
-//                            delete self.oldItem.height;
+                        } else if (item instanceof Circle) {
+                            self.oldItem.xPoint = item.xPoint();
+                            self.oldItem.yPoint = item.yPoint();
+                            self.oldItem.radius = item.radius();
 
-//                            self.oldItem.xPoint = item.xPoint();
-//                            self.oldItem.yPoint = item.yPoint();
-//                            self.oldItem.radius = item.radius();
+                        } else if (item instanceof Line) {
+                            self.oldItem.xPointA = item.xPointA();
+                            self.oldItem.yPointA = item.yPointA();
+                            self.oldItem.xPointB = item.xPointB();
+                            self.oldItem.yPointB = item.yPointB();
                         }
                     }
                 }
