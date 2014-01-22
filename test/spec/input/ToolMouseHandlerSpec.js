@@ -702,6 +702,53 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
         });
     });
 
+    describe("as a user I want to edit the point coordinates of a line", function () {
+
+        it("should change item's point a coordinates " +
+            "when moving the mouse cursor " +
+            "given one item was selected " +
+            " and the 'change point a' action point was selected", function () {
+
+            selectItemAndSetAction(PointerAction.CHANGE_POINT_A);
+
+            var cut = new ToolMouseHandler(layerBucket, checkPointerItemCollision, interpretItemAction);
+
+            cut.handleDown({clientX: 100, clientY: 100});
+
+            cut.handleMove({clientX: 50, clientY: 50});
+
+            expect(layerOneItems.length).toBe(1);
+
+            expectItem(itemOne).fn('xPointA').toBe(50).fn('yPointA').toBe(50)
+                .fn('xPointB').toBe(200).fn('yPointB').toBe(100);
+        });
+
+
+        it("should change item's point a coordinates " +
+            "when moving the mouse cursor to its end position " +
+            "given one item was selected " +
+            " and the 'change point a' action point was selected", function () {
+
+            selectItemAndSetAction(PointerAction.CHANGE_POINT_A);
+
+            var cut = new ToolMouseHandler(layerBucket, checkPointerItemCollision, interpretItemAction);
+
+            cut.handleDown({clientX: 100, clientY: 100});
+
+            cut.handleUp({clientX: 50, clientY: 50});
+
+            expect(layerOneItems.length).toBe(1);
+
+            expectItem(itemOne).fn('xPointA').toBe(50).fn('yPointA').toBe(50)
+                .fn('xPointB').toBe(200).fn('yPointB').toBe(100);
+        });
+
+        beforeEach(function () {
+            setUpLayerWithOneLine();
+            setUpCollisionService();
+        });
+    });
+
     describe("as a user I want to move an existing rect", function () {
 
         it("should change item's x & y coordinates, " +

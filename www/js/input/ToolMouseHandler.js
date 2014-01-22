@@ -271,7 +271,15 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'input/PointerAction', 
     };
 
     ToolMouseHandler.prototype._resizeLine = function (event) {
-        this._changePointB(event);
+        if (this.activeAction === PointerAction.CHANGE_POINT_A)
+            this._changePointA(event);
+        else if (this.activeAction === PointerAction.CREATE_NEW)
+            this._changePointB(event);
+    };
+
+    ToolMouseHandler.prototype._changePointA = function (event) {
+        this.activeShape.xPointA(event.clientX);
+        this.activeShape.yPointA(event.clientY);
     };
 
     ToolMouseHandler.prototype._changePointB = function (event) {
