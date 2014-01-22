@@ -44,8 +44,8 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'input/PointerAction', 
 
         this.state = State.STARTED;
 
-        var wasRectOrActionPointSelected = this._selectShapeOrStartAction(event);
-        if (wasRectOrActionPointSelected)
+        var wasShapeOrActionPointSelected = this._selectShapeOrStartAction(event);
+        if (wasShapeOrActionPointSelected)
             return;
 
         this._createNewShape(event);
@@ -203,10 +203,20 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'input/PointerAction', 
                         self.activeShape = item;
                         self.activeAction = tempAction;
 
-                        self.oldItem.xPoint = item.xPoint();
-                        self.oldItem.yPoint = item.yPoint();
-                        self.oldItem.width = item.width();
-                        self.oldItem.height = item.height();
+                        if (item instanceof Rectangle) {
+                            self.oldItem.xPoint = item.xPoint();
+                            self.oldItem.yPoint = item.yPoint();
+                            self.oldItem.width = item.width();
+                            self.oldItem.height = item.height();
+
+                        } else if (item instanceof Circle) {
+//                            delete self.oldItem.width;
+//                            delete self.oldItem.height;
+
+                            self.oldItem.xPoint = item.xPoint();
+                            self.oldItem.yPoint = item.yPoint();
+//                            self.oldItem.radius = item.radius();
+                        }
                     }
                 }
             });
@@ -242,7 +252,16 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'input/PointerAction', 
     };
 
     ToolMouseHandler.prototype._resizeCircle = function (event) {
-        this._resizeRadius(event);
+        if (this.activeAction === PointerAction.MOVE)
+            this._changeCenterPoint(event);
+
+        else if (this.activeAction === PointerAction.CREATE_NEW)
+            this._resizeRadius(event);
+    };
+
+    ToolMouseHandler.prototype._changeCenterPoint = function (event) {
+        this.activeShape.xPoint(event.clientX);
+        this.activeShape.yPoint(event.clientY);
     };
 
     ToolMouseHandler.prototype._resizeRadius = function (event) {

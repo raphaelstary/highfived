@@ -85,7 +85,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
             expect(layerTwo.items().length).toBe(1);
         });
 
-        beforeEach(setUpLayersWithZeroItems);
+        beforeEach(setUpRectLayerWithZeroItems);
     });
 
     describe("as a user I want to create a new line", function () {
@@ -615,6 +615,49 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
         beforeEach(setUpLayersWithOneItemAndCollisionService);
     });
 
+    describe("as a user I want to move an existing circle", function () {
+        it("should change item's x & y coordinates, " +
+            "when moving mouse cursor " +
+            "given one item has been selected " +
+            " and the 'move' action point has been selected", function () {
+
+            selectItemAndSetAction(PointerAction.MOVE);
+
+            var cut = new ToolMouseHandler(layerBucket, checkPointerItemCollision, interpretItemAction);
+
+            cut.handleDown({clientX: 0, clientY: 0});
+
+            cut.handleMove({clientX: 350, clientY: 350});
+
+            expect(layerOneItems.length).toBe(1);
+
+            expectItem(itemOne).fn('xPoint').toBe(350).fn('yPoint').toBe(350).fn('radius').toBe(50);
+        });
+
+        it("should change item's x & y coordinates, " +
+            "when moving mouse to end position cursor " +
+            "given one item has been selected " +
+            " and the 'move' action point has been selected", function () {
+
+            selectItemAndSetAction(PointerAction.MOVE);
+
+            var cut = new ToolMouseHandler(layerBucket, checkPointerItemCollision, interpretItemAction);
+
+            cut.handleDown({clientX: 0, clientY: 0});
+
+            cut.handleUp({clientX: 350, clientY: 350});
+
+            expect(layerOneItems.length).toBe(1);
+
+            expectItem(itemOne).fn('xPoint').toBe(350).fn('yPoint').toBe(350).fn('radius').toBe(50);
+        });
+
+        beforeEach(function () {
+            setUpLayerWithOneCircle();
+            setUpCollisionService();
+        });
+    });
+
     describe("as a user I want to move an existing rect", function () {
 
         it("should change item's x & y coordinates, " +
@@ -636,7 +679,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
         });
 
         it("should change item's x & y coordinates, " +
-            "when moving mouse cursor, " +
+            "when moving & stopping mouse cursor, " +
             "given one item has been selected " +
             " and the 'move' action point has been selected", function () {
 
@@ -990,7 +1033,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
             "when 'handleDown' is called " +
             "given it was already called", function () {
 
-            setUpLayersWithZeroItems();
+            setUpRectLayerWithZeroItems();
             var cut = new ToolMouseHandler(layerBucket);
 
             cut.handleDown({clientX: 0, clientY: 0});
@@ -1020,7 +1063,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
             "when 'handleDown' is called " +
             "given an item was created but not finished", function () {
 
-            setUpLayersWithZeroItems();
+            setUpRectLayerWithZeroItems();
 
             var cut = new ToolMouseHandler(layerBucket);
 
@@ -1036,7 +1079,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
             "when 'handleDown' is called " +
             "given an item was created but not finished with two layers", function () {
 
-            setUpLayersWithZeroItems();
+            setUpRectLayerWithZeroItems();
             var layerTwo = new Layer('layerTwo', ko.observableArray());
             layerOne.isActive(false);
             layerTwo.isActive(true);
@@ -1060,7 +1103,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
     // as a user I want to select a rect
         it("should create a new item which is active, " +
             "when 'handleDown' is called", function () {
-            setUpLayersWithZeroItems();
+            setUpRectLayerWithZeroItems();
 
             var cut = new ToolMouseHandler(layerBucket);
 
@@ -1111,7 +1154,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
 
         it("should select an new active item, " +
             "when 'handleDown' is called", function () {
-            setUpLayersWithZeroItems();
+            setUpRectLayerWithZeroItems();
 
             var cut = new ToolMouseHandler(layerBucket);
 
@@ -1143,7 +1186,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
             "when an item gets selected/active " +
             "given there are two items", function () {
 
-            setUpLayersWithZeroItems();
+            setUpRectLayerWithZeroItems();
             checkPointerItemCollision = function (pointer) {
                 return pointer.pointA.xPoint == 198 && pointer.pointA.yPoint == 148;
             };
@@ -1169,7 +1212,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
             "when I want to select an existing item and mistakenly miss it with my pointer " +
             "given there is an item", function () {
 
-            setUpLayersWithOneItem();
+            setUpLayersWithOneRect();
 
             checkPointerItemCollision = function () {
                 return false;
@@ -1194,14 +1237,17 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
     }
 
     function setUpLayersWithOneItemAndCollisionService() {
-        setUpLayersWithOneItem();
+        setUpLayersWithOneRect();
+        setUpCollisionService();
+    }
 
+    function setUpCollisionService() {
         checkPointerItemCollision = function () {
             return true;
         };
     }
 
-    function setUpLayersWithOneItem() {
+    function setUpLayersWithOneRect() {
         layers = ko.observableArray([
             new Layer('layerOne', ko.observableArray([new Rectangle('onlyItem', 100, 100, 100, 100)]), 'rectangle')
         ]);
@@ -1209,9 +1255,17 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
         setUpLayerVars();
     }
 
-    function setUpLayersWithZeroItems() {
+    function setUpRectLayerWithZeroItems() {
         layers = ko.observableArray([
             new Layer('layerOne', ko.observableArray(), 'rectangle')
+        ]);
+        layerBucket = new LayerBucket(layers);
+        setUpLayerVars();
+    }
+
+    function setUpLayerWithOneLine() {
+        layers = ko.observableArray([
+            new Layer('layerOne', ko.observableArray([new Line('onlyItem', 100, 100, 200, 100)]), 'line')
         ]);
         layerBucket = new LayerBucket(layers);
         setUpLayerVars();
@@ -1220,6 +1274,14 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
     function setUpOneLineLayerWithZeroItems() {
         layers = ko.observableArray([
             new Layer('layerOne', ko.observableArray(), 'line')
+        ]);
+        layerBucket = new LayerBucket(layers);
+        setUpLayerVars();
+    }
+
+    function setUpLayerWithOneCircle() {
+        layers = ko.observableArray([
+            new Layer('layerOne', ko.observableArray([new Circle('onlyItem', 100, 100, 50)]), 'circle')
         ]);
         layerBucket = new LayerBucket(layers);
         setUpLayerVars();

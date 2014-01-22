@@ -1,11 +1,11 @@
 define(['lib/knockout', 'model/Item'], function (ko, Item) {
     /**
      *
-     * @param name
-     * @param xPoint
-     * @param yPoint
-     * @param width
-     * @param height
+     * @param {string} name
+     * @param {number} xPoint
+     * @param {number} yPoint
+     * @param {number} width
+     * @param {number} height
      * @constructor
      */
     function Rectangle(name, xPoint, yPoint, width, height) {

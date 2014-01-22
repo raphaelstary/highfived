@@ -1,4 +1,13 @@
 define(['model/Item', 'lib/knockout'], function (Item, ko) {
+    /**
+     *
+     * @param {string} name
+     * @param {number} xPointA
+     * @param {number} yPointA
+     * @param {number} xPointB
+     * @param {number} yPointB
+     * @constructor
+     */
     function Line(name, xPointA, yPointA, xPointB, yPointB) {
         Item.call(this, name);
 

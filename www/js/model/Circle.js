@@ -1,4 +1,12 @@
 define(['model/Item', 'lib/knockout'], function (Item, ko) {
+    /**
+     *
+     * @param {string} name
+     * @param {number} xPoint
+     * @param {number} yPoint
+     * @param {number} radius
+     * @constructor
+     */
     function Circle(name, xPoint, yPoint, radius) {
         Item.call(this, name);
 
