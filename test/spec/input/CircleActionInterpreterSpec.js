@@ -4,13 +4,17 @@ define(['input/CircleActionInterpreter', 'input/PointerAction'], function (Circl
         it("should return 'NOTHING' " +
             "when I miss all points", function () {
             var pointer = {
-                xPoint: 500,
-                yPoint: 500,
+                center: {
+                    xPoint: 500,
+                    yPoint: 500
+                },
                 radius: 2
             };
             var circle = {
-                xPoint: 100,
-                yPoint: 100,
+                center: {
+                    xPoint: 100,
+                    yPoint: 100
+                },
                 radius: 50
             };
             var checkCollision = function () {
@@ -27,17 +31,22 @@ define(['input/CircleActionInterpreter', 'input/PointerAction'], function (Circl
         it("should return 'MOVE' " +
             "when I hit the center point", function () {
             var pointer = {
-                xPoint: 100,
-                yPoint: 100,
+                center: {
+                    xPoint: 100,
+                    yPoint: 100
+                },
                 radius: 2
             };
             var circle = {
-                xPoint: 100,
-                yPoint: 100,
+                center: {
+                    xPoint: 100,
+                    yPoint: 100
+                },
                 radius: 50
             };
             var checkCollision = function (actionPoint, pointer) {
-                return actionPoint.xPoint === circle.xPoint && actionPoint.yPoint === circle.yPoint;
+                return actionPoint.center.xPoint === circle.center.xPoint &&
+                    actionPoint.center.yPoint === circle.center.yPoint;
             };
 
             var cut = new CircleActionInterpreter(checkCollision);
@@ -53,17 +62,22 @@ define(['input/CircleActionInterpreter', 'input/PointerAction'], function (Circl
         it("should return 'RESIZE_RADIUS' " +
             "when I hit the arc point", function () {
             var pointer = {
-                xPoint: 150,
-                yPoint: 100,
+                center: {
+                    xPoint: 150,
+                    yPoint: 100
+                },
                 radius: 2
             };
             var circle = {
-                xPoint: 100,
-                yPoint: 100,
+                center: {
+                    xPoint: 100,
+                    yPoint: 100
+                },
                 radius: 50
             };
             var checkCollision = function (actionPoint, pointer) {
-                return actionPoint.xPoint === circle.xPoint + circle.radius && actionPoint.yPoint === circle.yPoint;
+                return actionPoint.center.xPoint === circle.center.xPoint + circle.radius &&
+                    actionPoint.center.yPoint === circle.center.yPoint;
             };
 
             var cut = new CircleActionInterpreter(checkCollision);

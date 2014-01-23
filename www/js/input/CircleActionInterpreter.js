@@ -7,10 +7,12 @@ define(['input/PointerAction'], function (PointerAction) {
 
     CircleActionInterpreter.prototype.interpret = function (pointer, circle) {
 
-        if (this._checkCollision({xPoint: circle.xPoint, yPoint: circle.yPoint, radius: OFF_SET}, pointer))
+        if (this._checkCollision(
+            {center: {xPoint: circle.center.xPoint, yPoint: circle.center.yPoint}, radius: OFF_SET}, pointer))
             return PointerAction.MOVE;
 
-        else if (this._checkCollision({xPoint: circle.xPoint + circle.radius, yPoint: circle.yPoint, radius: OFF_SET},
+        else if (this._checkCollision(
+            {center: {xPoint: circle.center.xPoint + circle.radius, yPoint: circle.center.yPoint}, radius: OFF_SET},
             pointer))
             return PointerAction.RESIZE_RADIUS;
 
