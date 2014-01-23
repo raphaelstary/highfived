@@ -91,9 +91,11 @@ define(['math/Vectors'], function (Vectors) {
 
         var vector = Vectors.createVector({xPoint: xPointA, yPoint: yPointA}, {xPoint: xPointB, yPoint: yPointB});
         var length = Vectors.magnitude(vector) / 3;
+        var half = Vectors.magnitude(vector) / 2;
         var unitVector = Vectors.normalize(vector);
 
         this._drawCirclePoint(xPointA + length * unitVector.x, yPointA + length * unitVector.y);
+        this._drawCirclePoint(xPointA + half * unitVector.x, yPointA + half * unitVector.y);
         this._drawCirclePoint(xPointB + length * -unitVector.x, yPointB + length * -unitVector.y);
 
         this._drawCirclePoint(xPointB, yPointB);
