@@ -10,9 +10,9 @@ define(['model/Item', 'lib/knockout'], function (Item, ko) {
     function Circle(name, xPoint, yPoint, radius) {
         Item.call(this, name);
 
-        this.xPoint = ko.observable(xPoint);
-        this.yPoint = ko.observable(yPoint);
-        this.radius = ko.observable(radius);
+        this.xPoint = ko.observable(xPoint).extend({integer: null});
+        this.yPoint = ko.observable(yPoint).extend({integer: null});
+        this.radius = ko.observable(radius).extend({integer: null});
 
         var self = this;
         this.toggleRangeXPoint = function () {

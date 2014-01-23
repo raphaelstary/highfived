@@ -11,10 +11,10 @@ define(['model/Item', 'lib/knockout'], function (Item, ko) {
     function Line(name, xPointA, yPointA, xPointB, yPointB) {
         Item.call(this, name);
 
-        this.xPointA = ko.observable(xPointA);
-        this.yPointA = ko.observable(yPointA);
-        this.xPointB = ko.observable(xPointB);
-        this.yPointB = ko.observable(yPointB);
+        this.xPointA = ko.observable(xPointA).extend({integer: null});
+        this.yPointA = ko.observable(yPointA).extend({integer: null});
+        this.xPointB = ko.observable(xPointB).extend({integer: null});
+        this.yPointB = ko.observable(yPointB).extend({integer: null});
 
         var self = this;
         this.toggleRangeXPointA = function () {

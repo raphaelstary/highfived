@@ -339,7 +339,7 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'input/PointerAction', 
     ToolMouseHandler.prototype._resizeRadius = function (event) {
         var radius = Math.sqrt(Math.pow(event.clientX - this.activeShape.xPoint(), 2) +
             Math.pow(event.clientY - this.activeShape.yPoint(), 2));
-        this.activeShape.radius(radius);
+        this.activeShape.radius(Math.floor(radius));
     };
 
     ToolMouseHandler.prototype._resizeLine = function (event) {
