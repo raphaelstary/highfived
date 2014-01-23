@@ -1,7 +1,9 @@
 require(['view/MainView', 'input/ToolMouseHandler', 'input/RectCollisionDetector', 'input/RectActionInterpreter',
-    'render/getRequestAnimationFrame', 'render/Loop', 'render/Renderer',
+    'input/CircleCollisionDetector', 'input/CircleActionInterpreter', 'input/checkLineCollision',
+    'input/LineActionInterpreter', 'render/getRequestAnimationFrame', 'render/Loop', 'render/Renderer',
     'lib/domReady', 'lib/bootstrap'],
-    function (MainView, ToolMouseHandler, RectCollisionDetector, RectActionInterpreter, getAnimFrame, Loop, Renderer) {
+    function (MainView, ToolMouseHandler, RectCollisionDetector, RectActionInterpreter, CircleCollisionDetector,
+              CircleActionInterpreter, checkLineCollision, LineActionInterpreter, getAnimFrame, Loop, Renderer) {
 
         var inputLayers = [
             {
@@ -56,9 +58,23 @@ require(['view/MainView', 'input/ToolMouseHandler', 'input/RectCollisionDetector
 
         var canvas = document.getElementById('editor-ui');
 
-        var actionInterpreter = new RectActionInterpreter(RectCollisionDetector.checkFilledRectangle);
-        var toolMouseHandler = new ToolMouseHandler(layerModel, RectCollisionDetector.checkRectangle,
-            actionInterpreter.interpret.bind(actionInterpreter));
+        var rectActionInterpreter = new RectActionInterpreter(RectCollisionDetector.checkFilledRectangle);
+        var lineActionInterpreter = new LineActionInterpreter(CircleCollisionDetector.checkFilledCircle);
+        var circleActionInterpreter = new CircleActionInterpreter(CircleCollisionDetector.checkFilledCircle);
+
+        var actionInterpreter = {
+            interpretRect: rectActionInterpreter.interpret.bind(rectActionInterpreter),
+            interpretLine: lineActionInterpreter.interpret.bind(lineActionInterpreter),
+            interpretCircle: circleActionInterpreter.interpret.bind(circleActionInterpreter)
+        };
+
+        var collisionDetector = {
+            checkRect: RectCollisionDetector.checkRectangle,
+            checkLine: checkLineCollision,
+            checkCircle: CircleCollisionDetector.checkCircle
+        };
+
+        var toolMouseHandler = new ToolMouseHandler(layerModel, collisionDetector, actionInterpreter);
 
         canvas.addEventListener('mousedown', toolMouseHandler.handleDown.bind(toolMouseHandler));
         canvas.addEventListener('mousemove', toolMouseHandler.handleMove.bind(toolMouseHandler));

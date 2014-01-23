@@ -4,18 +4,18 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'input/PointerAction', 
     /**
      * handles {MouseEvent}s when the 'edit' mode in the editor is on
      *
-     * @param {Object} layerBucket                           the layer model for the whole editor with its items
-     * @param {function} checkPointerShapeCollision     checks if mouse pointer clicked on a shape
-     * @param {function} interpretPointerAction         checks/chooses if mouse pointer hit an 'action point'
+     * @param {Object} layerBucket                  the layer model for the whole editor with its items
+     * @param {Object} collisionDetector            checks if mouse pointer clicked on a shape
+     * @param {Object} actionInterpreter            checks/chooses if mouse pointer hit an 'action point'
      * @constructor
      */
-    function ToolMouseHandler(layerBucket, checkPointerShapeCollision, interpretPointerAction) {
+    function ToolMouseHandler(layerBucket, collisionDetector, actionInterpreter) {
         if (layerBucket == null || layerBucket.layers == null)
             throw "Illegal argument: layer model not provided";
 
         this.layerBucket = layerBucket;
-        this._checkCollision = checkPointerShapeCollision;
-        this._interpretAction = interpretPointerAction;
+        this.collisionDetector = collisionDetector;
+        this.actionInterpreter = actionInterpreter;
 
         this.counter = 0;
         this.activeShape = null;
@@ -88,11 +88,16 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'input/PointerAction', 
 
         this._resizeShape(event);
 
-        var isRect = this.layerBucket.activeLayer.type === RECTANGLE;
+        var isRect = this.activeShape instanceof Rectangle;
         if (isRect)
             this._normalizeRect(this.activeShape);
 
-        if (isRect && (this.activeShape.width() == 0 || this.activeShape.height == 0))
+        if ((isRect && (this.activeShape.width() === 0 || this.activeShape.height === 0))
+            ) // todo remove line
+//            ||
+//            (this.activeShape instanceof Circle && this.activeShape.radius() === 0) ||
+//            (this.activeShape instanceof Line && this.activeShape.xPointA() === this.activeShape.xPointB() &&
+//                this.activeShape.yPointA() === this.activeShape.yPointB()))
             this._resolveWrongState();
         else
             this.state = State.CAN_START;
@@ -208,7 +213,25 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'input/PointerAction', 
                 if (isPointerShapeCollision || isPointerActionPointCollision || item.isHidden())
                     return;
 
-                if (!item.isActive() && self._checkCollision(pointer, self._getABRect(item))) {
+                var isRect = item instanceof Rectangle,
+                    isCircle = item instanceof Circle,
+                    isLine = item instanceof Line;
+
+                var circlePointer = {
+                    center: {
+                        xPoint: event.clientX,
+                        yPoint: event.clientY
+                    },
+                    radius: OFF_SET
+                };
+
+                if (!item.isActive() &&
+                    ((isRect && self.collisionDetector.checkRect(pointer, self._getABRect(item))) ||
+                        (isCircle && self.collisionDetector.checkCircle(
+                            {center: {xPoint: item.xPoint(), yPoint: item.yPoint()}, radius: item.radius()}, circlePointer)) ||
+                        (isLine && self.collisionDetector.checkLine(
+                            {pointA: {xPoint: item.xPointA(), yPoint: item.yPointA()}, pointB: {xPoint: item.xPointB(), yPoint: item.yPointB()}}, circlePointer))
+                        )) {
                     self._deactivateActiveItem();
                     self._activateItem(item);
                     self.activeAction = PointerAction.NOTHING;
@@ -216,25 +239,35 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'input/PointerAction', 
                     isPointerShapeCollision = true;
 
                 } else if (item.isActive()) {
-                    var tempAction = self._interpretAction(pointer, item);
+                    var tempAction;
+
+                    if (isRect) {
+                        tempAction = self.actionInterpreter.interpretRect(pointer, item);
+
+                    } else if (isCircle) {
+                        tempAction = self.actionInterpreter.interpretCircle(circlePointer, item);
+
+                    } else if (isLine) {
+                        tempAction = self.actionInterpreter.interpretLine(circlePointer, item);
+                    }
 
                     if (tempAction !== PointerAction.NOTHING) {
                         isPointerActionPointCollision = true;
                         self.activeShape = item;
                         self.activeAction = tempAction;
 
-                        if (item instanceof Rectangle) {
+                        if (isRect) {
                             self.oldItem.xPoint = item.xPoint();
                             self.oldItem.yPoint = item.yPoint();
                             self.oldItem.width = item.width();
                             self.oldItem.height = item.height();
 
-                        } else if (item instanceof Circle) {
+                        } else if (isCircle) {
                             self.oldItem.xPoint = item.xPoint();
                             self.oldItem.yPoint = item.yPoint();
                             self.oldItem.radius = item.radius();
 
-                        } else if (item instanceof Line) {
+                        } else if (isLine) {
                             self.oldItem.xPointA = item.xPointA();
                             self.oldItem.yPointA = item.yPointA();
                             self.oldItem.xPointB = item.xPointB();
