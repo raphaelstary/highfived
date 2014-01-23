@@ -1,5 +1,6 @@
-define(['model/Line', 'model/Rectangle', 'model/Circle', 'input/PointerAction', 'input/ABRectangle',
-    'math/Point'], function (Line, Rectangle, Circle, PointerAction, ABRectangle, Point) {
+define(['model/Line', 'model/Rectangle', 'model/Circle', 'input/PointerAction', 'input/ABRectangle', 'math/Point',
+    'math/Line', 'math/Circle'], function (Line, Rectangle, Circle, PointerAction, ABRectangle, Point, MathLine,
+                                           MathCircle) {
 
     /**
      * handles {MouseEvent}s when the 'edit' mode in the editor is on
@@ -88,16 +89,11 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'input/PointerAction', 
 
         this._resizeShape(event);
 
-        var isRect = this.activeShape instanceof Rectangle;
-        if (isRect)
+        if (this._isRect(this.activeShape))
             this._normalizeRect(this.activeShape);
 
-        if ((isRect && (this.activeShape.width() === 0 || this.activeShape.height === 0))
-            ) // todo remove line
-//            ||
-//            (this.activeShape instanceof Circle && this.activeShape.radius() === 0) ||
-//            (this.activeShape instanceof Line && this.activeShape.xPointA() === this.activeShape.xPointB() &&
-//                this.activeShape.yPointA() === this.activeShape.yPointB()))
+        if (this._isRectFlat(this.activeShape) || this._isCircleFlat(this.activeShape) ||
+            this._isLineFlat(this.activeShape))
             this._resolveWrongState();
         else
             this.state = State.CAN_START;
@@ -204,6 +200,14 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'input/PointerAction', 
             new Point(event.clientX + OFF_SET, event.clientY + OFF_SET)
         );
 
+        var circlePointer = {
+            center: {
+                xPoint: event.clientX,
+                yPoint: event.clientY
+            },
+            radius: OFF_SET
+        };
+
         var self = this;
         this.layerBucket.layers.forEach(function (layer) {
             if (isPointerShapeCollision || isPointerActionPointCollision)
@@ -217,28 +221,7 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'input/PointerAction', 
                     isCircle = item instanceof Circle,
                     isLine = item instanceof Line;
 
-                var circlePointer = {
-                    center: {
-                        xPoint: event.clientX,
-                        yPoint: event.clientY
-                    },
-                    radius: OFF_SET
-                };
-
-                if (!item.isActive() &&
-                    ((isRect && self.collisionDetector.checkRect(pointer, self._getABRect(item))) ||
-                        (isCircle && self.collisionDetector.checkCircle(
-                            {center: {xPoint: item.xPoint(), yPoint: item.yPoint()}, radius: item.radius()}, circlePointer)) ||
-                        (isLine && self.collisionDetector.checkLine(
-                            {pointA: {xPoint: item.xPointA(), yPoint: item.yPointA()}, pointB: {xPoint: item.xPointB(), yPoint: item.yPointB()}}, circlePointer))
-                        )) {
-                    self._deactivateActiveItem();
-                    self._activateItem(item);
-                    self.activeAction = PointerAction.NOTHING;
-
-                    isPointerShapeCollision = true;
-
-                } else if (item.isActive()) {
+                if (item.isActive()) {
                     var tempAction;
 
                     if (isRect) {
@@ -257,22 +240,35 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'input/PointerAction', 
                         self.activeAction = tempAction;
 
                         if (isRect) {
-                            self.oldItem.xPoint = item.xPoint();
-                            self.oldItem.yPoint = item.yPoint();
-                            self.oldItem.width = item.width();
-                            self.oldItem.height = item.height();
+                            self._setOldRect(item);
 
                         } else if (isCircle) {
-                            self.oldItem.xPoint = item.xPoint();
-                            self.oldItem.yPoint = item.yPoint();
-                            self.oldItem.radius = item.radius();
+                            self._setOldCircle(item);
 
                         } else if (isLine) {
-                            self.oldItem.xPointA = item.xPointA();
-                            self.oldItem.yPointA = item.yPointA();
-                            self.oldItem.xPointB = item.xPointB();
-                            self.oldItem.yPointB = item.yPointB();
+                            self._setOldLine(item);
                         }
+                    }
+                } else {
+
+                    if (isRectCollision() || isCircleCollision() || isLineCollision()) {
+                        self._deactivateActiveItem();
+                        self._activateItem(item);
+                        self.activeAction = PointerAction.NOTHING;
+
+                        isPointerShapeCollision = true;
+                    }
+
+                    function isRectCollision() {
+                        return isRect && self.collisionDetector.checkRect(pointer, self._getABRect(item));
+                    }
+
+                    function isCircleCollision() {
+                        return isCircle && self.collisionDetector.checkCircle(self._getMathCircle(item), circlePointer);
+                    }
+
+                    function isLineCollision() {
+                        return isLine && self.collisionDetector.checkLine(self._getMathLine(item), circlePointer);
                     }
                 }
             });
@@ -292,6 +288,26 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'input/PointerAction', 
         if (this.layerBucket.activeItem != null) {
             this.layerBucket.activeItem.isActive(false);
         }
+    };
+
+    ToolMouseHandler.prototype._setOldRect = function (item) {
+        this.oldItem.xPoint = item.xPoint();
+        this.oldItem.yPoint = item.yPoint();
+        this.oldItem.width = item.width();
+        this.oldItem.height = item.height();
+    };
+
+    ToolMouseHandler.prototype._setOldCircle = function (item) {
+        this.oldItem.xPoint = item.xPoint();
+        this.oldItem.yPoint = item.yPoint();
+        this.oldItem.radius = item.radius();
+    };
+
+    ToolMouseHandler.prototype._setOldLine = function (item) {
+        this.oldItem.xPointA = item.xPointA();
+        this.oldItem.yPointA = item.yPointA();
+        this.oldItem.xPointB = item.xPointB();
+        this.oldItem.yPointB = item.yPointB();
     };
 
     ToolMouseHandler.prototype._resizeShape = function (event) {
@@ -416,6 +432,38 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'input/PointerAction', 
         return new ABRectangle(
             new Point(item.xPoint(), item.yPoint()),
             new Point(item.xPoint() + item.width(), item.yPoint() + item.height()));
+    };
+
+    ToolMouseHandler.prototype._getMathCircle = function (item) {
+        return new MathCircle(new Point(item.xPoint(), item.yPoint()), item.radius());
+    };
+
+    ToolMouseHandler.prototype._getMathLine = function (item) {
+        return new MathLine(new Point(item.xPointA(), item.yPointA()), new Point(item.xPointB(), item.yPointB()));
+    };
+
+    ToolMouseHandler.prototype._isRect = function (item) {
+        return item instanceof Rectangle;
+    };
+
+    ToolMouseHandler.prototype._isCircle = function (item) {
+        return item instanceof Circle;
+    };
+
+    ToolMouseHandler.prototype._isLine = function (item) {
+        return item instanceof Line;
+    };
+
+    ToolMouseHandler.prototype._isRectFlat = function (item) {
+        return this._isRect(item) && (item.width() === 0 || item.height === 0);
+    };
+
+    ToolMouseHandler.prototype._isCircleFlat = function (item) {
+        return this._isCircle(item) && item.radius() === 0;
+    };
+
+    ToolMouseHandler.prototype._isLineFlat = function (item) {
+        return this._isLine(item) && item.xPointA() === item.xPointB() && item.yPointA() === item.yPointB();
     };
 
     /**

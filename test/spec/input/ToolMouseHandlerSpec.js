@@ -1458,56 +1458,50 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
             expect(itemOne.isSelected()).toBeTruthy();
         });
 
-//        it("should select an line, " +
-//            "when it gets active " +
-//            "given there is an item", function () {
-//
-//            setUpLayerWithOneLine();
-//            setUpCollisionService();
-//
-//            var cut = new ToolMouseHandler(layerBucket, checkPointerItemCollision, interpretItemAction);
-//
-//            cut.handleDown({clientX: 100, clientY: 100});
-//
-//            expect(itemOne.isActive()).toBeTruthy();
-//            expect(itemOne.isSelected()).toBeTruthy();
-//        });
+        it("should select an line, " +
+            "when it gets active " +
+            "given there is an item", function () {
 
-//        it("shouldn't create a new item - a circle, " +
-//            "when I want to select an existing item and mistakenly miss it with my pointer " +
-//            "given there is an item", function () {
-//
-//            setUpLayerWithOneCircle();
-//
-//            checkPointerItemCollision = function () {
-//                return false;
-//            };
-//
-//            var cut = new ToolMouseHandler(layerBucket, checkPointerItemCollision, interpretItemAction);
-//
-//            cut.handleDown({clientX: 210, clientY: 150});
-//            cut.handleUp({clientX: 210, clientY: 150});
-//
-//            expect(layerOneItems.length).toBe(1);
-//        });
-//
-//        it("shouldn't create a new item - a line, " +
-//            "when I want to select an existing item and mistakenly miss it with my pointer " +
-//            "given there is an item", function () {
-//
-//            setUpLayerWithOneLine();
-//
-//            checkPointerItemCollision = function () {
-//                return false;
-//            };
-//
-//            var cut = new ToolMouseHandler(layerBucket, checkPointerItemCollision, interpretItemAction);
-//
-//            cut.handleDown({clientX: 210, clientY: 150});
-//            cut.handleUp({clientX: 210, clientY: 150});
-//
-//            expect(layerOneItems.length).toBe(1);
-//        });
+            setUpLayerWithOneLine();
+            setUpCollisionService();
+
+            var cut = new ToolMouseHandler(layerBucket, collisionDetector, actionInterpreter);
+
+            cut.handleDown({clientX: 100, clientY: 100});
+
+            expect(itemOne.isActive()).toBeTruthy();
+            expect(itemOne.isSelected()).toBeTruthy();
+        });
+
+        it("shouldn't create a new item - a circle, " +
+            "when I want to select an existing item and mistakenly miss it with my pointer " +
+            "given there is an item", function () {
+
+            setUpLayerWithOneCircle();
+            setUpCollisionServiceFalse();
+
+            var cut = new ToolMouseHandler(layerBucket, collisionDetector, actionInterpreter);
+
+            cut.handleDown({clientX: 210, clientY: 150});
+            cut.handleUp({clientX: 210, clientY: 150});
+
+            expect(layerOneItems.length).toBe(1);
+        });
+
+        it("shouldn't create a new item - a line, " +
+            "when I want to select an existing item and mistakenly miss it with my pointer " +
+            "given there is an item", function () {
+
+            setUpLayerWithOneLine();
+            setUpCollisionServiceFalse();
+
+            var cut = new ToolMouseHandler(layerBucket, collisionDetector, actionInterpreter);
+
+            cut.handleDown({clientX: 210, clientY: 150});
+            cut.handleUp({clientX: 210, clientY: 150});
+
+            expect(layerOneItems.length).toBe(1);
+        });
     });
 
     function selectItemAndSetAction(action) {
