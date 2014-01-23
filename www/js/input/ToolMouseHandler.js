@@ -149,13 +149,13 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'input/PointerAction', 
             this._removeStartedShape();
 
         } else {
-            if (this.activeShape instanceof Rectangle)
+            if (this._isRect(this.activeShape))
                 this._revertChangedRect();
 
-            else if (this.activeShape instanceof Circle)
+            else if (this._isCircle(this.activeShape))
                 this._revertChangedCircle();
 
-            else if (this.activeShape instanceof Line)
+            else if (this._isLine(this.activeShape))
                 this._revertChangedLine();
         }
 
@@ -311,13 +311,13 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'input/PointerAction', 
     };
 
     ToolMouseHandler.prototype._resizeShape = function (event) {
-        if (this.layerBucket.activeLayer.type === RECTANGLE) {
+        if (this._isRect(this.activeShape)) {
             this._resizeRect(event);
 
-        } else if (this.layerBucket.activeLayer.type === LINE) {
+        } else if (this._isLine(this.activeShape)) {
             this._resizeLine(event);
 
-        } else if (this.layerBucket.activeLayer.type === CIRCLE) {
+        } else if (this._isCircle(this.activeShape)) {
             this._resizeCircle(event);
         }
 

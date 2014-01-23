@@ -613,6 +613,28 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
             expectItem(itemOne).fn('xPoint').toBe(100).fn('yPoint').toBe(100).fn('width').toBe(200).fn('height').toBe(200);
         });
 
+        it("should change rect's coordinates " +
+            "when I click on the action point and move the mouse " +
+            "given there are 2 layers and the circle layer is active " +
+            " and a line is selected", function () {
+
+            var layerTwo = new Layer('layerTwo', ko.observableArray(), 'circle');
+            layers.push(layerTwo);
+            layerTwo.isActive(true);
+            layerTwo.isSelected(true);
+            layerBucket.activeLayer = layerTwo;
+
+            selectItemAndSetAction(PointerAction.RESIZE_TOP_AND_LEFT);
+            setUpCollisionServiceFalse();
+
+            var cut = new ToolMouseHandler(layerBucket, collisionDetector, actionInterpreter);
+
+            cut.handleDown({clientX: 100, clientY: 100});
+            cut.handleUp({clientX: 50, clientY: 50});
+
+            expectItem(itemOne).fn('xPoint').toBe(50).fn('yPoint').toBe(50).fn('width').toBe(150).fn('height').toBe(150);
+        });
+
         beforeEach(setUpLayersWithOneItemAndCollisionService);
     });
 
@@ -650,6 +672,28 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
             cut.handleUp({clientX: 350, clientY: 350});
 
             expect(layerOneItems.length).toBe(1);
+
+            expectItem(itemOne).fn('xPoint').toBe(350).fn('yPoint').toBe(350).fn('radius').toBe(50);
+        });
+
+        it("should change the circle's center coordinates " +
+            "when I click on the action point and move the mouse " +
+            "given there are 2 layers and the rect layer is active " +
+            " and a line is selected", function () {
+
+            var layerTwo = new Layer('layerTwo', ko.observableArray(), 'rectangle');
+            layers.push(layerTwo);
+            layerTwo.isActive(true);
+            layerTwo.isSelected(true);
+            layerBucket.activeLayer = layerTwo;
+
+            selectItemAndSetAction(PointerAction.MOVE);
+            setUpCollisionServiceFalse();
+
+            var cut = new ToolMouseHandler(layerBucket, collisionDetector, actionInterpreter);
+
+            cut.handleDown({clientX: 100, clientY: 100});
+            cut.handleUp({clientX: 350, clientY: 350});
 
             expectItem(itemOne).fn('xPoint').toBe(350).fn('yPoint').toBe(350).fn('radius').toBe(50);
         });
@@ -782,6 +826,29 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
 
             expectItem(itemOne).fn('xPointA').toBe(100).fn('yPointA').toBe(100)
                 .fn('xPointB').toBe(350).fn('yPointB').toBe(350);
+        });
+
+        it("should change line's point a coordinates " +
+            "when I click on the action point and move the mouse " +
+            "given the rect layer is active " +
+            " and a line is selected", function () {
+
+            var layerTwo = new Layer('layerTwo', ko.observableArray(), 'rectangle');
+            layers.push(layerTwo);
+            layerTwo.isActive(true);
+            layerTwo.isSelected(true);
+            layerBucket.activeLayer = layerTwo;
+
+            selectItemAndSetAction(PointerAction.CHANGE_POINT_A);
+            setUpCollisionServiceFalse();
+
+            var cut = new ToolMouseHandler(layerBucket, collisionDetector, actionInterpreter);
+
+            cut.handleDown({clientX: 100, clientY: 100});
+            cut.handleUp({clientX: 350, clientY: 350});
+
+            expectItem(itemOne).fn('xPointA').toBe(350).fn('yPointA').toBe(350)
+                .fn('xPointB').toBe(200).fn('yPointB').toBe(100);
         });
 
         beforeEach(function () {
