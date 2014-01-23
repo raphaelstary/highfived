@@ -1,8 +1,8 @@
 define(function () {
 
     function calculateDistance(circleA, circleB) {
-        return Math.sqrt(Math.pow(circleB.xPoint - circleA.xPoint, 2) +
-            Math.pow(circleB.yPoint - circleA.yPoint, 2))
+        return Math.sqrt(Math.pow(circleB.center.xPoint - circleA.center.xPoint, 2) +
+            Math.pow(circleB.center.yPoint - circleA.center.yPoint, 2))
     }
 
     function isNotOutside(distance, circle, pointer) {

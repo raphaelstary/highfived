@@ -228,10 +228,10 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'input/PointerAction', 
                         tempAction = self.actionInterpreter.interpretRect(pointer, item);
 
                     } else if (isCircle) {
-                        tempAction = self.actionInterpreter.interpretCircle(circlePointer, item);
+                        tempAction = self.actionInterpreter.interpretCircle(circlePointer, self._getMathCircle(item));
 
                     } else if (isLine) {
-                        tempAction = self.actionInterpreter.interpretLine(circlePointer, item);
+                        tempAction = self.actionInterpreter.interpretLine(circlePointer, self._getMathLine(item));
                     }
 
                     if (tempAction !== PointerAction.NOTHING) {

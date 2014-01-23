@@ -4,8 +4,8 @@ define(['input/CircleCollisionDetector'], function (CircleCollisionDetector) {
         it("should return false " +
             "when the pointer is outside of the circle", function () {
 
-            var circle = {xPoint: 50, yPoint: 50, radius: 50};
-            var pointer = {xPoint: 105, yPoint: 50, radius: 4};
+            var circle = {center: {xPoint: 50, yPoint: 50}, radius: 50};
+            var pointer = {center: {xPoint: 105, yPoint: 50}, radius: 4};
 
             var actual = CircleCollisionDetector.checkCircle(circle, pointer);
 
@@ -15,8 +15,8 @@ define(['input/CircleCollisionDetector'], function (CircleCollisionDetector) {
         it("should return true " +
             "when the pointer touches the circle from the outside", function () {
 
-            var circle = {xPoint: 50, yPoint: 50, radius: 50};
-            var pointer = {xPoint: 104, yPoint: 50, radius: 4};
+            var circle = {center: {xPoint: 50, yPoint: 50}, radius: 50};
+            var pointer = {center: {xPoint: 104, yPoint: 50}, radius: 4};
 
             var actual = CircleCollisionDetector.checkCircle(circle, pointer);
 
@@ -27,8 +27,8 @@ define(['input/CircleCollisionDetector'], function (CircleCollisionDetector) {
         it("should return true " +
             "when the pointer touches the circle from the inside", function () {
 
-            var circle = {xPoint: 50, yPoint: 50, radius: 50};
-            var pointer = {xPoint: 96, yPoint: 50, radius: 4};
+            var circle = {center: {xPoint: 50, yPoint: 50}, radius: 50};
+            var pointer = {center: {xPoint: 96, yPoint: 50}, radius: 4};
 
             var actual = CircleCollisionDetector.checkCircle(circle, pointer);
 
@@ -38,8 +38,8 @@ define(['input/CircleCollisionDetector'], function (CircleCollisionDetector) {
         it("should return false " +
             "when the pointer is inside of the circle", function () {
 
-            var circle = {xPoint: 50, yPoint: 50, radius: 50};
-            var pointer = {xPoint: 95, yPoint: 50, radius: 4};
+            var circle = {center: {xPoint: 50, yPoint: 50}, radius: 50};
+            var pointer = {center: {xPoint: 95, yPoint: 50}, radius: 4};
 
             var actual = CircleCollisionDetector.checkCircle(circle, pointer);
 
@@ -51,8 +51,8 @@ define(['input/CircleCollisionDetector'], function (CircleCollisionDetector) {
         it("should return false " +
             "when the pointer is outside of the circle", function () {
 
-            var circle = {xPoint: 50, yPoint: 50, radius: 50};
-            var pointer = {xPoint: 105, yPoint: 50, radius: 4};
+            var circle = {center: {xPoint: 50, yPoint: 50}, radius: 50};
+            var pointer = {center: {xPoint: 105, yPoint: 50}, radius: 4};
 
             var actual = CircleCollisionDetector.checkFilledCircle(circle, pointer);
 
@@ -62,8 +62,8 @@ define(['input/CircleCollisionDetector'], function (CircleCollisionDetector) {
         it("should return true " +
             "when the pointer touches the circle from the outside", function () {
 
-            var circle = {xPoint: 50, yPoint: 50, radius: 50};
-            var pointer = {xPoint: 104, yPoint: 50, radius: 4};
+            var circle = {center: {xPoint: 50, yPoint: 50}, radius: 50};
+            var pointer = {center: {xPoint: 104, yPoint: 50}, radius: 4};
 
             var actual = CircleCollisionDetector.checkFilledCircle(circle, pointer);
 
@@ -74,8 +74,8 @@ define(['input/CircleCollisionDetector'], function (CircleCollisionDetector) {
         it("should return true " +
             "when the pointer touches the circle from the inside", function () {
 
-            var circle = {xPoint: 50, yPoint: 50, radius: 50};
-            var pointer = {xPoint: 96, yPoint: 50, radius: 4};
+            var circle = {center: {xPoint: 50, yPoint: 50}, radius: 50};
+            var pointer = {center: {xPoint: 96, yPoint: 50}, radius: 4};
 
             var actual = CircleCollisionDetector.checkFilledCircle(circle, pointer);
 
@@ -85,8 +85,8 @@ define(['input/CircleCollisionDetector'], function (CircleCollisionDetector) {
         it("should return true " +
             "when the pointer is inside of the circle", function () {
 
-            var circle = {xPoint: 50, yPoint: 50, radius: 50};
-            var pointer = {xPoint: 95, yPoint: 50, radius: 4};
+            var circle = {center: {xPoint: 50, yPoint: 50}, radius: 50};
+            var pointer = {center: {xPoint: 95, yPoint: 50}, radius: 4};
 
             var actual = CircleCollisionDetector.checkFilledCircle(circle, pointer);
 
