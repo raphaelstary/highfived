@@ -14,7 +14,9 @@ define(['input/PointerAction', 'math/Vectors'], function (PointerAction, Vectors
 
         else {
             var vector = Vectors.createVector(line.pointA, line.pointB);
-            var length = Vectors.magnitude(vector) / 3;
+            var magnitude = Vectors.magnitude(vector);
+            var length = magnitude / 3;
+            var lengthHalf = magnitude / 2;
             var unitVector = Vectors.normalize(vector);
 
             var controlPointA = {
@@ -33,11 +35,22 @@ define(['input/PointerAction', 'math/Vectors'], function (PointerAction, Vectors
                 radius: OFF_SET
             };
 
+            var centerPoint = {
+                center: {
+                    xPoint: line.pointA.xPoint + lengthHalf * unitVector.x,
+                    yPoint: line.pointA.yPoint + lengthHalf * unitVector.y
+                },
+                radius: OFF_SET
+            };
+
             if (this._checkCollision(controlPointA, pointer))
                 return PointerAction.TRANSFORM_FROM_POINT_A;
 
             else if (this._checkCollision(controlPointB, pointer))
                 return PointerAction.TRANSFORM_FROM_POINT_B;
+
+            else if (this._checkCollision(centerPoint, pointer))
+                return PointerAction.MOVE;
 
         }
             return PointerAction.NOTHING;

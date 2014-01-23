@@ -1,6 +1,5 @@
 define(['model/Line', 'model/Rectangle', 'model/Circle', 'input/PointerAction', 'input/ABRectangle', 'math/Point',
-    'math/Line', 'math/Circle'], function (Line, Rectangle, Circle, PointerAction, ABRectangle, Point, MathLine,
-                                           MathCircle) {
+    'math/Line', 'math/Circle', 'math/Vectors'], function (Line, Rectangle, Circle, PointerAction, ABRectangle, Point, MathLine, MathCircle, Vectors) {
 
     /**
      * handles {MouseEvent}s when the 'edit' mode in the editor is on
@@ -345,8 +344,42 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'input/PointerAction', 
     ToolMouseHandler.prototype._resizeLine = function (event) {
         if (this.activeAction === PointerAction.CHANGE_POINT_A)
             this._changePointA(event);
+
         else if (this.activeAction === PointerAction.CREATE_NEW || this.activeAction === PointerAction.CHANGE_POINT_B)
             this._changePointB(event);
+
+        else if (this.activeAction === PointerAction.MOVE)
+            this._moveLine(event);
+    };
+
+    ToolMouseHandler.prototype._moveLine = function (event) {
+        var pointA = {
+            xPoint: this.activeShape.xPointA(),
+            yPoint: this.activeShape.yPointA()
+        };
+        var pointB = {
+            xPoint: this.activeShape.xPointB(),
+            yPoint: this.activeShape.yPointB()
+        };
+
+        var vector = Vectors.createVector(pointA, pointB);
+        var magnitude = Vectors.magnitude(vector);
+        var length = magnitude / 2;
+        var unitVector = Vectors.normalize(vector);
+
+        var centerPoint = {
+            xPoint: pointA.xPoint + length * unitVector.x,
+            yPoint: pointA.yPoint + length * unitVector.y
+        };
+        var delta = {
+            x: event.clientX - centerPoint.xPoint,
+            y: event.clientY - centerPoint.yPoint
+        };
+
+        this.activeShape.xPointA(pointA.xPoint + delta.x);
+        this.activeShape.yPointA(pointA.yPoint + delta.y);
+        this.activeShape.xPointB(pointB.xPoint + delta.x);
+        this.activeShape.yPointB(pointB.yPoint + delta.y);
     };
 
     ToolMouseHandler.prototype._changePointA = function (event) {

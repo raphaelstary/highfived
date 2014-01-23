@@ -162,4 +162,37 @@ define(['input/LineActionInterpreter', 'input/PointerAction'], function (LineAct
             expect(actual).toBe(PointerAction.TRANSFORM_FROM_POINT_B);
         });
     });
+
+    describe("as a user I click on the 'point B' action point of a line to start the edit action", function () {
+
+        it("should return 'MOVE' " +
+            "when I hit point B", function () {
+            var pointer = {
+                center: {
+                    xPoint: 150,
+                    yPoint: 100
+                },
+                radius: 2
+            };
+            var line = {
+                pointA: {
+                    xPoint: 100,
+                    yPoint: 100
+                },
+                pointB: {
+                    xPoint: 200,
+                    yPoint: 100
+                }
+            };
+            var checkCollision = function (actionPoint, pointer) {
+                return actionPoint.center.xPoint === 150 && actionPoint.center.yPoint === 100;
+            };
+
+            var cut = new LineActionInterpreter(checkCollision);
+
+            var actual = cut.interpret(pointer, line);
+
+            expect(actual).toBe(PointerAction.MOVE);
+        });
+    });
 });
