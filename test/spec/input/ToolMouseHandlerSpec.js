@@ -591,11 +591,16 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
             cut.handleMove({clientX: 275, clientY: 275});
             cut.handleUp({clientX: 300, clientY: 300});
 
-            cut._checkCollision = function () {
-                return false;
+            cut.collisionDetector = {
+                checkRect: function () {
+                    return false;
+                }
             };
-            cut._interpretAction = function () {
-                return PointerAction.NOTHING;
+
+            cut.actionInterpreter = {
+                interpretRect: function () {
+                    return PointerAction.NOTHING;
+                }
             };
 
             cut.handleDown({clientX: 350, clientY: 350});
