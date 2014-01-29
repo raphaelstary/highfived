@@ -217,9 +217,10 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'model/Curve', 'input/P
                 if (isPointerShapeCollision || isPointerActionPointCollision || item.isHidden())
                     return;
 
-                var isRect = item instanceof Rectangle,
-                    isCircle = item instanceof Circle,
-                    isLine = item instanceof Line;
+                var isRect = self._isRect(item),
+                    isCircle = self._isCircle(item),
+                    isLine = self._isLine(item),
+                    isCurve = self._isCurve(item);
 
                 if (item.isActive()) {
                     var tempAction;
@@ -232,6 +233,9 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'model/Curve', 'input/P
 
                     } else if (isLine) {
                         tempAction = self.actionInterpreter.interpretLine(circlePointer, self._getMathLine(item));
+
+                    } else if (isCurve) {
+                        tempAction = self.actionInterpreter.interpretCurve(circlePointer, self._getMathCurve(item));
                     }
 
                     if (tempAction !== PointerAction.NOTHING) {
@@ -319,8 +323,10 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'model/Curve', 'input/P
 
         } else if (this._isCircle(this.activeShape)) {
             this._resizeCircle(event);
-        }
 
+        } else if (this._isCurve(this.activeShape)) {
+            this._resizeCurve(event);
+        }
     };
 
     ToolMouseHandler.prototype._resizeCircle = function (event) {
@@ -357,6 +363,14 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'model/Curve', 'input/P
 
         else if (this.activeAction === PointerAction.TRANSFORM_FROM_POINT_B)
             this._transformToCurveFromB(event);
+    };
+
+    ToolMouseHandler.prototype._resizeCurve = function (event) {
+        if (this.activeAction === PointerAction.CHANGE_POINT_A)
+            this._changePointA(event);
+
+        else if (this.activeAction === PointerAction.CHANGE_POINT_B)
+            this._changePointB(event);
     };
 
     ToolMouseHandler.prototype._transformToCurveFromA = function (event) {
@@ -506,6 +520,10 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'model/Curve', 'input/P
         return new MathLine(new Point(item.xPointA(), item.yPointA()), new Point(item.xPointB(), item.yPointB()));
     };
 
+    ToolMouseHandler.prototype._getMathCurve = function (item) {
+        return null;
+    };
+
     ToolMouseHandler.prototype._isRect = function (item) {
         return item instanceof Rectangle;
     };
@@ -516,6 +534,10 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'model/Curve', 'input/P
 
     ToolMouseHandler.prototype._isLine = function (item) {
         return item instanceof Line;
+    };
+
+    ToolMouseHandler.prototype._isCurve = function (item) {
+        return item instanceof Curve;
     };
 
     ToolMouseHandler.prototype._isRectFlat = function (item) {

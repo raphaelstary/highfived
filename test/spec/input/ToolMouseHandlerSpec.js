@@ -1681,6 +1681,95 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
 
     describe("as a user I want to edit the point coordinates of a bezier curve", function () {
 
+        it("should change item's point A coordinates " +
+            "when moving the mouse cursor " +
+            "given one item was selected " +
+            " and the 'change point a' action point was selected", function () {
+
+            selectItemAndSetAction(PointerAction.CHANGE_POINT_A);
+
+            var cut = new ToolMouseHandler(layerBucket, collisionDetector, actionInterpreter);
+
+            cut.handleDown({clientX: 100, clientY: 100});
+
+            cut.handleMove({clientX: 50, clientY: 90});
+
+            expect(layerOneItems.length).toBe(1);
+
+            expectItem(itemOne).fn('xPointA').toBe(50).fn('yPointA').toBe(90)
+                .fn('xPointB').toBe(100).fn('yPointB').toBe(50)
+                .fn('xPointC').toBe(200).fn('yPointC').toBe(50)
+                .fn('xPointD').toBe(200).fn('yPointD').toBe(100);
+        });
+
+        it("should change item's point A coordinates " +
+            "when moving the mouse cursor to its end position " +
+            "given one item was selected " +
+            " and the 'change point a' action point was selected", function () {
+
+            selectItemAndSetAction(PointerAction.CHANGE_POINT_A);
+
+            var cut = new ToolMouseHandler(layerBucket, collisionDetector, actionInterpreter);
+
+            cut.handleDown({clientX: 100, clientY: 100});
+
+            cut.handleUp({clientX: 50, clientY: 90});
+
+            expect(layerOneItems.length).toBe(1);
+
+            expectItem(itemOne).fn('xPointA').toBe(50).fn('yPointA').toBe(90)
+                .fn('xPointB').toBe(100).fn('yPointB').toBe(50)
+                .fn('xPointC').toBe(200).fn('yPointC').toBe(50)
+                .fn('xPointD').toBe(200).fn('yPointD').toBe(100);
+        });
+
+        it("should change item's point A coordinates " +
+            "when moving the mouse cursor " +
+            "given one item was selected " +
+            " and the 'change point a' action point was selected", function () {
+
+            selectItemAndSetAction(PointerAction.CHANGE_POINT_B);
+
+            var cut = new ToolMouseHandler(layerBucket, collisionDetector, actionInterpreter);
+
+            cut.handleDown({clientX: 100, clientY: 100});
+
+            cut.handleMove({clientX: 50, clientY: 90});
+
+            expect(layerOneItems.length).toBe(1);
+
+            expectItem(itemOne).fn('xPointA').toBe(100).fn('yPointA').toBe(100)
+                .fn('xPointB').toBe(50).fn('yPointB').toBe(90)
+                .fn('xPointC').toBe(200).fn('yPointC').toBe(50)
+                .fn('xPointD').toBe(200).fn('yPointD').toBe(100);
+        });
+
+        it("should change item's point A coordinates " +
+            "when moving the mouse cursor to its end position " +
+            "given one item was selected " +
+            " and the 'change point a' action point was selected", function () {
+
+            selectItemAndSetAction(PointerAction.CHANGE_POINT_B);
+
+            var cut = new ToolMouseHandler(layerBucket, collisionDetector, actionInterpreter);
+
+            cut.handleDown({clientX: 100, clientY: 100});
+
+            cut.handleUp({clientX: 50, clientY: 90});
+
+            expect(layerOneItems.length).toBe(1);
+
+            expectItem(itemOne).fn('xPointA').toBe(100).fn('yPointA').toBe(100)
+                .fn('xPointB').toBe(50).fn('yPointB').toBe(90)
+                .fn('xPointC').toBe(200).fn('yPointC').toBe(50)
+                .fn('xPointD').toBe(200).fn('yPointD').toBe(100);
+        });
+
+//        new Curve('onlyItem', 100, 100, 100, 50, 200, 50, 200, 100)
+        beforeEach(function() {
+            setUpLayerWithOneCurve();
+            setUpCollisionService();
+        });
     });
 
     describe("as a user I want to move an existing bezier curve", function () {
@@ -1698,7 +1787,8 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
         actionInterpreter = {
             interpretRect: simpleReturn,
             interpretLine: simpleReturn,
-            interpretCircle: simpleReturn
+            interpretCircle: simpleReturn,
+            interpretCurve: simpleReturn
         };
     }
 
@@ -1715,7 +1805,8 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
         collisionDetector = {
             checkRect: simpleTrue,
             checkLine: simpleTrue,
-            checkCircle: simpleTrue
+            checkCircle: simpleTrue,
+            checkCurve: simpleTrue
         };
     }
 
@@ -1750,6 +1841,14 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
     function setUpLayerWithOneLine() {
         layers = ko.observableArray([
             new Layer('layerOne', ko.observableArray([new Line('onlyItem', 100, 100, 200, 100)]), 'line')
+        ]);
+        layerBucket = new LayerBucket(layers);
+        setUpLayerVars();
+    }
+
+    function setUpLayerWithOneCurve() {
+        layers = ko.observableArray([
+            new Layer('layerOne', ko.observableArray([new Curve('onlyItem', 100, 100, 100, 50, 200, 50, 200, 100)]), 'line')
         ]);
         layerBucket = new LayerBucket(layers);
         setUpLayerVars();
