@@ -374,6 +374,9 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'model/Curve', 'input/P
 
         else if (this.activeAction === PointerAction.CHANGE_POINT_C)
             this._changePointC(event);
+
+        else if (this.activeAction === PointerAction.CHANGE_POINT_D)
+            this._changePointD(event);
     };
 
     ToolMouseHandler.prototype._transformToCurveFromA = function (event) {
@@ -443,6 +446,11 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'model/Curve', 'input/P
     ToolMouseHandler.prototype._changePointC = function (event) {
         this.activeShape.xPointC(event.clientX);
         this.activeShape.yPointC(event.clientY);
+    };
+
+    ToolMouseHandler.prototype._changePointD = function (event) {
+        this.activeShape.xPointD(event.clientX);
+        this.activeShape.yPointD(event.clientY);
     };
 
     ToolMouseHandler.prototype._resizeRect = function (event) {
