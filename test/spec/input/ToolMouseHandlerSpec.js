@@ -1,6 +1,7 @@
 define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangle', 'input/PointerAction',
-    'spec/input/expectItem', 'model/LayerBucket', 'model/Line', 'model/Circle'], function (ToolMouseHandler, ko, Layer, Rectangle,
-    PointerAction, expectItem, LayerBucket, Line, Circle) {
+    'spec/input/expectItem', 'model/LayerBucket', 'model/Line', 'model/Circle', 'model/Curve'], function (
+    ToolMouseHandler, ko, Layer, Rectangle,
+    PointerAction, expectItem, LayerBucket, Line, Circle, Curve) {
 
     var layerBucket, layers, layerOne, layerOneItems, itemOne, collisionDetector, actionInterpreter;
 
@@ -1615,6 +1616,75 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
 
             expect(layerOneItems.length).toBe(1);
         });
+    });
+
+    describe("as a user I want to transform lines to bezier curves", function () {
+        it("should replace the line item with a curve " +
+            "when I press the 'control point A' action point " +
+            "given a line exists", function () {
+
+            selectItemAndSetAction(PointerAction.TRANSFORM_FROM_POINT_A);
+            var expectedXPointA = itemOne.xPointA();
+            var expectedYPointA = itemOne.yPointA();
+            var expectedXPointD = itemOne.xPointB();
+            var expectedYPointD = itemOne.yPointB();
+
+            var cut = new ToolMouseHandler(layerBucket, collisionDetector, actionInterpreter);
+
+            cut.handleDown({clientX: 0, clientY: 0});
+            cut.handleMove({clientX: 100, clientY: 50});
+
+            var item = layerOneItems[0];
+            expect(item).toBeDefined();
+            expect(item instanceof Curve).toBe(true);
+
+            expect(layerOneItems.length).toBe(1);
+
+            expectItem(item).fn('xPointA').toBe(expectedXPointA).fn('yPointA').toBe(expectedYPointA)
+                .fn('xPointB').toBe(100).fn('yPointB').toBe(50)
+                .fn('xPointC').toBe(expectedXPointD).fn('yPointC').toBe(expectedYPointD)
+                .fn('xPointD').toBe(expectedXPointD).fn('yPointD').toBe(expectedYPointD);
+        });
+
+        it("should replace the line item with a curve " +
+            "when I press the 'control point B' action point " +
+            "given a line exists", function () {
+
+            selectItemAndSetAction(PointerAction.TRANSFORM_FROM_POINT_B);
+            var expectedXPointA = itemOne.xPointA();
+            var expectedYPointA = itemOne.yPointA();
+            var expectedXPointD = itemOne.xPointB();
+            var expectedYPointD = itemOne.yPointB();
+
+            var cut = new ToolMouseHandler(layerBucket, collisionDetector, actionInterpreter);
+
+            cut.handleDown({clientX: 0, clientY: 0});
+            cut.handleMove({clientX: 100, clientY: 50});
+
+            var item = layerOneItems[0];
+            expect(item).toBeDefined();
+            expect(item instanceof Curve).toBe(true);
+
+            expect(layerOneItems.length).toBe(1);
+
+            expectItem(item).fn('xPointA').toBe(expectedXPointA).fn('yPointA').toBe(expectedYPointA)
+                .fn('xPointB').toBe(expectedXPointA).fn('yPointB').toBe(expectedYPointA)
+                .fn('xPointC').toBe(100).fn('yPointC').toBe(50)
+                .fn('xPointD').toBe(expectedXPointD).fn('yPointD').toBe(expectedYPointD);
+        });
+
+        beforeEach(function () {
+            setUpLayerWithOneLine();
+            setUpCollisionService();
+        });
+    });
+
+    describe("as a user I want to edit the point coordinates of a bezier curve", function () {
+
+    });
+
+    describe("as a user I want to move an existing bezier curve", function () {
+
     });
 
     function selectItemAndSetAction(action) {

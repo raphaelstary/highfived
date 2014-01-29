@@ -1,5 +1,6 @@
-define(['model/Line', 'model/Rectangle', 'model/Circle', 'input/PointerAction', 'input/ABRectangle', 'math/Point',
-    'math/Line', 'math/Circle', 'math/Vectors'], function (Line, Rectangle, Circle, PointerAction, ABRectangle, Point, MathLine, MathCircle, Vectors) {
+define(['model/Line', 'model/Rectangle', 'model/Circle', 'model/Curve', 'input/PointerAction', 'input/ABRectangle',
+    'math/Point', 'math/Line', 'math/Circle', 'math/Vectors'], function (Line, Rectangle, Circle, Curve, PointerAction,
+    ABRectangle, Point, MathLine, MathCircle, Vectors) {
 
     /**
      * handles {MouseEvent}s when the 'edit' mode in the editor is on
@@ -350,6 +351,36 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'input/PointerAction', 
 
         else if (this.activeAction === PointerAction.MOVE)
             this._moveLine(event);
+
+        else if (this.activeAction === PointerAction.TRANSFORM_FROM_POINT_A)
+            this._transformToCurveFromA(event);
+
+        else if (this.activeAction === PointerAction.TRANSFORM_FROM_POINT_B)
+            this._transformToCurveFromB(event);
+    };
+
+    ToolMouseHandler.prototype._transformToCurveFromA = function (event) {
+        var curve = new Curve(this.activeShape.name,
+            this.activeShape.xPointA(), this.activeShape.yPointA(),
+            event.clientX, event.clientY,
+            this.activeShape.xPointB(), this.activeShape.yPointB(),
+            this.activeShape.xPointB(), this.activeShape.yPointB());
+
+        this._removeStartedShape();
+        this.layerBucket.activeLayer.items.push(curve);
+//        this._activateItem(curve)
+    };
+
+    ToolMouseHandler.prototype._transformToCurveFromB = function (event) {
+        var curve = new Curve(this.activeShape.name,
+            this.activeShape.xPointA(), this.activeShape.yPointA(),
+            this.activeShape.xPointA(), this.activeShape.yPointA(),
+            event.clientX, event.clientY,
+            this.activeShape.xPointB(), this.activeShape.yPointB());
+
+        this._removeStartedShape();
+        this.layerBucket.activeLayer.items.push(curve);
+//        this._activateItem(curve)
     };
 
     ToolMouseHandler.prototype._moveLine = function (event) {

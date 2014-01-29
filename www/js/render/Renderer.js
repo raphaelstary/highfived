@@ -90,7 +90,7 @@ define(['math/Vectors'], function (Vectors) {
         this._drawCirclePoint(xPointA, yPointA);
 
         var vector = Vectors.createVector({xPoint: xPointA, yPoint: yPointA}, {xPoint: xPointB, yPoint: yPointB});
-        var length = Vectors.magnitude(vector) / 3;
+        var length = Vectors.magnitude(vector) / 4;
         var half = Vectors.magnitude(vector) / 2;
         var unitVector = Vectors.normalize(vector);
 
