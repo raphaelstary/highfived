@@ -1,5 +1,5 @@
-define(['render/Renderer', 'model/Layer', 'model/Rectangle', 'model/Line', 'model/Circle', 'model/LayerBucket',
-    'lib/knockout'], function (Renderer, Layer, Rectangle, Line, Circle, LayerBucket, ko) {
+define(['render/Renderer', 'model/Layer', 'model/Rectangle', 'model/Line', 'model/Circle', 'model/Curve',
+    'model/LayerBucket', 'lib/knockout'], function (Renderer, Layer, Rectangle, Line, Circle, Curve, LayerBucket, ko) {
 
     var layerBucket, layers, items, itemOne, CANVAS_WIDTH, CANVAS_HEIGHT;
 
@@ -104,6 +104,122 @@ define(['render/Renderer', 'model/Layer', 'model/Rectangle', 'model/Line', 'mode
         });
 
         beforeEach(initCircle);
+    });
+
+    describe('as a caller I want to render bezier curves & active bezier curves on the screen', function () {
+
+        it('should draw a normal curve ' +
+            'when I call drawScene ' +
+            'given a valid layer model containing one curve', function () {
+
+            var moveToCalled = false;
+            var beginPathCalled = false;
+            var strokeCalled = false;
+            var bezierCurveToCalled = false;
+
+            var ctx = {
+                clearRect: function () {},
+                beginPath: function () {
+                    beginPathCalled = true;
+                },
+                moveTo: function (x, y) {
+                    expectValidPixelCoordinate(x, 0, CANVAS_WIDTH);
+                    expectValidPixelCoordinate(y, 0, CANVAS_HEIGHT);
+
+                    moveToCalled = true;
+                },
+                bezierCurveTo: function (xB, yB, xC, yC, xD, yD) {
+                    expectValidPixelCoordinate(xB, 0, CANVAS_WIDTH);
+                    expectValidPixelCoordinate(yB, 0, CANVAS_HEIGHT);
+                    expectValidPixelCoordinate(xC, 0, CANVAS_WIDTH);
+                    expectValidPixelCoordinate(yC, 0, CANVAS_HEIGHT);
+                    expectValidPixelCoordinate(xD, 0, CANVAS_WIDTH);
+                    expectValidPixelCoordinate(yD, 0, CANVAS_HEIGHT);
+
+                    bezierCurveToCalled = true;
+                },
+                stroke: function () {
+                    strokeCalled = true;
+                }
+            };
+
+            var renderer = new Renderer(null, ctx, CANVAS_WIDTH, CANVAS_HEIGHT, layerBucket);
+
+            renderer.drawScene();
+
+            expect(moveToCalled).toBe(true);
+            expect(bezierCurveToCalled).toBe(true);
+            expect(beginPathCalled).toBe(true);
+            expect(strokeCalled).toBe(true);
+        });
+
+        it('should draw an active curve ' +
+            'when I call drawScene ' +
+            'given a valid layer model containing one active curve', function () {
+
+            itemOne.isActive(true);
+
+            var moveToCalled = false;
+            var bezierCurveToCalled = false;
+            var beginPathCalled = false;
+            var strokeCalled = false;
+            var arcCalled = false;
+            var fillCalled = false;
+
+            var ctx = {
+                clearRect: function () {},
+                beginPath: function () {
+                    beginPathCalled = true;
+                },
+                moveTo: function (x, y) {
+                    expectValidPixelCoordinate(x, 0, CANVAS_WIDTH);
+                    expectValidPixelCoordinate(y, 0, CANVAS_HEIGHT);
+
+                    moveToCalled = true;
+                },
+                bezierCurveTo: function (xB, yB, xC, yC, xD, yD) {
+                    expectValidPixelCoordinate(xB, 0, CANVAS_WIDTH);
+                    expectValidPixelCoordinate(yB, 0, CANVAS_HEIGHT);
+                    expectValidPixelCoordinate(xC, 0, CANVAS_WIDTH);
+                    expectValidPixelCoordinate(yC, 0, CANVAS_HEIGHT);
+                    expectValidPixelCoordinate(xD, 0, CANVAS_WIDTH);
+                    expectValidPixelCoordinate(yD, 0, CANVAS_HEIGHT);
+
+                    bezierCurveToCalled = true;
+                },
+                stroke: function () {
+                    strokeCalled = true;
+                },
+                arc: function (x, y) {
+                    expectValidPixelCoordinate(x, 0, CANVAS_WIDTH);
+                    expectValidPixelCoordinate(y, 0, CANVAS_HEIGHT);
+
+                    arcCalled = true;
+                },
+                fill: function () {
+                    fillCalled = true;
+                },
+                save: function () {},
+                restore: function () {}
+            };
+
+            var renderer = new Renderer(null, ctx, CANVAS_WIDTH, CANVAS_HEIGHT, layerBucket);
+
+            renderer.drawScene();
+
+            expect(moveToCalled).toBeTruthy();
+            expect(bezierCurveToCalled).toBeTruthy();
+            expect(beginPathCalled).toBeTruthy();
+            expect(strokeCalled).toBeTruthy();
+
+            expect(arcCalled).toBeTruthy();
+            expect(fillCalled).toBeTruthy();
+
+            expect(ctx.fillStyle).toBe('white');
+            expect(ctx.strokeStyle).toBe('blue');
+        });
+
+        beforeEach(initCurve);
     });
 
     describe('as a caller I want to render lines & active lines on the screen', function () {
@@ -371,6 +487,15 @@ define(['render/Renderer', 'model/Layer', 'model/Rectangle', 'model/Line', 'mode
 
     function initLine() {
         items = ko.observableArray([new Line('onlyItem', 10, 15, 100, 150)]);
+        layers = ko.observableArray([
+            new Layer('layerOne', items, 'line')
+        ]);
+
+        init();
+    }
+
+    function initCurve() {
+        items = ko.observableArray([new Curve('onlyItem', 100, 100, 100, 50, 200, 50, 200, 100)]);
         layers = ko.observableArray([
             new Layer('layerOne', items, 'line')
         ]);

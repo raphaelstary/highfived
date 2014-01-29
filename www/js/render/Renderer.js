@@ -1,4 +1,4 @@
-define(['math/Vectors'], function (Vectors) {
+define(['math/Vectors', 'model/Line'], function (Vectors, Line) {
     /**
      * main editor render class
      *
@@ -42,9 +42,17 @@ define(['math/Vectors'], function (Vectors) {
                     layer.items.forEach(function (item) {
                         if (!item.isHidden()) {
                             if (item.isActive()) {
-                                self._drawActiveLine(item.xPointA(), item.yPointA(), item.xPointB(), item.yPointB(), 'blue');
+                                if (item instanceof Line)
+                                    self._drawActiveLine(item.xPointA(), item.yPointA(), item.xPointB(), item.yPointB(), 'blue');
+                                else
+                                    self._drawActiveCurve(item.xPointA(), item.yPointA(), item.xPointB(), item.yPointB(),
+                                        item.xPointC(), item.yPointC(), item.xPointD(), item.yPointD(), 'blue');
                             } else {
-                                self._drawLine(item.xPointA(), item.yPointA(), item.xPointB(), item.yPointB());
+                                if (item instanceof Line)
+                                    self._drawLine(item.xPointA(), item.yPointA(), item.xPointB(), item.yPointB());
+                                else
+                                    self._drawCurve(item.xPointA(), item.yPointA(), item.xPointB(), item.yPointB(),
+                                        item.xPointC(), item.yPointC(), item.xPointD(), item.yPointD());
                             }
                         }
                     });
@@ -80,6 +88,30 @@ define(['math/Vectors'], function (Vectors) {
         this.screenCtx.moveTo(xPointA, yPointA);
         this.screenCtx.lineTo(xPointB, yPointB);
         this.screenCtx.stroke();
+    };
+
+    Renderer.prototype._drawCurve = function (xPointA, yPointA, xPointB, yPointB, xPointC, yPointC, xPointD, yPointD) {
+        this.screenCtx.beginPath();
+        this.screenCtx.moveTo(xPointA, yPointA);
+        this.screenCtx.bezierCurveTo(xPointB, yPointB, xPointC, yPointC, xPointD, yPointD);
+        this.screenCtx.stroke();
+    };
+
+    Renderer.prototype._drawActiveCurve = function (xPointA, yPointA, xPointB, yPointB, xPointC, yPointC, xPointD,
+                                                    yPointD, color) {
+        this.screenCtx.save();
+
+        this._setColor(color);
+        this._drawCurve(xPointA, yPointA, xPointB, yPointB, xPointC, yPointC, xPointD, yPointD);
+
+        this._drawCirclePoint(xPointA, yPointA);
+        this._drawCirclePoint(xPointB, yPointB);
+        this._drawCirclePoint(xPointC, yPointC);
+        this._drawCirclePoint(xPointD, yPointD);
+
+        this._drawCirclePoint((xPointD - xPointA) / 2, (yPointD - yPointA) / 2);
+
+        this.screenCtx.restore();
     };
 
     Renderer.prototype._drawActiveLine = function (xPointA, yPointA, xPointB, yPointB, color) {
