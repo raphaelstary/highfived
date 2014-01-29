@@ -1723,7 +1723,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
                 .fn('xPointD').toBe(200).fn('yPointD').toBe(100);
         });
 
-        it("should change item's point A coordinates " +
+        it("should change item's point B coordinates " +
             "when moving the mouse cursor " +
             "given one item was selected " +
             " and the 'change point a' action point was selected", function () {
@@ -1744,7 +1744,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
                 .fn('xPointD').toBe(200).fn('yPointD').toBe(100);
         });
 
-        it("should change item's point A coordinates " +
+        it("should change item's point B coordinates " +
             "when moving the mouse cursor to its end position " +
             "given one item was selected " +
             " and the 'change point a' action point was selected", function () {
@@ -1762,6 +1762,48 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
             expectItem(itemOne).fn('xPointA').toBe(100).fn('yPointA').toBe(100)
                 .fn('xPointB').toBe(50).fn('yPointB').toBe(90)
                 .fn('xPointC').toBe(200).fn('yPointC').toBe(50)
+                .fn('xPointD').toBe(200).fn('yPointD').toBe(100);
+        });
+
+        it("should change item's point C coordinates " +
+            "when moving the mouse cursor " +
+            "given one item was selected " +
+            " and the 'change point a' action point was selected", function () {
+
+            selectItemAndSetAction(PointerAction.CHANGE_POINT_C);
+
+            var cut = new ToolMouseHandler(layerBucket, collisionDetector, actionInterpreter);
+
+            cut.handleDown({clientX: 100, clientY: 100});
+
+            cut.handleMove({clientX: 50, clientY: 90});
+
+            expect(layerOneItems.length).toBe(1);
+
+            expectItem(itemOne).fn('xPointA').toBe(100).fn('yPointA').toBe(100)
+                .fn('xPointB').toBe(100).fn('yPointB').toBe(50)
+                .fn('xPointC').toBe(50).fn('yPointC').toBe(90)
+                .fn('xPointD').toBe(200).fn('yPointD').toBe(100);
+        });
+
+        it("should change item's point C coordinates " +
+            "when moving the mouse cursor to its end position " +
+            "given one item was selected " +
+            " and the 'change point a' action point was selected", function () {
+
+            selectItemAndSetAction(PointerAction.CHANGE_POINT_C);
+
+            var cut = new ToolMouseHandler(layerBucket, collisionDetector, actionInterpreter);
+
+            cut.handleDown({clientX: 100, clientY: 100});
+
+            cut.handleUp({clientX: 50, clientY: 90});
+
+            expect(layerOneItems.length).toBe(1);
+
+            expectItem(itemOne).fn('xPointA').toBe(100).fn('yPointA').toBe(100)
+                .fn('xPointB').toBe(100).fn('yPointB').toBe(50)
+                .fn('xPointC').toBe(50).fn('yPointC').toBe(90)
                 .fn('xPointD').toBe(200).fn('yPointD').toBe(100);
         });
 
