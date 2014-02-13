@@ -23,6 +23,9 @@ define(['model/Item', 'lib/knockout'], function (Item, ko) {
         this.yPointC = ko.observable(yPointC).extend({integer: null});
         this.xPointD = ko.observable(xPointD).extend({integer: null});
         this.yPointD = ko.observable(yPointD).extend({integer: null});
+
+        this.xCenterPoint = 0;
+        this.yCenterPoint = 0;
     }
 
     Curve.prototype = Object.create(Item.prototype);

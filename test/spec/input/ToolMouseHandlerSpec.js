@@ -1857,47 +1857,51 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
 
     describe("as a user I want to move an existing bezier curve", function () {
 
-//        it("should change item's x & y coordinates, " +
-//            "when moving mouse cursor " +
-//            "given one item has been selected " +
-//            " and the 'move' action point has been selected", function () {
-//
-//            selectItemAndSetAction(PointerAction.MOVE);
-//
-//            var cut = new ToolMouseHandler(layerBucket, collisionDetector, actionInterpreter);
-//
-//            cut.handleDown({clientX: 150, clientY: 100});
-//
-//            cut.handleMove({clientX: 150, clientY: 200});
-//
-//            expect(layerOneItems.length).toBe(1);
-//
-//            expectItem(itemOne).fn('xPointA').toBe(100).fn('yPointA').toBe(100)
-//                .fn('xPointB').toBe(100).fn('yPointB').toBe(50)
-//                .fn('xPointC').toBe(200).fn('yPointC').toBe(50)
-//                .fn('xPointD').toBe(200).fn('yPointD').toBe(100);
-//        });
-//
-//        it("should change item's x & y coordinates, " +
-//            "when moving mouse to end position cursor " +
-//            "given one item has been selected " +
-//            " and the 'move' action point has been selected", function () {
-//
-//            selectItemAndSetAction(PointerAction.MOVE);
-//
-//            var cut = new ToolMouseHandler(layerBucket, collisionDetector, actionInterpreter);
-//
-//            cut.handleDown({clientX: 150, clientY: 100});
-//
-//            cut.handleUp({clientX: 150, clientY: 200});
-//
-//            expect(layerOneItems.length).toBe(1);
-//
-//            expectItem(itemOne).fn('xPointA').toBe(100).fn('yPointA').toBe(100)
-//                .fn('xPointB').toBe(100).fn('yPointB').toBe(50)
-//                .fn('xPointC').toBe(200).fn('yPointC').toBe(50)
-//                .fn('xPointD').toBe(200).fn('yPointD').toBe(100);
-//        });
+        it("should change item's x & y coordinates, " +
+            "when moving mouse cursor " +
+            "given one item has been selected " +
+            " and the 'move' action point has been selected", function () {
+
+            selectItemAndSetAction(PointerAction.MOVE);
+            itemOne.xCenterPoint = 150;
+            itemOne.yCenterPoint = 25;
+
+            var cut = new ToolMouseHandler(layerBucket, collisionDetector, actionInterpreter);
+
+            cut.handleDown({clientX: 150, clientY: 25});
+
+            cut.handleMove({clientX: 200, clientY: 75});
+
+            expect(layerOneItems.length).toBe(1);
+
+            expectItem(itemOne).fn('xPointA').toBe(150).fn('yPointA').toBe(150)
+                .fn('xPointB').toBe(150).fn('yPointB').toBe(100)
+                .fn('xPointC').toBe(250).fn('yPointC').toBe(100)
+                .fn('xPointD').toBe(250).fn('yPointD').toBe(150);
+        });
+
+        it("should change item's x & y coordinates, " +
+            "when moving mouse to end position cursor " +
+            "given one item has been selected " +
+            " and the 'move' action point has been selected", function () {
+
+            selectItemAndSetAction(PointerAction.MOVE);
+            itemOne.xCenterPoint = 150;
+            itemOne.yCenterPoint = 25;
+
+            var cut = new ToolMouseHandler(layerBucket, collisionDetector, actionInterpreter);
+
+            cut.handleDown({clientX: 150, clientY: 25});
+
+            cut.handleUp({clientX: 200, clientY: 75});
+
+            expect(layerOneItems.length).toBe(1);
+
+            expectItem(itemOne).fn('xPointA').toBe(150).fn('yPointA').toBe(150)
+                .fn('xPointB').toBe(150).fn('yPointB').toBe(100)
+                .fn('xPointC').toBe(250).fn('yPointC').toBe(100)
+                .fn('xPointD').toBe(250).fn('yPointD').toBe(150);
+        });
 
         beforeEach(function() {
             setUpLayerWithOneCurve();

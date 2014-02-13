@@ -377,6 +377,9 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'model/Curve', 'input/P
 
         else if (this.activeAction === PointerAction.CHANGE_POINT_D)
             this._changePointD(event);
+
+        else if (this.activeAction === PointerAction.MOVE)
+            this._moveCurve(event);
     };
 
     ToolMouseHandler.prototype._transformToCurveFromA = function (event) {
@@ -401,6 +404,22 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'model/Curve', 'input/P
         this._removeStartedShape();
         this.layerBucket.activeLayer.items.push(curve);
 //        this._activateItem(curve)
+    };
+
+    ToolMouseHandler.prototype._moveCurve = function (event) {
+        var delta = {
+            x: event.clientX - this.activeShape.xCenterPoint,
+            y: event.clientY - this.activeShape.yCenterPoint
+        };
+
+        this.activeShape.xPointA(this.activeShape.xPointA() + delta.x);
+        this.activeShape.yPointA(this.activeShape.yPointA() + delta.y);
+        this.activeShape.xPointB(this.activeShape.xPointB() + delta.x);
+        this.activeShape.yPointB(this.activeShape.yPointB() + delta.y);
+        this.activeShape.xPointC(this.activeShape.xPointC() + delta.x);
+        this.activeShape.yPointC(this.activeShape.yPointC() + delta.y);
+        this.activeShape.xPointD(this.activeShape.xPointD() + delta.x);
+        this.activeShape.yPointD(this.activeShape.yPointD() + delta.y);
     };
 
     ToolMouseHandler.prototype._moveLine = function (event) {
