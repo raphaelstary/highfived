@@ -181,5 +181,12 @@ define(['math/Vectors', 'model/Line'], function (Vectors, Line) {
         this.screenCtx.strokeStyle = color;
     };
 
+    Renderer.prototype.resize = function (width, height) {
+        this.screen.width = width;
+        this.screen.height = height;
+        this.screenWidth = width;
+        this.screenHeight = height;
+    };
+
     return Renderer;
 });

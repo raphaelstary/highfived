@@ -82,8 +82,8 @@
                                                data-bind="value: xPoint">
                                     </div>
                                     <input id="xpointrange" type="range" style="width: 90%"
-                                           data-bind="visible: showRangeXPoint, value: xPoint, attr: {max: $root.MAX_RANGE},
-                                       event: {click: $root.activateItem.bind($root)}">
+                                           data-bind="visible: showRangeXPoint, value: xPoint, valueUpdate: 'input',
+                                           attr: {max: $root.MAX_RANGE}, event: {click: $root.activateItem.bind($root)}">
                                 </div>
                             </div>
 
@@ -98,7 +98,7 @@
                                     </div>
                                     <input id="ypointrange" type="range" style="width: 90%"
                                            data-bind="visible: showRangeYPoint, value: yPoint, attr: {max: $root.MAX_RANGE},
-                                       event: {click: $root.activateItem.bind($root)}">
+                                       event: {click: $root.activateItem.bind($root)}, valueUpdate: 'input'">
                                 </div>
                             </div>
 
@@ -113,7 +113,7 @@
                                     </div>
                                     <input id="widthrange" type="range" style="width: 90%"
                                            data-bind="visible: showRangeWidth, value: width, attr: {max: $root.MAX_RANGE},
-                                       event: {click: $root.activateItem.bind($root)}">
+                                       event: {click: $root.activateItem.bind($root)}, valueUpdate: 'input'">
                                 </div>
                             </div>
 
@@ -129,7 +129,7 @@
                                     </div>
                                     <input id="heightrange" type="range" style="width: 90%"
                                            data-bind="visible: showRangeHeight, value: height, attr: {max: $root.MAX_RANGE},
-                                       event: {click: $root.activateItem.bind($root)}">
+                                       event: {click: $root.activateItem.bind($root)}, valueUpdate: 'input'">
                                 </div>
                             </div>
 
@@ -144,7 +144,7 @@
                                     </div>
                                     <input id="xpointarange" type="range" style="width: 90%"
                                            data-bind="visible: showRangeXPointA, value: xPointA, attr: {max: $root.MAX_RANGE},
-                                       event: {click: $root.activateItem.bind($root)}">
+                                       event: {click: $root.activateItem.bind($root)}, valueUpdate: 'input'">
                                 </div>
                             </div>
 
@@ -159,7 +159,7 @@
                                     </div>
                                     <input id="ypointarange" type="range" style="width: 90%"
                                            data-bind="visible: showRangeYPointA, value: yPointA, attr: {max: $root.MAX_RANGE},
-                                       event: {click: $root.activateItem.bind($root)}">
+                                       event: {click: $root.activateItem.bind($root)}, valueUpdate: 'input'">
                                 </div>
                             </div>
 
@@ -174,7 +174,7 @@
                                     </div>
                                     <input id="xpointbrange" type="range" style="width: 90%"
                                            data-bind="visible: showRangeXPointB, value: xPointB, attr: {max: $root.MAX_RANGE},
-                                       event: {click: $root.activateItem.bind($root)}">
+                                       event: {click: $root.activateItem.bind($root)}, valueUpdate: 'input'">
                                 </div>
                             </div>
 
@@ -189,7 +189,7 @@
                                     </div>
                                     <input id="ypointbrange" type="range" style="width: 90%"
                                            data-bind="visible: showRangeYPointB, value: yPointB, attr: {max: $root.MAX_RANGE},
-                                       event: {click: $root.activateItem.bind($root)}">
+                                       event: {click: $root.activateItem.bind($root)}, valueUpdate: 'input'">
                                 </div>
                             </div>
 
@@ -205,7 +205,7 @@
                                     </div>
                                     <input id="radiusrange" type="range" style="width: 90%"
                                            data-bind="visible: showRangeRadius, value: radius, attr: {max: $root.MAX_RANGE},
-                                       event: {click: $root.activateItem.bind($root)}">
+                                       event: {click: $root.activateItem.bind($root)}, valueUpdate: 'input'">
                                 </div>
                             </div>
 
@@ -238,9 +238,24 @@
             <span class="glyphicon " data-bind="css: {'glyphicon-play': isPause, 'glyphicon-pause': isPlay}"></span>
         </a>
         <a href="#" class="navbar-link" data-bind="click: toggleGhostMapping, visible: isPlay,
-            css: {pink: isGhostMappingActive}">
+            css: {pink: isGhostMappingActive}"> <!-- aka onion skinning -->
             <span class="glyphicon glyphicon-film"></span>
         </a>
+    </p>
+
+
+    <form class="navbar-form navbar-left">
+        <div class="form-group" style="width: 60px">
+            <label for="zoomlevel" class="sr-only">zoom</label>
+            <input id="zoomlevel" type="text" class="form-control" placeholder="zoom">
+        </div>
+        %
+    </form>
+    <p class="navbar-text">
+        <a href="#" class="navbar-link">
+            <span class="glyphicon glyphicon-zoom-in"></span>
+        </a>
+        <span class="glyphicon glyphicon-zoom-out"></span>
     </p>
 
     <div class="btn-group dropup pull-right navbar-text">
