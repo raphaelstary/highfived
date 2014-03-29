@@ -1,6 +1,8 @@
 define(['lib/knockout'], function (ko) {
 
-    function ControlBarView(showLayerTool) {
+    function ControlBarView(layerBucket, showLayerTool) {
+        this.layerBucket = layerBucket;
+
         var self = this;
         this.isPlay = ko.observable(false);
 
@@ -36,7 +38,25 @@ define(['lib/knockout'], function (ko) {
     };
 
     ControlBarView.prototype.exportStuff = function () {
-        console.log("export the stuff");
+        for (var i = 0; i < this.layerBucket.layers().length; i++) {
+            var layer = this.layerBucket.layers()[i];
+            if (layer.type === 'circle') {
+                var arr = [];
+                layer.items.forEach(function (elem) {
+                    arr.push({
+                        x: elem.xPoint(),
+                        y: elem.yPoint(),
+                        radius: elem.radius(),
+                        color: 'green'
+                    });
+                });
+
+                var txtArea = document.getElementById('textexport');
+                txtArea.value = JSON.stringify(arr);
+
+                break;
+            }
+        }
     };
 
     return ControlBarView;

@@ -37,7 +37,7 @@ define(['lib/knockout', 'view/ControlBarView', 'view/LayerToolView', 'model/Fact
             var showLayerTool = ko.observable(false);
             var layerBucket = new Factory(this.inputLayers).createLayerModel();
 
-            var controlBarView = new ControlBarView(showLayerTool);
+            var controlBarView = new ControlBarView(layerBucket, showLayerTool);
             ko.applyBindings(controlBarView, document.getElementById('control-bar'));
 
             var layerToolView = new LayerToolView(layerBucket, showLayerTool);
