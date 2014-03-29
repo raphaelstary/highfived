@@ -42,6 +42,8 @@ section#layers-tool {
     width: 225px;
     right: 10px;
     top: 10px;
+    max-height: 95%;
+    overflow-y: scroll;
 }
 
 section .list-group-item {
@@ -123,4 +125,33 @@ li.active > .badge {
     height: 20px;
     padding: 5px 10px !important;
     font-size: 10px;
+}
+
+.smallmenu {
+    font-size: 10px;
+}
+
+.smallnav {
+    font-size: 11px;
+}
+
+.navbar {
+    min-height: 15px;
+}
+
+.navbar-text {
+    float: left;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.navbar-form {
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+.badge {
+    /*padding: 3px 7px;*/
+    font-size: 10px;
+    padding-bottom: 1px;
 }
