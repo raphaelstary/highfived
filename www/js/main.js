@@ -1,11 +1,11 @@
 require(['view/MainView', 'input/ToolMouseHandler', 'input/RectCollisionDetector', 'input/RectActionInterpreter',
     'input/CircleCollisionDetector', 'input/CircleActionInterpreter', 'input/checkLineCollision',
     'input/LineActionInterpreter', 'render/getRequestAnimationFrame', 'render/Loop', 'render/Renderer',
-        'render/ResizeBus', 'render/ResizeHandler', 'render/ScreenSizer',
+        'render/ResizeBus', 'render/ResizeHandler', 'render/ScreenSizer', 'input/DragAndDropHandler',
     'lib/domReady', 'lib/bootstrap'],
     function (MainView, ToolMouseHandler, RectCollisionDetector, RectActionInterpreter, CircleCollisionDetector,
               CircleActionInterpreter, checkLineCollision, LineActionInterpreter, getAnimFrame, Loop, Renderer,
-              ResizeBus, ResizeHandler, ScreenSizer) {
+              ResizeBus, ResizeHandler, ScreenSizer, DragAndDropHandler) {
 
         var inputLayers = [
             {
@@ -92,28 +92,15 @@ require(['view/MainView', 'input/ToolMouseHandler', 'input/RectCollisionDetector
 
         window.addEventListener('resize', resizeHandler.handleResize.bind(resizeHandler));
 
-        canvas.addEventListener('dragenter', function (event) {
+        canvas.addEventListener('dragenter', function () {
             event.preventDefault();
         });
-        canvas.addEventListener('dragover', function (event) {
+        canvas.addEventListener('dragover', function () {
             event.preventDefault();
         });
 
-        canvas.addEventListener('drop', function (event) {
-            event.preventDefault();
-
-            var files = event.dataTransfer.files;
-
-            handleFiles(files, event.clientX, event.clientY);
-        });
-
-        function handleFiles(files, x, y) {
-            var img = new Image();
-            img.onload = function () {
-                context.drawImage(img, x, y, img.width, img.height);
-            };
-            img.src = window.URL.createObjectURL(files[0]);
-        }
+        var dropHandler = new DragAndDropHandler(layerModel);
+        canvas.addEventListener('drop', dropHandler.handleDrop.bind(dropHandler));
 
         var loop = new Loop(getAnimFrame(window), renderer);
         loop.start();

@@ -17,13 +17,8 @@ define(['lib/knockout', 'model/Circle', 'model/Line', 'model/Rectangle'], functi
 
         if (layer.isSelected()) {
 
-            if (this.layerBucket.activeLayer != null) {
-                this.layerBucket.activeLayer.isActive(false);
-            }
-
-            layer.isActive(true);
-
-            this.layerBucket.activeLayer = layer;
+            this.layerBucket.deactivateActiveLayer();
+            this.layerBucket.activateLayer(layer);
         }
     };
 

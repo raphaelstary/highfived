@@ -30,6 +30,10 @@ define(['math/Vectors', 'model/Line'], function (Vectors, Line) {
                 if (layer.type === 'rectangle') {
                     layer.items.forEach(function (item) {
                         if (!item.isHidden()) {
+                            if (item.img) {
+                                self.screenCtx.drawImage(item.img, item.xPoint(), item.yPoint(), item.width(), item.height());
+                            }
+
                             if (item.isActive()) {
                                 self._drawActiveRectangle(item.xPoint(), item.yPoint(), item.width(), item.height(), 'red');
                             } else {
