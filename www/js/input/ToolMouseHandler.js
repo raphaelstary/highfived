@@ -10,7 +10,7 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'model/Curve', 'input/P
      * @param {Object} actionInterpreter            checks/chooses if mouse pointer hit an 'action point'
      * @constructor
      */
-    function ToolMouseHandler(layerBucket, collisionDetector, actionInterpreter) {
+    function ToolMouseHandler(layerBucket, collisionDetector, actionInterpreter, zoomLevel) {
         if (layerBucket == null || layerBucket.layers == null)
             throw "Illegal argument: layer model not provided";
 
@@ -22,6 +22,8 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'model/Curve', 'input/P
         this.activeAction = PointerAction.NOTHING;
         this.state = State.CAN_START;
         this.oldItem = {};
+
+        this.zoomLevel = zoomLevel;
     }
 
     /**
@@ -44,11 +46,15 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'model/Curve', 'input/P
 
         this.state = State.STARTED;
 
-        var wasShapeOrActionPointSelected = this._selectShapeOrStartAction(event);
+        var scaleFactor = this._getScaleFactor(),
+            clientX = this._calcClientX(event.clientX, scaleFactor),
+            clientY = this._calcClientY(event.clientY, scaleFactor);
+
+        var wasShapeOrActionPointSelected = this._selectShapeOrStartAction(clientX, clientY);
         if (wasShapeOrActionPointSelected)
             return;
 
-        this._createNewShape(event);
+        this._createNewShape(clientX, clientY);
     };
 
     /**
@@ -67,7 +73,11 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'model/Curve', 'input/P
         if (this.state !== State.STARTED)
             return;
 
-        this._resizeShape(event);
+        var scaleFactor = this._getScaleFactor(),
+            clientX = this._calcClientX(event.clientX, scaleFactor),
+            clientY = this._calcClientY(event.clientY, scaleFactor);
+
+        this._resizeShape(clientX, clientY);
     };
 
     /**
@@ -86,7 +96,11 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'model/Curve', 'input/P
         if (this.state !== State.STARTED)
             return;
 
-        this._resizeShape(event);
+        var scaleFactor = this._getScaleFactor(),
+            clientX = this._calcClientX(event.clientX, scaleFactor),
+            clientY = this._calcClientY(event.clientY, scaleFactor);
+
+        this._resizeShape(clientX, clientY);
 
         if (this._isRect(this.layerBucket.activeItem))
             this._normalizeRect(this.layerBucket.activeItem);
@@ -112,7 +126,19 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'model/Curve', 'input/P
             throw "Illegal argument: " + event;
     };
 
-    ToolMouseHandler.prototype._createNewShape = function (event) {
+    ToolMouseHandler.prototype._getScaleFactor = function () {
+        return this.zoomLevel() / 100;
+    };
+
+    ToolMouseHandler.prototype._calcClientX = function (clientX, scaleFactor) {
+        return Math.floor(clientX / scaleFactor);
+    };
+
+    ToolMouseHandler.prototype._calcClientY = function (clientY, scaleFactor) {
+        return Math.floor(clientY / scaleFactor);
+    };
+
+    ToolMouseHandler.prototype._createNewShape = function (clientX, clientY) {
         if (this.layerBucket.activeLayer == null) {
             //todo test case
             this.state = State.CAN_START;
@@ -121,13 +147,13 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'model/Curve', 'input/P
 
         var item;
         if (this.layerBucket.activeLayer.type === RECTANGLE) {
-            item = new Rectangle('unknown ' + this.counter++, event.clientX, event.clientY, 10, 10);
+            item = new Rectangle('unknown ' + this.counter++, clientX, clientY, 10, 10);
 
         } else if (this.layerBucket.activeLayer.type === LINE) {
-            item = new Line('unknown ' + this.counter++, event.clientX, event.clientY, event.clientX, event.clientY)
+            item = new Line('unknown ' + this.counter++, clientX, clientY, clientX, clientY)
 
         } else if (this.layerBucket.activeLayer.type === CIRCLE) {
-            item = new Circle('unknown ' + this.counter++, event.clientX, event.clientY, 10, 10);
+            item = new Circle('unknown ' + this.counter++, clientX, clientY, 10, 10);
 
         } else {
             //todo test case
@@ -189,20 +215,20 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'model/Curve', 'input/P
         this.layerBucket.activeItem.yPointB(this.oldItem.yPointB);
     };
 
-    ToolMouseHandler.prototype._selectShapeOrStartAction = function (event) {
+    ToolMouseHandler.prototype._selectShapeOrStartAction = function (clientX, clientY) {
         var isPointerShapeCollision = false;
         var isPointerActionPointCollision = false;
 
         const OFF_SET = 2;
         var pointer = new ABRectangle(
-            new Point(event.clientX - OFF_SET, event.clientY - OFF_SET),
-            new Point(event.clientX + OFF_SET, event.clientY + OFF_SET)
+            new Point(clientX - OFF_SET, clientY - OFF_SET),
+            new Point(clientX + OFF_SET, clientY + OFF_SET)
         );
 
         var circlePointer = {
             center: {
-                xPoint: event.clientX,
-                yPoint: event.clientY
+                xPoint: clientX,
+                yPoint: clientY
             },
             radius: OFF_SET
         };
@@ -300,78 +326,79 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'model/Curve', 'input/P
         this.oldItem.yPointB = item.yPointB();
     };
 
-    ToolMouseHandler.prototype._resizeShape = function (event) {
+    ToolMouseHandler.prototype._resizeShape = function (clientX, clientY) {
+
         if (this._isRect(this.layerBucket.activeItem)) {
-            this._resizeRect(event);
+            this._resizeRect(clientX, clientY);
 
         } else if (this._isLine(this.layerBucket.activeItem)) {
-            this._resizeLine(event);
+            this._resizeLine(clientX, clientY);
 
         } else if (this._isCircle(this.layerBucket.activeItem)) {
-            this._resizeCircle(event);
+            this._resizeCircle(clientX, clientY);
 
         } else if (this._isCurve(this.layerBucket.activeItem)) {
-            this._resizeCurve(event);
+            this._resizeCurve(clientX, clientY);
         }
     };
 
-    ToolMouseHandler.prototype._resizeCircle = function (event) {
+    ToolMouseHandler.prototype._resizeCircle = function (clientX, clientY) {
         if (this.activeAction === PointerAction.MOVE)
-            this._changeCenterPoint(event);
+            this._changeCenterPoint(clientX, clientY);
 
         else if (this.activeAction === PointerAction.CREATE_NEW || this.activeAction === PointerAction.RESIZE_RADIUS)
-            this._resizeRadius(event);
+            this._resizeRadius(clientX, clientY);
     };
 
-    ToolMouseHandler.prototype._changeCenterPoint = function (event) {
-        this.layerBucket.activeItem.xPoint(event.clientX);
-        this.layerBucket.activeItem.yPoint(event.clientY);
+    ToolMouseHandler.prototype._changeCenterPoint = function (clientX, clientY) {
+        this.layerBucket.activeItem.xPoint(clientX);
+        this.layerBucket.activeItem.yPoint(clientY);
     };
 
-    ToolMouseHandler.prototype._resizeRadius = function (event) {
-        var radius = Math.sqrt(Math.pow(event.clientX - this.layerBucket.activeItem.xPoint(), 2) +
-            Math.pow(event.clientY - this.layerBucket.activeItem.yPoint(), 2));
+    ToolMouseHandler.prototype._resizeRadius = function (clientX, clientY) {
+        var radius = Math.sqrt(Math.pow(clientX - this.layerBucket.activeItem.xPoint(), 2) +
+            Math.pow(clientY - this.layerBucket.activeItem.yPoint(), 2));
         this.layerBucket.activeItem.radius(Math.floor(radius));
     };
 
-    ToolMouseHandler.prototype._resizeLine = function (event) {
+    ToolMouseHandler.prototype._resizeLine = function (clientX, clientY) {
         if (this.activeAction === PointerAction.CHANGE_POINT_A)
-            this._changePointA(event);
+            this._changePointA(clientX, clientY);
 
         else if (this.activeAction === PointerAction.CREATE_NEW || this.activeAction === PointerAction.CHANGE_POINT_B)
-            this._changePointB(event);
+            this._changePointB(clientX, clientY);
 
         else if (this.activeAction === PointerAction.MOVE)
-            this._moveLine(event);
+            this._moveLine(clientX, clientY);
 
         else if (this.activeAction === PointerAction.TRANSFORM_FROM_POINT_A)
-            this._transformToCurveFromA(event);
+            this._transformToCurveFromA(clientX, clientY);
 
         else if (this.activeAction === PointerAction.TRANSFORM_FROM_POINT_B)
-            this._transformToCurveFromB(event);
+            this._transformToCurveFromB(clientX, clientY);
     };
 
-    ToolMouseHandler.prototype._resizeCurve = function (event) {
+    ToolMouseHandler.prototype._resizeCurve = function (clientX, clientY) {
         if (this.activeAction === PointerAction.CHANGE_POINT_A)
-            this._changePointA(event);
+            this._changePointA(clientX, clientY);
 
         else if (this.activeAction === PointerAction.CHANGE_POINT_B)
-            this._changePointB(event);
+            this._changePointB(clientX, clientY);
 
         else if (this.activeAction === PointerAction.CHANGE_POINT_C)
-            this._changePointC(event);
+            this._changePointC(clientX, clientY);
 
         else if (this.activeAction === PointerAction.CHANGE_POINT_D)
-            this._changePointD(event);
+            this._changePointD(clientX, clientY);
 
         else if (this.activeAction === PointerAction.MOVE)
-            this._moveCurve(event);
+            this._moveCurve(clientX, clientY);
     };
 
-    ToolMouseHandler.prototype._transformToCurveFromA = function (event) {
+    ToolMouseHandler.prototype._transformToCurveFromA = function (clientX, clientY) {
         var curve = new Curve(this.layerBucket.activeItem.name,
             this.layerBucket.activeItem.xPointA(), this.layerBucket.activeItem.yPointA(),
-            event.clientX, event.clientY,
+            clientX, clientY,
             this.layerBucket.activeItem.xPointB(), this.layerBucket.activeItem.yPointB(),
             this.layerBucket.activeItem.xPointB(), this.layerBucket.activeItem.yPointB());
 
@@ -380,11 +407,11 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'model/Curve', 'input/P
 //        this.layerBucket.activateItem(curve)
     };
 
-    ToolMouseHandler.prototype._transformToCurveFromB = function (event) {
+    ToolMouseHandler.prototype._transformToCurveFromB = function (clientX, clientY) {
         var curve = new Curve(this.layerBucket.activeItem.name,
             this.layerBucket.activeItem.xPointA(), this.layerBucket.activeItem.yPointA(),
             this.layerBucket.activeItem.xPointA(), this.layerBucket.activeItem.yPointA(),
-            event.clientX, event.clientY,
+            clientX, clientY,
             this.layerBucket.activeItem.xPointB(), this.layerBucket.activeItem.yPointB());
 
         this._removeStartedShape();
@@ -392,10 +419,10 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'model/Curve', 'input/P
 //        this.layerBucket.activateItem(curve)
     };
 
-    ToolMouseHandler.prototype._moveCurve = function (event) {
+    ToolMouseHandler.prototype._moveCurve = function (clientX, clientY) {
         var delta = {
-            x: event.clientX - this.layerBucket.activeItem.xCenterPoint,
-            y: event.clientY - this.layerBucket.activeItem.yCenterPoint
+            x: clientX - this.layerBucket.activeItem.xCenterPoint,
+            y: clientY - this.layerBucket.activeItem.yCenterPoint
         };
 
         this.layerBucket.activeItem.xPointA(this.layerBucket.activeItem.xPointA() + delta.x);
@@ -408,7 +435,7 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'model/Curve', 'input/P
         this.layerBucket.activeItem.yPointD(this.layerBucket.activeItem.yPointD() + delta.y);
     };
 
-    ToolMouseHandler.prototype._moveLine = function (event) {
+    ToolMouseHandler.prototype._moveLine = function (clientX, clientY) {
         var pointA = {
             xPoint: this.layerBucket.activeItem.xPointA(),
             yPoint: this.layerBucket.activeItem.yPointA()
@@ -428,8 +455,8 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'model/Curve', 'input/P
             yPoint: pointA.yPoint + length * unitVector.y
         };
         var delta = {
-            x: event.clientX - centerPoint.xPoint,
-            y: event.clientY - centerPoint.yPoint
+            x: clientX - centerPoint.xPoint,
+            y: clientY - centerPoint.yPoint
         };
 
         this.layerBucket.activeItem.xPointA(pointA.xPoint + delta.x);
@@ -438,82 +465,82 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'model/Curve', 'input/P
         this.layerBucket.activeItem.yPointB(pointB.yPoint + delta.y);
     };
 
-    ToolMouseHandler.prototype._changePointA = function (event) {
-        this.layerBucket.activeItem.xPointA(event.clientX);
-        this.layerBucket.activeItem.yPointA(event.clientY);
+    ToolMouseHandler.prototype._changePointA = function (clientX, clientY) {
+        this.layerBucket.activeItem.xPointA(clientX);
+        this.layerBucket.activeItem.yPointA(clientY);
     };
 
-    ToolMouseHandler.prototype._changePointB = function (event) {
-        this.layerBucket.activeItem.xPointB(event.clientX);
-        this.layerBucket.activeItem.yPointB(event.clientY);
+    ToolMouseHandler.prototype._changePointB = function (clientX, clientY) {
+        this.layerBucket.activeItem.xPointB(clientX);
+        this.layerBucket.activeItem.yPointB(clientY);
     };
 
-    ToolMouseHandler.prototype._changePointC = function (event) {
-        this.layerBucket.activeItem.xPointC(event.clientX);
-        this.layerBucket.activeItem.yPointC(event.clientY);
+    ToolMouseHandler.prototype._changePointC = function (clientX, clientY) {
+        this.layerBucket.activeItem.xPointC(clientX);
+        this.layerBucket.activeItem.yPointC(clientY);
     };
 
-    ToolMouseHandler.prototype._changePointD = function (event) {
-        this.layerBucket.activeItem.xPointD(event.clientX);
-        this.layerBucket.activeItem.yPointD(event.clientY);
+    ToolMouseHandler.prototype._changePointD = function (clientX, clientY) {
+        this.layerBucket.activeItem.xPointD(clientX);
+        this.layerBucket.activeItem.yPointD(clientY);
     };
 
-    ToolMouseHandler.prototype._resizeRect = function (event) {
+    ToolMouseHandler.prototype._resizeRect = function (clientX, clientY) {
         if (this.activeAction === PointerAction.RESIZE_BOTTOM_AND_RIGHT ||
             this.activeAction === PointerAction.CREATE_NEW) {
-            this._resizeRight(event);
-            this._resizeBottom(event);
+            this._resizeRight(clientX, clientY);
+            this._resizeBottom(clientX, clientY);
 
         } else if (this.activeAction === PointerAction.RESIZE_TOP_AND_LEFT) {
-            this._resizeTop(event);
-            this._resizeLeft(event);
+            this._resizeTop(clientX, clientY);
+            this._resizeLeft(clientX, clientY);
 
         } else if (this.activeAction === PointerAction.RESIZE_TOP_AND_RIGHT) {
-            this._resizeTop(event);
-            this._resizeRight(event);
+            this._resizeTop(clientX, clientY);
+            this._resizeRight(clientX, clientY);
 
         } else if (this.activeAction === PointerAction.RESIZE_BOTTOM_AND_LEFT) {
-            this._resizeLeft(event);
-            this._resizeBottom(event);
+            this._resizeLeft(clientX, clientY);
+            this._resizeBottom(clientX, clientY);
 
         } else if (this.activeAction === PointerAction.RESIZE_RIGHT) {
-            this._resizeRight(event);
+            this._resizeRight(clientX, clientY);
 
         } else if (this.activeAction === PointerAction.RESIZE_BOTTOM) {
-            this._resizeBottom(event);
+            this._resizeBottom(clientX, clientY);
 
         } else if (this.activeAction === PointerAction.RESIZE_LEFT) {
-            this._resizeLeft(event);
+            this._resizeLeft(clientX, clientY);
 
         } else if (this.activeAction === PointerAction.RESIZE_TOP) {
-            this._resizeTop(event);
+            this._resizeTop(clientX, clientY);
 
         } else if (this.activeAction === PointerAction.MOVE) {
-            this._move(event);
+            this._move(clientX, clientY);
         }
     };
 
-    ToolMouseHandler.prototype._resizeRight = function (event) {
-        this.layerBucket.activeItem.width(event.clientX - this.layerBucket.activeItem.xPoint());
+    ToolMouseHandler.prototype._resizeRight = function (clientX, clientY) {
+        this.layerBucket.activeItem.width(clientX - this.layerBucket.activeItem.xPoint());
     };
 
-    ToolMouseHandler.prototype._resizeBottom = function (event) {
-        this.layerBucket.activeItem.height(event.clientY - this.layerBucket.activeItem.yPoint());
+    ToolMouseHandler.prototype._resizeBottom = function (clientX, clientY) {
+        this.layerBucket.activeItem.height(clientY - this.layerBucket.activeItem.yPoint());
     };
 
-    ToolMouseHandler.prototype._resizeTop = function (event) {
-        this.layerBucket.activeItem.height(this.layerBucket.activeItem.height() - (event.clientY - this.layerBucket.activeItem.yPoint()));
-        this.layerBucket.activeItem.yPoint(event.clientY);
+    ToolMouseHandler.prototype._resizeTop = function (clientX, clientY) {
+        this.layerBucket.activeItem.height(this.layerBucket.activeItem.height() - (clientY - this.layerBucket.activeItem.yPoint()));
+        this.layerBucket.activeItem.yPoint(clientY);
     };
 
-    ToolMouseHandler.prototype._resizeLeft = function (event) {
-        this.layerBucket.activeItem.width(this.layerBucket.activeItem.width() - (event.clientX - this.layerBucket.activeItem.xPoint()));
-        this.layerBucket.activeItem.xPoint(event.clientX);
+    ToolMouseHandler.prototype._resizeLeft = function (clientX, clientY) {
+        this.layerBucket.activeItem.width(this.layerBucket.activeItem.width() - (clientX - this.layerBucket.activeItem.xPoint()));
+        this.layerBucket.activeItem.xPoint(clientX);
     };
 
-    ToolMouseHandler.prototype._move = function (event) {
-        this.layerBucket.activeItem.xPoint(event.clientX - Math.floor(this.layerBucket.activeItem.width() / 2));
-        this.layerBucket.activeItem.yPoint(event.clientY - Math.floor(this.layerBucket.activeItem.height() / 2));
+    ToolMouseHandler.prototype._move = function (clientX, clientY) {
+        this.layerBucket.activeItem.xPoint(clientX - Math.floor(this.layerBucket.activeItem.width() / 2));
+        this.layerBucket.activeItem.yPoint(clientY - Math.floor(this.layerBucket.activeItem.height() / 2));
     };
 
     ToolMouseHandler.prototype._normalizeRect = function (rect) {

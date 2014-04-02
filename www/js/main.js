@@ -55,8 +55,9 @@ require(['view/MainView', 'input/ToolMouseHandler', 'input/RectCollisionDetector
                 type: 'rectangle'
             }
         ];
-
-        var layerModel = new MainView(inputLayers).init();
+        var layerData = new MainView(inputLayers).init();
+        var layerModel = layerData.layerBucket;
+        var zoomLevel = layerData.zoomLevel;
 
         var canvas = document.getElementById('editor-ui');
 
@@ -76,14 +77,14 @@ require(['view/MainView', 'input/ToolMouseHandler', 'input/RectCollisionDetector
             checkCircle: CircleCollisionDetector.checkCircle
         };
 
-        var toolMouseHandler = new ToolMouseHandler(layerModel, collisionDetector, actionInterpreter);
+        var toolMouseHandler = new ToolMouseHandler(layerModel, collisionDetector, actionInterpreter, zoomLevel);
 
         canvas.addEventListener('mousedown', toolMouseHandler.handleDown.bind(toolMouseHandler));
         canvas.addEventListener('mousemove', toolMouseHandler.handleMove.bind(toolMouseHandler));
         canvas.addEventListener('mouseup', toolMouseHandler.handleUp.bind(toolMouseHandler));
 
         var context = canvas.getContext('2d');
-        var renderer = new Renderer(canvas, context, canvas.width, canvas.height, layerModel);
+        var renderer = new Renderer(canvas, context, canvas.width, canvas.height, layerModel, zoomLevel);
         renderer.resize(window.innerWidth, window.innerHeight);
 
         var resizeBus = new ResizeBus();
@@ -99,7 +100,7 @@ require(['view/MainView', 'input/ToolMouseHandler', 'input/RectCollisionDetector
             event.preventDefault();
         });
 
-        var dropHandler = new DragAndDropHandler(layerModel);
+        var dropHandler = new DragAndDropHandler(layerModel, zoomLevel);
         canvas.addEventListener('drop', dropHandler.handleDrop.bind(dropHandler));
 
         var loop = new Loop(getAnimFrame(window), renderer);

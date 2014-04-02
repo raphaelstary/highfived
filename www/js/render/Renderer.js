@@ -9,12 +9,13 @@ define(['math/Vectors', 'model/Line'], function (Vectors, Line) {
      * @param {LayerBucket} layerBucket                           the layer model for the whole editor with its items
      * @constructor
      */
-    function Renderer(screen, screenCtx, width, height, layerBucket) {
+    function Renderer(screen, screenCtx, width, height, layerBucket, zoomLevel) {
         this.screen = screen;
         this.screenCtx = screenCtx;
         this.screenWidth = width;
         this.screenHeight = height;
         this.layerBucket = layerBucket;
+        this.zoomLevel = zoomLevel;
     }
 
     /**
@@ -22,6 +23,8 @@ define(['math/Vectors', 'model/Line'], function (Vectors, Line) {
      */
     Renderer.prototype.drawScene = function () {
         this._clearScreen();
+
+        this._setScaleFactor();
 
         var self = this;
         this.layerBucket.layers.forEach(function (layer) {
@@ -31,7 +34,10 @@ define(['math/Vectors', 'model/Line'], function (Vectors, Line) {
                     layer.items.forEach(function (item) {
                         if (!item.isHidden()) {
                             if (item.img) {
-                                self.screenCtx.drawImage(item.img, item.xPoint(), item.yPoint(), item.width(), item.height());
+                                self.screenCtx.drawImage(item.img, item.xPoint() * self.scaleFactor,
+                                        item.yPoint() * self.scaleFactor,
+                                        item.width() * self.scaleFactor,
+                                        item.height() * self.scaleFactor);
                             }
 
                             if (item.isActive()) {
@@ -74,6 +80,8 @@ define(['math/Vectors', 'model/Line'], function (Vectors, Line) {
                 }
             }
         });
+
+        this._drawRectangle(0, 0, this.screenWidth, this.screenHeight);
     };
 
     Renderer.prototype._drawActiveCircle = function (xPoint, yPoint, radius, color) {
@@ -89,15 +97,17 @@ define(['math/Vectors', 'model/Line'], function (Vectors, Line) {
 
     Renderer.prototype._drawLine = function (xPointA, yPointA, xPointB, yPointB) {
         this.screenCtx.beginPath();
-        this.screenCtx.moveTo(xPointA, yPointA);
-        this.screenCtx.lineTo(xPointB, yPointB);
+        this.screenCtx.moveTo(xPointA  * this.scaleFactor, yPointA  * this.scaleFactor);
+        this.screenCtx.lineTo(xPointB  * this.scaleFactor, yPointB  * this.scaleFactor);
         this.screenCtx.stroke();
     };
 
     Renderer.prototype._drawCurve = function (xPointA, yPointA, xPointB, yPointB, xPointC, yPointC, xPointD, yPointD) {
         this.screenCtx.beginPath();
-        this.screenCtx.moveTo(xPointA, yPointA);
-        this.screenCtx.bezierCurveTo(xPointB, yPointB, xPointC, yPointC, xPointD, yPointD);
+        this.screenCtx.moveTo(xPointA * this.scaleFactor, yPointA * this.scaleFactor);
+        this.screenCtx.bezierCurveTo(xPointB * this.scaleFactor,
+            yPointB * this.scaleFactor, xPointC * this.scaleFactor, yPointC * this.scaleFactor,
+            xPointD * this.scaleFactor, yPointD * this.scaleFactor);
         this.screenCtx.stroke();
     };
 
@@ -167,7 +177,7 @@ define(['math/Vectors', 'model/Line'], function (Vectors, Line) {
 
     Renderer.prototype._drawCircle = function (xPoint, yPoint, radius, fillColor) {
         this.screenCtx.beginPath();
-        this.screenCtx.arc(xPoint, yPoint, radius, 0, 2 * Math.PI, false);
+        this.screenCtx.arc(xPoint * this.scaleFactor, yPoint * this.scaleFactor, radius * this.scaleFactor, 0, 2 * Math.PI, false);
 
         if (fillColor !== undefined) {
             this.screenCtx.fillStyle = fillColor;
@@ -178,7 +188,7 @@ define(['math/Vectors', 'model/Line'], function (Vectors, Line) {
     };
 
     Renderer.prototype._drawRectangle = function (xPoint, yPoint, width, height) {
-        this.screenCtx.strokeRect(xPoint - 0.5, yPoint - 0.5, width, height);
+        this.screenCtx.strokeRect(xPoint * this.scaleFactor - 0.5, yPoint * this.scaleFactor - 0.5, width * this.scaleFactor, height * this.scaleFactor);
     };
 
     Renderer.prototype._setColor = function (color) {
@@ -190,6 +200,10 @@ define(['math/Vectors', 'model/Line'], function (Vectors, Line) {
         this.screen.height = height;
         this.screenWidth = width;
         this.screenHeight = height;
+    };
+
+    Renderer.prototype._setScaleFactor = function () {
+        this.scaleFactor = this.zoomLevel() / 100;
     };
 
     return Renderer;

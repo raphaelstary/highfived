@@ -1,6 +1,6 @@
 define(['lib/knockout'], function (ko) {
 
-    function ControlBarView(showLayerTool) {
+    function ControlBarView(showLayerTool, zoomLevel) {
         var self = this;
         this.isPlay = ko.observable(false);
 
@@ -11,6 +11,7 @@ define(['lib/knockout'], function (ko) {
         this.isBuildPointerActive = ko.observable(false);
         this.isGhostMappingActive = ko.observable(false);
         this.showLayerTool = showLayerTool;
+        this.zoomLevel = zoomLevel;
     }
 
     ControlBarView.prototype.playPointer = function () {
@@ -37,6 +38,14 @@ define(['lib/knockout'], function (ko) {
 
     ControlBarView.prototype.exportStuff = function () {
         console.log("export the stuff");
+    };
+
+    ControlBarView.prototype.zoomIn = function () {
+        this.zoomLevel(this.zoomLevel() + 25);
+    };
+
+    ControlBarView.prototype.zoomOut = function () {
+        this.zoomLevel(this.zoomLevel() - 25);
     };
 
     return ControlBarView;
