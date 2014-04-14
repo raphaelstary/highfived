@@ -1,0 +1,90 @@
+{
+    "name": "string",
+    "width": 1920,
+    "height": 1080,
+    "camera": {
+        "x": 60,
+        "y": 70,
+        "path": {
+            "endX": 0,
+            "endY": 10,
+            "duration": 100,
+            "length": 10,
+            "transition": "LINEAR",
+            "add": "START_SCENE",
+            "remove": "ACTION_X",
+            "trigger": "CAMERA_END",
+            "loop": false,
+            "delay": 50
+        }
+    },
+    "entities": [
+        {
+            "name": "test1",
+            "x": 50,
+            "y": 40,
+            "image": {
+                "fileName": "test.png",
+                "add": "START_SCENE",
+                "delay": 5,
+                "remove": "HIT_TARGET_TEST1",
+                "zIndex": 0
+            },
+            "path": {
+                "endX": 0,
+                "endY": 10,
+                "duration": 100,
+                "length": 10,
+                "transition": "LINEAR",
+                "add": "START_SCENE",
+                "remove": "ACTION_X",
+                "trigger": "CAMERA_END",
+                "loop": false,
+                "delay": 50
+            },
+            "touchArea": {
+                "width": 100,
+                "height": 100,
+                "add": "START_SCENE",
+                "remove": "ACTION_X",
+                "delay": 50,
+                "trigger": "TEST_HIT"
+            },
+            "target": {
+                "radius": 40,
+                "add": "START_SCENE",
+                "remove": "TIME_OVER",
+                "delay": 10,
+                "trigger": "HIT_TARGET_TEST1"
+            },
+            "sprite": {
+                "frames": [
+                    {
+                        "fileName": "frame01.png"
+                    },
+                    {
+                        "fileName": "frame02.png"
+                    },
+                    {
+                        "fileName": "frame03.png"
+                    }
+                ],
+                "add": "HIT_TARGET_TEST1",
+                "remove": "ACTION_Y",
+                "delay": 50,
+                "trigger": "ROLL_SCREEN",
+                "loop": false,
+                "duration": 2,
+                "zIndex": 0
+            }
+        }
+    ],
+    "customEvents": [
+        "ACTION_X",
+        "ACTION_Y",
+        "ROLL_SCREEN",
+        "HIT_TARGET_TEST1",
+        "TIME_OVER",
+        "CAMERA_END"
+    ]
+}
