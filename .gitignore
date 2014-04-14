@@ -18,3 +18,6 @@ node_modules
 www/js/lib
 www-built
 www-ghpages
+
+*.sublime-project
+*.sublime-workspace
