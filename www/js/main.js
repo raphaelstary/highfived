@@ -7,55 +7,8 @@ require(['view/MainView', 'input/ToolMouseHandler', 'input/RectCollisionDetector
               CircleActionInterpreter, checkLineCollision, LineActionInterpreter, getAnimFrame, Loop, Renderer,
               ResizeBus, ResizeHandler, ScreenSizer, DragAndDropHandler) {
 
-        var inputLayers = [
-            {
-                id: 'event',
-                name: 'event area',
-                items: [],
-                type: 'rectangle'
-            },
-            {
-                id: 'physic',
-                name: 'physics body',
-                type: 'rectangle'
-            },
-            {
-                id: 'collision',
-                name: 'collision area',
-                type: 'rectangle'
-            },
-            {
-                id: 'animated',
-                name: 'animated object',
-                type: 'rectangle'
-            },
-            {
-                id: 'transition',
-                name: 'transition path',
-                type: 'line'
-            },
-            {
-                id: 'ai',
-                name: 'AI point',
-                type: 'circle'
-            },
-            {
-                id: 'static',
-                name: 'static image',
-                type: 'rectangle'
-            },
-            {
-                id: 'vector',
-                name: 'vector field',
-                type: 'rectangle'
-            },
-            {
-                id: 'touch',
-                name: 'touch area',
-                type: 'rectangle'
-            }
-        ];
-        var layerData = new MainView(inputLayers).init();
+
+        var layerData = new MainView().init();
         var layerModel = layerData.layerBucket;
         var zoomLevel = layerData.zoomLevel;
 

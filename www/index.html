@@ -11,8 +11,36 @@
 
 <section id="layers-tool" class="panel panel-default smallmenu" data-bind="visible: showLayerTool">
 <div class="panel-heading">
+
     <input type="search" class="form-control input-sm" placeholder="Search"
            data-bind="value: filter, valueUpdate: 'input'">
+
+    <div style="font-size: 13px; padding-top: 5px">
+        <a href="#" style="padding-left: 5px">
+            <span class="glyphicon glyphicon-plus"></span>
+        </a>
+        <a href="#" style="padding-left: 5px">
+            <span class="glyphicon glyphicon-picture"></span>
+        </a>
+        <a href="#" style="padding-left: 5px">
+            <span class="glyphicon glyphicon-facetime-video"></span>
+        </a>
+        <a href="#" style="padding-left: 5px">
+            <span class="glyphicon glyphicon-road"></span>
+        </a>
+        <a href="#" style="padding-left: 5px">
+            <span class="glyphicon glyphicon-hand-up"></span>
+        </a>
+        <a href="#" style="padding-left: 5px" class="active-light">
+            <span class="glyphicon glyphicon-screenshot"></span>
+        </a>
+        <a href="#" style="padding-left: 5px">
+            <span class="glyphicon glyphicon-calendar"></span>
+        </a>
+        <a href="#" style="padding-left: 5px">
+            <span class="glyphicon glyphicon-resize-small"></span>
+        </a>
+    </div>
 </div>
 <div class="panel-body">
     <ul class="list-group" data-bind="foreach: layerBucket.layers">
@@ -247,7 +275,8 @@
     <div class="navbar-form navbar-left">
         <div class="form-group" style="width: 60px">
             <label for="zoomlevel" class="sr-only">zoom</label>
-            <input id="zoomlevel" type="text" class="form-control input-sm" placeholder="zoom" data-bind="value: zoomLevel">
+            <input id="zoomlevel" type="text" class="form-control input-sm" placeholder="zoom"
+                   data-bind="value: zoomLevel">
         </div>
         %
     </div>
