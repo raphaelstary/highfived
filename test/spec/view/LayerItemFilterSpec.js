@@ -1,4 +1,4 @@
-define(['view/LayerItemFilter', 'lib/knockout'], function (LayerItemFilter, ko) {
+define(['../../../www/js/view/EntityFilter', 'lib/knockout'], function (LayerItemFilter, ko) {
 
     describe('filter the entities with their items (view model) with a given input filter term (text)', function () {
 
@@ -30,7 +30,7 @@ define(['view/LayerItemFilter', 'lib/knockout'], function (LayerItemFilter, ko) 
             'when input is no string,' +
             'given a layer model', function () {
 
-            var filter = new LayerItemFilter({entities: layers});
+            var filter = new EntityFilter({entities: layers});
             filter.handle(null);
 
             expect(layers()[0].items().length).toBe(2);
@@ -40,7 +40,7 @@ define(['view/LayerItemFilter', 'lib/knockout'], function (LayerItemFilter, ko) 
             'when input matches one item,' +
             'given a layer model', function () {
 
-            var filter = new LayerItemFilter({entities: layers});
+            var filter = new EntityFilter({entities: layers});
             filter.handle('Two');
 
             expect(layers()[0].items().length).toBe(1);
@@ -51,7 +51,7 @@ define(['view/LayerItemFilter', 'lib/knockout'], function (LayerItemFilter, ko) 
             'when input matches all,' +
             'given a layer model', function () {
 
-            var filter = new LayerItemFilter({entities: layers});
+            var filter = new EntityFilter({entities: layers});
             filter.handle('item');
 
             expect(layers()[0].items().length).toBe(2);
@@ -63,7 +63,7 @@ define(['view/LayerItemFilter', 'lib/knockout'], function (LayerItemFilter, ko) 
             'when input matches item again,' +
             'given one was removed before & there is a layer model', function () {
 
-            var filter = new LayerItemFilter({entities: layers});
+            var filter = new EntityFilter({entities: layers});
             filter.handle('Two');
 
             expect(layers()[0].items().length).toBe(1);
@@ -78,7 +78,7 @@ define(['view/LayerItemFilter', 'lib/knockout'], function (LayerItemFilter, ko) 
             'when items were added again because input matches,' +
             'given one was removed before & there is a layer model', function () {
 
-            var filter = new LayerItemFilter({entities: layers});
+            var filter = new EntityFilter({entities: layers});
             filter.handle('Two');
 
             expect(layers()[0].items().length).toBe(1);
@@ -114,7 +114,7 @@ define(['view/LayerItemFilter', 'lib/knockout'], function (LayerItemFilter, ko) 
                 ])
             });
 
-            var filter = new LayerItemFilter({entities: layers});
+            var filter = new EntityFilter({entities: layers});
             filter.handle('Four');
 
             expect(layers()[0].items().length).toBe(0);

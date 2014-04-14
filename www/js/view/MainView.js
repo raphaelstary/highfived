@@ -1,4 +1,4 @@
-define(['lib/knockout', 'view/ControlBarView', 'view/EntityToolView', 'model/Factory', 'view/LayerItemFilter'],
+define(['lib/knockout', 'view/ControlBarView', 'view/EntityToolView', 'model/Factory', 'EntityFilter'],
     function (ko, ControlBarView, LayerToolView, Factory, LayerItemFilter) {
 
         // filter for numeric input fields
@@ -43,7 +43,7 @@ define(['lib/knockout', 'view/ControlBarView', 'view/EntityToolView', 'model/Fac
             var layerToolView = new EntityToolView(layerBucket, showLayerTool);
             ko.applyBindings(layerToolView, document.getElementById('layers-tool'));
 
-            var itemFilter = new LayerItemFilter(layerBucket);
+            var itemFilter = new EntityFilter(layerBucket);
             layerToolView.filter.subscribe(itemFilter.handle.bind(itemFilter));
 
             return {
