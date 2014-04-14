@@ -7,7 +7,7 @@ define(['model/Factory', 'model/Layer', 'model/Rectangle'], function (Factory, L
             'given undefined', function () {
             var factory = new Factory();
 
-            var actual = factory.createLayerModel().layers;
+            var actual = factory.createLayerModel().entities;
 
             expect(actual().length).toBe(0);
         });
@@ -17,7 +17,7 @@ define(['model/Factory', 'model/Layer', 'model/Rectangle'], function (Factory, L
             'given null', function () {
             var factory = new Factory(null);
 
-            var actual = factory.createLayerModel().layers;
+            var actual = factory.createLayerModel().entities;
 
             expect(actual().length).toBe(0);
         });
@@ -27,7 +27,7 @@ define(['model/Factory', 'model/Layer', 'model/Rectangle'], function (Factory, L
             'given an empty array', function () {
             var factory = new Factory([]);
 
-            var actual = factory.createLayerModel().layers;
+            var actual = factory.createLayerModel().entities;
 
             expect(actual().length).toBe(0);
         });
@@ -37,7 +37,7 @@ define(['model/Factory', 'model/Layer', 'model/Rectangle'], function (Factory, L
             'given undefined', function () {
             var factory = new Factory();
 
-            var actual = factory.createLayerModel().layers;
+            var actual = factory.createLayerModel().entities;
 
             expect(actual().length).toBe(0);
         });
@@ -55,7 +55,7 @@ define(['model/Factory', 'model/Layer', 'model/Rectangle'], function (Factory, L
 
             var factory = new Factory(input);
 
-            var actual = factory.createLayerModel().layers();
+            var actual = factory.createLayerModel().entities();
 
             expect(actual.length).toBe(1);
             var layer = actual[0];
@@ -66,9 +66,9 @@ define(['model/Factory', 'model/Layer', 'model/Rectangle'], function (Factory, L
             expect(layer.type).toBe('testType');
         });
 
-        it('should create an observable array containing two layers, ' +
+        it('should create an observable array containing two entities, ' +
             'when I call create, ' +
-            'given an array with two layers', function () {
+            'given an array with two entities', function () {
 
             var input = [
                 {
@@ -81,7 +81,7 @@ define(['model/Factory', 'model/Layer', 'model/Rectangle'], function (Factory, L
 
             var factory = new Factory(input);
 
-            var actual = factory.createLayerModel().layers;
+            var actual = factory.createLayerModel().entities;
 
             expect(actual().length).toBe(2);
 
@@ -101,7 +101,7 @@ define(['model/Factory', 'model/Layer', 'model/Rectangle'], function (Factory, L
                 }
             ];
             var factory = new Factory(input);
-            var actual = factory.createLayerModel().layers;
+            var actual = factory.createLayerModel().entities;
             var layer = actual()[0];
 
             expect(layer.items).toBeDefined();
@@ -118,7 +118,7 @@ define(['model/Factory', 'model/Layer', 'model/Rectangle'], function (Factory, L
                 }
             ];
             var factory = new Factory(input);
-            var actual = factory.createLayerModel().layers;
+            var actual = factory.createLayerModel().entities;
             var layer = actual()[0];
 
             expect(layer.items).toBeDefined();
@@ -135,7 +135,7 @@ define(['model/Factory', 'model/Layer', 'model/Rectangle'], function (Factory, L
                 }
             ];
             var factory = new Factory(input);
-            var actual = factory.createLayerModel().layers;
+            var actual = factory.createLayerModel().entities;
             var layer = actual()[0];
 
             expect(layer.items).toBeDefined();
@@ -154,7 +154,7 @@ define(['model/Factory', 'model/Layer', 'model/Rectangle'], function (Factory, L
                 }
             ];
             var factory = new Factory(input);
-            var actual = factory.createLayerModel().layers;
+            var actual = factory.createLayerModel().entities;
             var layer = actual()[0];
 
             expect(layer.items).toBeDefined();
@@ -183,7 +183,7 @@ define(['model/Factory', 'model/Layer', 'model/Rectangle'], function (Factory, L
                 }
             ];
             var factory = new Factory(input);
-            var actual = factory.createLayerModel().layers;
+            var actual = factory.createLayerModel().entities;
             var layer = actual()[0];
 
             expect(layer.items).toBeDefined();
@@ -211,7 +211,7 @@ define(['model/Factory', 'model/Layer', 'model/Rectangle'], function (Factory, L
                 }
             ];
             var factory = new Factory(input);
-            var actual = factory.createLayerModel().layers;
+            var actual = factory.createLayerModel().entities;
 
             expect(actual.forEach).toBeDefined();
 
@@ -237,7 +237,7 @@ define(['model/Factory', 'model/Layer', 'model/Rectangle'], function (Factory, L
                 }
             ];
             var factory = new Factory(input);
-            var actual = factory.createLayerModel().layers()[0].items;
+            var actual = factory.createLayerModel().entities()[0].items;
 
             expect(actual.forEach).toBeDefined();
 

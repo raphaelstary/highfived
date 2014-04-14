@@ -11,7 +11,7 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'model/Curve', 'input/P
      * @constructor
      */
     function ToolMouseHandler(layerBucket, collisionDetector, actionInterpreter, zoomLevel) {
-        if (layerBucket == null || layerBucket.layers == null)
+        if (layerBucket == null || layerBucket.entities == null)
             throw "Illegal argument: layer model not provided";
 
         this.layerBucket = layerBucket;
@@ -139,20 +139,20 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'model/Curve', 'input/P
     };
 
     ToolMouseHandler.prototype._createNewShape = function (clientX, clientY) {
-        if (this.layerBucket.activeLayer == null) {
+        if (this.layerBucket.activeEntity == null) {
             //todo test case
             this.state = State.CAN_START;
             return;
         }
 
         var item;
-        if (this.layerBucket.activeLayer.type === RECTANGLE) {
+        if (this.layerBucket.activeEntity.type === RECTANGLE) {
             item = new Rectangle('unknown ' + this.counter++, clientX, clientY, 10, 10);
 
-        } else if (this.layerBucket.activeLayer.type === LINE) {
+        } else if (this.layerBucket.activeEntity.type === LINE) {
             item = new Line('unknown ' + this.counter++, clientX, clientY, clientX, clientY)
 
-        } else if (this.layerBucket.activeLayer.type === CIRCLE) {
+        } else if (this.layerBucket.activeEntity.type === CIRCLE) {
             item = new Circle('unknown ' + this.counter++, clientX, clientY, 10, 10);
 
         } else {
@@ -166,7 +166,7 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'model/Curve', 'input/P
 
         this.activeAction = PointerAction.CREATE_NEW;
 
-        this.layerBucket.activeLayer.items.push(item);
+        this.layerBucket.activeEntity.items.push(item);
     };
 
     ToolMouseHandler.prototype._resolveWrongState = function () {
@@ -189,7 +189,7 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'model/Curve', 'input/P
 
     ToolMouseHandler.prototype._removeStartedShape = function () {
         var self = this;
-        this.layerBucket.layers.forEach(function (layer) {
+        this.layerBucket.entities.forEach(function (layer) {
             if (layer.isActive())
                 layer.items.remove(self.layerBucket.activeItem);
         });
@@ -234,7 +234,7 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'model/Curve', 'input/P
         };
 
         var self = this;
-        this.layerBucket.layers.forEach(function (layer) {
+        this.layerBucket.entities.forEach(function (layer) {
             if (isPointerShapeCollision || isPointerActionPointCollision)
                 return;
 
@@ -403,7 +403,7 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'model/Curve', 'input/P
             this.layerBucket.activeItem.xPointB(), this.layerBucket.activeItem.yPointB());
 
         this._removeStartedShape();
-        this.layerBucket.activeLayer.items.push(curve);
+        this.layerBucket.activeEntity.items.push(curve);
 //        this.layerBucket.activateItem(curve)
     };
 
@@ -415,7 +415,7 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'model/Curve', 'input/P
             this.layerBucket.activeItem.xPointB(), this.layerBucket.activeItem.yPointB());
 
         this._removeStartedShape();
-        this.layerBucket.activeLayer.items.push(curve);
+        this.layerBucket.activeEntity.items.push(curve);
 //        this.layerBucket.activateItem(curve)
     };
 

@@ -1,4 +1,4 @@
-define(['lib/knockout', 'view/ControlBarView', 'view/LayerToolView', 'model/Factory', 'view/LayerItemFilter'],
+define(['lib/knockout', 'view/ControlBarView', 'view/EntityToolView', 'model/Factory', 'view/LayerItemFilter'],
     function (ko, ControlBarView, LayerToolView, Factory, LayerItemFilter) {
 
         // filter for numeric input fields
@@ -29,19 +29,18 @@ define(['lib/knockout', 'view/ControlBarView', 'view/LayerToolView', 'model/Fact
             return result;
         };
 
-        function MainView(inputLayers) {
-            this.inputLayers = inputLayers;
+        function MainView() {
         }
 
         MainView.prototype.init = function () {
-            var showLayerTool = ko.observable(false);
-            var layerBucket = new Factory(this.inputLayers).createLayerModel();
+            var showLayerTool = ko.observable(true);
+            var layerBucket = new Factory().createLayerModel();
 
             var zoomLevel = ko.observable(100).extend({integer: null});
             var controlBarView = new ControlBarView(showLayerTool, zoomLevel);
             ko.applyBindings(controlBarView, document.getElementById('control-bar'));
 
-            var layerToolView = new LayerToolView(layerBucket, showLayerTool);
+            var layerToolView = new EntityToolView(layerBucket, showLayerTool);
             ko.applyBindings(layerToolView, document.getElementById('layers-tool'));
 
             var itemFilter = new LayerItemFilter(layerBucket);

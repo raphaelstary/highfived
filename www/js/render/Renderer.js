@@ -27,7 +27,7 @@ define(['math/Vectors', 'model/Line'], function (Vectors, Line) {
         this._setScaleFactor();
 
         var self = this;
-        this.layerBucket.layers.forEach(function (layer) {
+        this.layerBucket.entities.forEach(function (layer) {
             if (!layer.isHidden()) {
 
                 if (layer.type === 'rectangle') {

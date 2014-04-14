@@ -95,7 +95,7 @@ section .list-group {
     margin-bottom: 5px;
 }
 
-/* inverts colors for active layers */
+/* inverts colors for active entities */
 li.active > div.list-group-item-heading > a,
 li.active > div.list-group-item-heading > a:hover,
 li.active > div.list-group-item-heading > a:focus {
@@ -103,7 +103,7 @@ li.active > div.list-group-item-heading > a:focus {
     background-color: #428bca;
 }
 
-/* inverts colors for active layers */
+/* inverts colors for active entities */
 li.active > .badge {
     color: #428bca;
     background-color: #ffffff;

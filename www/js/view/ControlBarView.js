@@ -10,7 +10,7 @@ define(['lib/knockout'], function (ko) {
         this.isPlayPointerActive = ko.observable(true);
         this.isBuildPointerActive = ko.observable(false);
         this.isGhostMappingActive = ko.observable(false);
-        this.showLayerTool = showLayerTool;
+        this.showEntityTool = showLayerTool;
         this.zoomLevel = zoomLevel;
     }
 
@@ -33,7 +33,7 @@ define(['lib/knockout'], function (ko) {
     };
 
     ControlBarView.prototype.toggleShowLayerTool = function () {
-        this.showLayerTool(!this.showLayerTool());
+        this.showEntityTool(!this.showEntityTool());
     };
 
     ControlBarView.prototype.exportStuff = function () {

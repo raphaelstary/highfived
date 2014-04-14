@@ -1,5 +1,5 @@
 define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangle', 'input/PointerAction',
-    'spec/input/expectItem', 'model/LayerBucket', 'model/Line', 'model/Circle', 'model/Curve'], function (
+    'spec/input/expectItem', '../../../www/js/model/EntityBucket', 'model/Line', 'model/Circle', 'model/Curve'], function (
     ToolMouseHandler, ko, Layer, Rectangle,
     PointerAction, expectItem, LayerBucket, Line, Circle, Curve) {
 
@@ -69,13 +69,13 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
 
         it("should draw a new item in the active layer, " +
             "when I create one with the mouse cursor " +
-            "given two layers", function () {
+            "given two entities", function () {
 
             var layerTwo = new Layer('layerTwo', ko.observableArray(), 'rectangle');
             layerOne.isActive(false);
             layerTwo.isActive(true);
-            layerBucket.layers.push(layerTwo);
-            layerBucket.activeLayer = layerTwo;
+            layerBucket.entities.push(layerTwo);
+            layerBucket.activeEntity = layerTwo;
             layerTwo.items.forEach = forEach;
 
             var cut = new ToolMouseHandler(layerBucket);
@@ -616,14 +616,14 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
 
         it("should change rect's coordinates " +
             "when I click on the action point and move the mouse " +
-            "given there are 2 layers and the circle layer is active " +
+            "given there are 2 entities and the circle layer is active " +
             " and a line is selected", function () {
 
             var layerTwo = new Layer('layerTwo', ko.observableArray(), 'circle');
             layers.push(layerTwo);
             layerTwo.isActive(true);
             layerTwo.isSelected(true);
-            layerBucket.activeLayer = layerTwo;
+            layerBucket.activeEntity = layerTwo;
 
             selectItemAndSetAction(PointerAction.RESIZE_TOP_AND_LEFT);
             setUpCollisionServiceFalse();
@@ -679,14 +679,14 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
 
         it("should change the circle's center coordinates " +
             "when I click on the action point and move the mouse " +
-            "given there are 2 layers and the rect layer is active " +
+            "given there are 2 entities and the rect layer is active " +
             " and a line is selected", function () {
 
             var layerTwo = new Layer('layerTwo', ko.observableArray(), 'rectangle');
             layers.push(layerTwo);
             layerTwo.isActive(true);
             layerTwo.isSelected(true);
-            layerBucket.activeLayer = layerTwo;
+            layerBucket.activeEntity = layerTwo;
 
             selectItemAndSetAction(PointerAction.MOVE);
             setUpCollisionServiceFalse();
@@ -884,7 +884,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
             layers.push(layerTwo);
             layerTwo.isActive(true);
             layerTwo.isSelected(true);
-            layerBucket.activeLayer = layerTwo;
+            layerBucket.activeEntity = layerTwo;
 
             selectItemAndSetAction(PointerAction.CHANGE_POINT_A);
             setUpCollisionServiceFalse();
@@ -975,11 +975,11 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
         });
 
         it("should throw an exception, " +
-            "when it's initialized with layer model with null layers", function () {
+            "when it's initialized with layer model with null entities", function () {
 
             var ex;
             try {
-                new ToolMouseHandler(new LayerBucket());
+                new ToolMouseHandler(new EntityBucket());
             } catch (e) {
                 ex = e;
             }
@@ -1323,13 +1323,13 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
 
         it("should do nothing to the model, " +
             "when 'handleDown' is called " +
-            "given an item was created but not finished with two layers", function () {
+            "given an item was created but not finished with two entities", function () {
 
             setUpRectLayerWithZeroItems();
             var layerTwo = new Layer('layerTwo', ko.observableArray());
             layerOne.isActive(false);
             layerTwo.isActive(true);
-            layerBucket.layers.push(layerTwo);
+            layerBucket.entities.push(layerTwo);
             layerTwo.items.forEach = forEach;
 
             var cut = new ToolMouseHandler(layerBucket);
@@ -1959,7 +1959,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
         layers = ko.observableArray([
             new Layer('layerOne', ko.observableArray([new Rectangle('onlyItem', 100, 100, 100, 100)]), 'rectangle')
         ]);
-        layerBucket = new LayerBucket(layers);
+        layerBucket = new EntityBucket(layers);
         setUpLayerVars();
     }
 
@@ -1967,7 +1967,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
         layers = ko.observableArray([
             new Layer('layerOne', ko.observableArray(), 'rectangle')
         ]);
-        layerBucket = new LayerBucket(layers);
+        layerBucket = new EntityBucket(layers);
         setUpLayerVars();
     }
 
@@ -1975,7 +1975,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
         layers = ko.observableArray([
             new Layer('layerOne', ko.observableArray([new Line('onlyItem', 100, 100, 200, 100)]), 'line')
         ]);
-        layerBucket = new LayerBucket(layers);
+        layerBucket = new EntityBucket(layers);
         setUpLayerVars();
     }
 
@@ -1983,7 +1983,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
         layers = ko.observableArray([
             new Layer('layerOne', ko.observableArray([new Curve('onlyItem', 100, 100, 100, 50, 200, 50, 200, 100)]), 'line')
         ]);
-        layerBucket = new LayerBucket(layers);
+        layerBucket = new EntityBucket(layers);
         setUpLayerVars();
     }
 
@@ -1991,7 +1991,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
         layers = ko.observableArray([
             new Layer('layerOne', ko.observableArray(), 'line')
         ]);
-        layerBucket = new LayerBucket(layers);
+        layerBucket = new EntityBucket(layers);
         setUpLayerVars();
     }
 
@@ -1999,7 +1999,7 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
         layers = ko.observableArray([
             new Layer('layerOne', ko.observableArray([new Circle('onlyItem', 100, 100, 50)]), 'circle')
         ]);
-        layerBucket = new LayerBucket(layers);
+        layerBucket = new EntityBucket(layers);
         setUpLayerVars();
     }
 
@@ -2007,14 +2007,14 @@ define(['input/ToolMouseHandler', 'lib/knockout', 'model/Layer', 'model/Rectangl
         layers = ko.observableArray([
             new Layer('layerOne', ko.observableArray(), 'circle')
         ]);
-        layerBucket = new LayerBucket(layers);
+        layerBucket = new EntityBucket(layers);
         setUpLayerVars();
     }
 
     function setUpLayerVars() {
         layerOne = layers()[0];
         layerOne.isActive(true);
-        layerBucket.activeLayer = layerOne;
+        layerBucket.activeEntity = layerOne;
 
         layerOneItems = layerOne.items();
         itemOne = layerOneItems[0];

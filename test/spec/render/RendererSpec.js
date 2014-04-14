@@ -1,5 +1,5 @@
 define(['render/Renderer', 'model/Layer', 'model/Rectangle', 'model/Line', 'model/Circle', 'model/Curve',
-    'model/LayerBucket', 'lib/knockout'], function (Renderer, Layer, Rectangle, Line, Circle, Curve, LayerBucket, ko) {
+    '../../../www/js/model/EntityBucket', 'lib/knockout'], function (Renderer, Layer, Rectangle, Line, Circle, Curve, LayerBucket, ko) {
 
     var layerBucket, layers, items, itemOne, CANVAS_WIDTH, CANVAS_HEIGHT;
 
@@ -517,7 +517,7 @@ define(['render/Renderer', 'model/Layer', 'model/Rectangle', 'model/Line', 'mode
             ko.utils.arrayForEach(this(), fn);
         }
 
-        layerBucket = new LayerBucket(layers);
+        layerBucket = new EntityBucket(layers);
 
         items.forEach = forEach;
         layers.forEach = forEach;
