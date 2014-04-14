@@ -1,6 +1,6 @@
 define(['lib/knockout'], function (ko) {
-    function LayerItemFilter(layerBucket) {
-        this.layerBucket = layerBucket;
+    function LayerItemFilter(entityBucket) {
+        this.entityBucket = entityBucket;
         this.tempLayers = {};
     }
 
@@ -9,7 +9,7 @@ define(['lib/knockout'], function (ko) {
             return;
 
         var self = this;
-        ko.utils.arrayForEach(this.layerBucket.entities(), function (layer) {
+        ko.utils.arrayForEach(this.entityBucket.entities(), function (layer) {
 
             if (self.tempLayers[layer.id] !== undefined) {
 

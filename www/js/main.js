@@ -9,7 +9,7 @@ require(['view/MainView', 'input/ToolMouseHandler', 'input/RectCollisionDetector
 
 
         var layerData = new MainView().init();
-        var layerModel = layerData.layerBucket;
+        var layerModel = layerData.entityBucket;
         var zoomLevel = layerData.zoomLevel;
 
         var canvas = document.getElementById('editor-ui');

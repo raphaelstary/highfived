@@ -14,7 +14,7 @@ define(['math/Vectors', 'model/Line'], function (Vectors, Line) {
         this.screenCtx = screenCtx;
         this.screenWidth = width;
         this.screenHeight = height;
-        this.layerBucket = layerBucket;
+        this.entityBucket = layerBucket;
         this.zoomLevel = zoomLevel;
     }
 
@@ -27,7 +27,7 @@ define(['math/Vectors', 'model/Line'], function (Vectors, Line) {
         this._setScaleFactor();
 
         var self = this;
-        this.layerBucket.entities.forEach(function (layer) {
+        this.entityBucket.entities.forEach(function (layer) {
             if (!layer.isHidden()) {
 
                 if (layer.type === 'rectangle') {
