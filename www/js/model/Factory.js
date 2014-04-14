@@ -1,4 +1,4 @@
-define(['lib/knockout', 'model/LayerBucket'], function (ko, LayerBucket) {
+define(['lib/knockout', 'EntityBucket'], function (ko, LayerBucket) {
     function Factory() {
     }
 
@@ -10,7 +10,7 @@ define(['lib/knockout', 'model/LayerBucket'], function (ko, LayerBucket) {
         var result = ko.observableArray();
         result.forEach = forEach;
 
-        return new LayerBucket(result);
+        return new EntityBucket(result);
     };
 
     return Factory;
