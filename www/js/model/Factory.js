@@ -1,8 +1,8 @@
-define(['lib/knockout', 'EntityBucket'], function (ko, LayerBucket) {
+define(['lib/knockout', 'model/EntityBucket'], function (ko, EntityBucket) {
     function Factory() {
     }
 
-    Factory.prototype.createLayerModel = function () {
+    Factory.prototype.createEntityModel = function () {
         function forEach(fn) {
             ko.utils.arrayForEach(this(), fn);
         }

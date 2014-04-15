@@ -5,16 +5,16 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'model/Curve', 'input/P
     /**
      * handles {MouseEvent}s when the 'edit' mode in the editor is on
      *
-     * @param {Object} layerBucket                  the layer model for the whole editor with its items
+     * @param {Object} entityBucket                  the layer model for the whole editor with its items
      * @param {Object} collisionDetector            checks if mouse pointer clicked on a shape
      * @param {Object} actionInterpreter            checks/chooses if mouse pointer hit an 'action point'
      * @constructor
      */
-    function ToolMouseHandler(layerBucket, collisionDetector, actionInterpreter, zoomLevel) {
-        if (layerBucket == null || layerBucket.entities == null)
+    function ToolMouseHandler(entityBucket, collisionDetector, actionInterpreter, zoomLevel) {
+        if (entityBucket == null || entityBucket.entities == null)
             throw "Illegal argument: layer model not provided";
 
-        this.entityBucket = layerBucket;
+        this.entityBucket = entityBucket;
         this.collisionDetector = collisionDetector;
         this.actionInterpreter = actionInterpreter;
 
@@ -54,7 +54,7 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'model/Curve', 'input/P
         if (wasShapeOrActionPointSelected)
             return;
 
-        this._createNewShape(clientX, clientY);
+//        this._createNewShape(clientX, clientY);
     };
 
     /**

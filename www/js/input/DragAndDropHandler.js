@@ -1,11 +1,11 @@
 define(['model/StaticImage'], function (StaticImage) {
-    function DragAndDropHandler(layerBucket) {
-        this.entityBucket = layerBucket;
+    function DragAndDropHandler(entityBucket) {
+        this.entityBucket = entityBucket;
 
         var self = this;
-        layerBucket.entities.forEach(function (layer) {
-            if (layer.name() === 'static image')
-                self.staticLayer = layer;
+        entityBucket.entities.forEach(function (entity) {
+            if (entity.name() === 'static image')
+                self.staticLayer = entity;
         });
     }
 
