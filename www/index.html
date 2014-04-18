@@ -82,10 +82,20 @@
                     <a href="#" data-bind="click: $root.deleteItem, visible: showControls, clickBubble: false">
                         <span class="glyphicon glyphicon-trash"></span>
                     </a>
-
-                    <a href="#" data-bind="click: $root.addItem, visible: showControls, clickBubble: false">
+                    <a href="#" class="dropdown-toggle"
+                       data-bind="visible: showHide" data-toggle="dropdown">
                         <span class="glyphicon glyphicon-plus"></span>
                     </a>
+
+                    <ul class="dropdown-menu">
+                        <li data-bind="visible: !hasImage()">
+                            <a href="#" data-bind="click: $root.createImage">Image</a>
+                        </li>
+                        <li data-bind="visible: !hasPath()">
+                            <a href="#" data-bind="click: $root.createPath.bind($root)">Path</a>
+                        </li>
+                    </ul>
+
                 </div>
 
                 <ul class="list-group" data-bind="visible: isSelected">
@@ -121,12 +131,13 @@
                             </div>
                         </form>
                     </li>
-
-                    <div data-bind="template: {name: 'item-skeleton', if: false, data: image}"></div>
-                    <div data-bind="template: {name: 'item-skeleton', data: path, if: path}"></div>
-                    <div data-bind="template: {name: 'item-skeleton', data: touchArea, if: touchArea}"></div>
-                    <div data-bind="template: {name: 'item-skeleton', data: target, if: target}"></div>
-                    <div data-bind="template: {name: 'item-skeleton', data: sprite, if: sprite}"></div>
+                    <!-- ko template: {name: 'item-skeleton', if: hasImage, data: image} -->
+                    <!-- /ko -->
+                    <!--<span data-bind="template: {name: 'item-skeleton', if: hasImage, data: image}"></span>-->
+                    <div data-bind="template: {name: 'item-skeleton', data: path, if: hasPath}"></div>
+                    <div data-bind="template: {name: 'item-skeleton', data: touchArea, if: hasTouchArea}"></div>
+                    <div data-bind="template: {name: 'item-skeleton', data: target, if: hasTarget}"></div>
+                    <div data-bind="template: {name: 'item-skeleton', data: sprite, if: hasSprite}"></div>
                 </ul>
             </li>
         </ul>
@@ -214,7 +225,7 @@
         <form class="form-horizontal list-group-item-text"
               data-bind="visible: isSelected">
 
-            <div class="form-group" data-bind="if: image">
+            <div class="form-group" data-bind="if: $data.fileName">
                 <div class="img-upload">
                     <span class="glyphicon glyphicon-plus-sign"></span>
                 </div>
@@ -222,7 +233,8 @@
                 <span data-bind="text: fileName"></span>
             </div>
 
-            <div data-bind="if: frames, foreach: frames">
+            <!-- ko if: $data.frames -->
+            <div data-bind="foreach: frames">
                 <div class="form-group">
                     <div class="img-upload">
                         <span class="glyphicon glyphicon-plus-sign"></span>
@@ -231,9 +243,10 @@
                     <span data-bind="text: fileName"></span>
                 </div>
             </div>
+            <!-- /ko -->
 
-            <div class="form-group"
-                 data-bind="if: radius, event: {mouseover: toggleRangeRadius, mouseout: toggleRangeRadius}">
+            <!-- ko if: $data.radius -->
+            <div class="form-group" data-bind="event: {mouseover: toggleRangeRadius, mouseout: toggleRangeRadius}">
 
                 <label class="control-label col-xs-4 input-sm">radius</label>
 
@@ -244,9 +257,11 @@
                        data-bind="visible: showRangeRadius, value: radius, attr: {max: $root.MAX_RANGE},
                                        event: {click: $root.activateItem.bind($root)}, valueUpdate: 'input'">
             </div>
+            <!-- /ko -->
 
+            <!-- ko if: $data.width -->
             <div class="form-group"
-                 data-bind="if: width, event: {mouseover: toggleRangeWidth, mouseout: toggleRangeWidth}">
+                 data-bind="event: {mouseover: toggleRangeWidth, mouseout: toggleRangeWidth}">
                 <label class="control-label col-xs-4 input-sm">Width</label>
 
                 <div class="col-xs-8">
@@ -258,9 +273,11 @@
                        data-bind="visible: showRangeWidth, value: width, valueUpdate: 'input',
                                            attr: {max: $root.MAX_RANGE}, event: {click: $root.activateItem.bind($root)}">
             </div>
+            <!-- /ko -->
 
+            <!-- ko if: $data.height -->
             <div class="form-group"
-                 data-bind="if: height, event: {mouseover: toggleRangeHeight, mouseout: toggleRangeHeight}">
+                 data-bind="event: {mouseover: toggleRangeHeight, mouseout: toggleRangeHeight}">
                 <label class="control-label col-xs-4 input-sm">Height</label>
 
                 <div class="col-xs-8">
@@ -272,9 +289,11 @@
                        data-bind="visible: showRangeHeight, value: height, valueUpdate: 'input',
                                            attr: {max: $root.MAX_RANGE}, event: {click: $root.activateItem.bind($root)}">
             </div>
+            <!-- /ko -->
 
+            <!-- ko if: $data.endX -->
             <div class="form-group"
-                 data-bind="if: endX, event: {mouseover: toggleRangeEndX, mouseout: toggleRangeEndX}">
+                 data-bind="event: {mouseover: toggleRangeEndX, mouseout: toggleRangeEndX}">
                 <label class="control-label col-xs-4 input-sm">endX</label>
 
                 <div class="col-xs-8">
@@ -286,9 +305,11 @@
                        data-bind="visible: showRangeEndX, value: endX, valueUpdate: 'input',
                                            attr: {max: $root.MAX_RANGE}, event: {click: $root.activateItem.bind($root)}">
             </div>
+            <!-- /ko -->
 
+            <!-- ko if: $data.endY -->
             <div class="form-group"
-                 data-bind="if: endY, event: {mouseover: toggleRangeEndY, mouseout: toggleRangeEndY}">
+                 data-bind="event: {mouseover: toggleRangeEndY, mouseout: toggleRangeEndY}">
                 <label class="control-label col-xs-4 input-sm">endY</label>
 
                 <div class="col-xs-8">
@@ -300,10 +321,11 @@
                        data-bind="visible: showRangeEndY, value: endY, valueUpdate: 'input',
                                            attr: {max: $root.MAX_RANGE}, event: {click: $root.activateItem.bind($root)}">
             </div>
+            <!-- /ko -->
 
             <div data-bind="template: {name: 'base-item', data: $data}"></div>
 
-            <div class="form-group" data-bind="if: loop() != undefined">
+            <div class="form-group" data-bind="if: $data.loop && loop() != undefined">
                 <label class="control-label col-xs-4 input-sm">loop</label>
 
                 <div class="col-xs-8">
@@ -311,7 +333,7 @@
                 </div>
             </div>
 
-            <div class="form-group" data-bind="if: duration">
+            <div class="form-group" data-bind="if: $data.duration">
                 <label class="control-label col-xs-4 input-sm">duration</label>
 
                 <div class="col-xs-8">
@@ -320,7 +342,7 @@
                 </div>
             </div>
 
-            <div class="form-group" data-bind="if: transition">
+            <div class="form-group" data-bind="if: $data.transition">
                 <label class="control-label col-xs-4 input-sm">transition</label>
 
                 <div class="col-xs-8">
@@ -329,7 +351,7 @@
                 </div>
             </div>
 
-            <div class="form-group" data-bind="if: zIndex">
+            <div class="form-group" data-bind="if: $data.zIndex">
                 <label class="control-label col-xs-4 input-sm">zIndex</label>
 
                 <div class="col-xs-8">

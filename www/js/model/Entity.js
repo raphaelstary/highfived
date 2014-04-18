@@ -30,6 +30,17 @@ define(['lib/knockout', 'model/Item'], function (ko, Item) {
         this.showRangeY = ko.computed(function () {
             return self.focusOnY() && self.isActive();
         });
+
+        this.hasImage = ko.observable(false);
+        this.image = {};
+        this.hasPath = ko.observable(false);
+        this.path = {};
+        this.hasSprite = ko.observable(false);
+        this.sprite = {};
+        this.hasTouchArea = ko.observable(false);
+        this.touchArea = {};
+        this.hasTarget = ko.observable(false);
+        this.target = {};
     }
 
     Entity.prototype = Object.create(Item.prototype);

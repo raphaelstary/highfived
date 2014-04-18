@@ -1,4 +1,4 @@
-define(['lib/knockout', 'model/Entity'], function(ko, Entity) {
+define(['lib/knockout', 'model/Entity', 'model/Image'], function(ko, Entity, Image) {
 
     function EntityToolView(entityBucket, showEntityTool) {
         this.entityBucket = entityBucket;
@@ -71,7 +71,29 @@ define(['lib/knockout', 'model/Entity'], function(ko, Entity) {
     EntityToolView.prototype.removeEntity = function (entity) {
     };
 
-    EntityToolView.prototype.addItem = function () {
+    EntityToolView.prototype.createImage = function (entity) {
+        entity.image = new Image();
+        entity.hasImage(true);
+    };
+
+    EntityToolView.prototype.createPath = function () {
+
+    };
+
+    EntityToolView.prototype.createTouchArea = function () {
+
+    };
+
+    EntityToolView.prototype.createTarget = function () {
+
+    };
+
+    EntityToolView.prototype.createSprite = function () {
+
+    };
+
+    EntityToolView.prototype.createFrame = function () {
+
     };
 
     EntityToolView.prototype.removeItem = function (item) {
