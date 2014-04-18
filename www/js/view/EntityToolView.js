@@ -31,6 +31,8 @@ define(['lib/knockout', 'model/Entity', 'model/Image', 'model/Path', 'model/Touc
     EntityToolView.prototype.activateEntity = function (entity) {
         this.entityBucket.deactivateActiveEntity();
         this.entityBucket.activateEntity(entity);
+
+        return true;
     };
 
     EntityToolView.prototype.toggleSelectItem = function (item) {
@@ -44,6 +46,8 @@ define(['lib/knockout', 'model/Entity', 'model/Image', 'model/Path', 'model/Touc
     EntityToolView.prototype.activateItem = function (item) {
         this.entityBucket.deactivateActiveItem();
         this.entityBucket.activateItem(item);
+
+        return true;
     };
 
     EntityToolView.prototype.toggleEditEntityName = function (entity) {
@@ -72,24 +76,29 @@ define(['lib/knockout', 'model/Entity', 'model/Image', 'model/Path', 'model/Touc
         entity.hasImage(true);
     };
 
-    EntityToolView.prototype.createPath = function () {
-
+    EntityToolView.prototype.createPath = function (entity) {
+        entity.paths.push(new Path());
+        entity.hasPaths(true);
     };
 
-    EntityToolView.prototype.createTouchArea = function () {
-
+    EntityToolView.prototype.createTouchArea = function (entity) {
+        entity.touchArea = new TouchArea();
+        entity.hasTouchArea(true);
     };
 
-    EntityToolView.prototype.createTarget = function () {
-
+    EntityToolView.prototype.createTarget = function (entity) {
+        entity.target = new Target();
+        entity.hasTarget(true);
     };
 
-    EntityToolView.prototype.createSprite = function () {
-
+    EntityToolView.prototype.createSprite = function (entity) {
+        entity.sprite = new Sprite();
+        entity.hasSprite(true);
     };
 
-    EntityToolView.prototype.createFrame = function () {
-
+    EntityToolView.prototype.createFrame = function (sprite) {
+        sprite.frames.push(new Frame());
+        sprite.hasFrames(true);
     };
 
     EntityToolView.prototype.removeItem = function (item) {

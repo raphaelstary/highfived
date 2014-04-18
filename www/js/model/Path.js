@@ -10,6 +10,7 @@ define(['lib/knockout', 'model/Item', 'model/Base'], function (ko, Item, Base) {
         this.transition = ko.observable();
         this.loop = ko.observable(false);
 
+        var self = this;
         this.toggleRangeEndX = function () {
             self.focusOnEndX(!self.focusOnEndX());
         };

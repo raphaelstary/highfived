@@ -240,12 +240,13 @@
 
         <!--ko if: $root.isImage($data)-->
         <div class="form-group">
-            <div class="img-upload img-thumbnail" style="width: 50px; height: 50px; text-align: center"
+            <div class="col-xs-4 img-upload img-thumbnail"
                     data-bind="drop: $data">
                 <span data-bind="visible: !imgReady()" class="glyphicon glyphicon-plus-sign" style="font-size: 21px; top: 7px"></span>
             </div>
-
-            <span data-bind="text: fileName"></span>
+            <div class="col-xs-8">
+                <p class="form-control-static" data-bind="text: shortFileName"></p>
+            </div>
         </div>
         <!--/ko-->
 
@@ -255,8 +256,9 @@
                 <div class="img-upload">
                     <span class="glyphicon glyphicon-plus-sign"></span>
                 </div>
-                <img class="img-thumbnail">
-                <span data-bind="text: fileName"></span>
+                <div class="col-xs-8">
+                    <span data-bind="text: fileName"></span>
+                </div>
             </div>
         </div>
         <!-- /ko -->
