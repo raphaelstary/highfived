@@ -155,3 +155,12 @@ li.active > .badge {
     font-size: 10px;
     padding-bottom: 1px;
 }
+
+#tool-menu {
+    font-size: 13px;
+    padding-top: 5px;
+}
+
+#tool-menu > a {
+    padding-left: 5px;
+}

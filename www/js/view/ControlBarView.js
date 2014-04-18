@@ -32,7 +32,7 @@ define(['lib/knockout'], function (ko) {
         this.isGhostMappingActive(!this.isGhostMappingActive());
     };
 
-    ControlBarView.prototype.toggleShowLayerTool = function () {
+    ControlBarView.prototype.toggleShowEntityTool = function () {
         this.showEntityTool(!this.showEntityTool());
     };
 

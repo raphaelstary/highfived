@@ -2,11 +2,13 @@ require(['view/MainView', 'input/ToolMouseHandler', 'input/RectCollisionDetector
     'input/CircleCollisionDetector', 'input/CircleActionInterpreter', 'input/checkLineCollision',
     'input/LineActionInterpreter', 'render/getRequestAnimationFrame', 'render/Loop', 'render/Renderer',
         'render/ResizeBus', 'render/ResizeHandler', 'render/ScreenSizer', 'input/DragAndDropHandler',
-    'lib/domReady', 'lib/bootstrap'],
+    'lib/domReady', 'lib/bootstrap', 'lib/jquery'],
     function (MainView, ToolMouseHandler, RectCollisionDetector, RectActionInterpreter, CircleCollisionDetector,
               CircleActionInterpreter, checkLineCollision, LineActionInterpreter, getAnimFrame, Loop, Renderer,
               ResizeBus, ResizeHandler, ScreenSizer, DragAndDropHandler) {
 
+
+        $('#tool-menu a').tooltip();
 
         var layerData = new MainView().init();
         var layerModel = layerData.entityBucket;

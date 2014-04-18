@@ -15,233 +15,368 @@
     <input type="search" class="form-control input-sm" placeholder="Search"
            data-bind="value: filter, valueUpdate: 'input'">
 
-    <div style="font-size: 13px; padding-top: 5px">
-        <a href="#" style="padding-left: 5px">
+    <div id="tool-menu">
+        <a href="#" data-bind="click: addEntity"
+           data-toggle="tooltip" data-placement="bottom" title="add">
             <span class="glyphicon glyphicon-plus"></span>
         </a>
-        <a href="#" style="padding-left: 5px">
+        <a href="#" data-bind="click: toggleShowImages, css: {'active-light': !showImages()"
+           data-toggle="tooltip" data-placement="bottom" title="images">
             <span class="glyphicon glyphicon-picture"></span>
         </a>
-        <a href="#" style="padding-left: 5px">
+        <a href="#" data-bind="click: toggleShowSprites, css: {'active-light': !showSprites()"
+           data-toggle="tooltip" data-placement="bottom" title="sprites">
             <span class="glyphicon glyphicon-facetime-video"></span>
         </a>
-        <a href="#" style="padding-left: 5px">
+        <a href="#" data-bind="click: toggleShowPaths, css: {'active-light': !showPaths()}"
+           data-toggle="tooltip" data-placement="bottom" title="paths">
             <span class="glyphicon glyphicon-road"></span>
         </a>
-        <a href="#" style="padding-left: 5px">
+        <a href="#" data-bind="click: toggleShowTouchAreas, css: {'active-light': !showTouchAreas()}"
+           data-toggle="tooltip" data-placement="bottom" title="touch areas">
             <span class="glyphicon glyphicon-hand-up"></span>
         </a>
-        <a href="#" style="padding-left: 5px" class="active-light">
+        <a href="#" data-bind="click: toggleTargets, css: {'active-light': !showTargets()}"
+           data-toggle="tooltip" data-placement="bottom" title="targets">
             <span class="glyphicon glyphicon-screenshot"></span>
         </a>
-        <a href="#" style="padding-left: 5px">
+        <a href="#" data-bind="click: toggleEditEvents"
+           data-toggle="tooltip" data-placement="bottom" title="edit events">
             <span class="glyphicon glyphicon-calendar"></span>
         </a>
-        <a href="#" style="padding-left: 5px">
+        <a href="#" data-bind="click: deselectAllEntities"
+           data-toggle="tooltip" data-placement="bottom" title="deselect all">
             <span class="glyphicon glyphicon-resize-small"></span>
         </a>
     </div>
 </div>
 <div class="panel-body">
-    <ul class="list-group" data-bind="foreach: layerBucket.layers">
-        <li class="list-group-item" data-bind="css: {'active': isActive, 'selected': isSelected}">
-            <span class="badge" data-bind="text: itemCount"></span>
+<ul class="list-group" data-bind="foreach: entityBucket.entities">
+<li class="list-group-item" data-bind="css: {'active': isActive, 'selected': isSelected}">
 
-            <div class="list-group-item-heading"
-                 data-bind="event: {mouseover: $root.toggleLayerControls, mouseout: $root.toggleLayerControls}">
+<div class="list-group-item-heading"
+     data-bind="event: {mouseover: $root.toggleControls, mouseout: $root.toggleControls}">
 
-                <a href="#" data-bind="click: $root.toggleSelectLayer.bind($root)">
-                    <span data-bind="html: isSelected() ? '&#9660;': '&#9656;'"></span>
-                    <span data-bind="text: name"></span>
-                </a>
+    <a href="#" data-bind="click: $root.toggleSelectEntity.bind($root)">
+        <span data-bind="html: isSelected() ? '&#9660;': '&#9656;'"></span>
+        <span data-bind="text: name"></span>
+    </a>
 
-                <a href="#" data-bind="visible: showHide, click: $root.toggleHideLayer">
+    <input type="text" class="form-control input-sm" placeholder="name"
+           data-bind="value: name, visible: isEditOn">
+
+    <a href="#" data-bind="click: $root.toggleEditEntityName, visible: showEdit">
+                            <span class="glyphicon glyphicon-pencil"
+                                  data-bind="css: {'active-light': !showControls()}">
+                            </span>
+    </a>
+
+    <a href="#" data-bind="visible: showHide, click: $root.toggleHide">
                         <span class="glyphicon"
                               data-bind="css: {'glyphicon-eye-open': !isHidden(), 'glyphicon-eye-close': isHidden,
                                                 'active-light': !showControls()}">
                         </span>
-                </a>
+    </a>
+
+    <a href="#" data-bind="click: $root.deleteItem, visible: showControls, clickBubble: false">
+        <span class="glyphicon glyphicon-trash"></span>
+    </a>
+
+    <a href="#" data-bind="click: $root.addItem, visible: showControls, clickBubble: false">
+        <span class="glyphicon glyphicon-plus"></span>
+    </a>
+</div>
+
+<ul class="list-group" data-bind="visible: showItems">
+<li class="list-group-item">
+
+    <form class="form-horizontal list-group-item-text"
+          data-bind="visible: isSelected">
+        <div class="form-group"
+             data-bind="event: {mouseover: toggleRangeX, mouseout: toggleRangeX}">
+
+            <label class="control-label col-xs-4 input-sm">x</label>
+
+            <div class="col-xs-8">
+                <input type="text" class="form-control input-sm" placeholder="x"
+                       data-bind="value: x">
             </div>
+            <input type="range" style="width: 90%"
+                   data-bind="visible: showRangeX, value: x, valueUpdate: 'input',
+                                           attr: {max: $root.MAX_RANGE}, event: {click: $root.activateItem.bind($root)}">
+        </div>
 
-            <ul class="list-group" data-bind="foreach: items, visible: showItems">
+        <div class="form-group"
+             data-bind="event: {mouseover: toggleRangeY, mouseout: toggleRangeY}">
+            <label class="control-label col-xs-4 input-sm">y</label>
 
-                <li class="list-group-item"
-                    data-bind="event: {mouseover: $root.toggleItemControls, mouseout: $root.toggleItemControls},
+            <div class="col-xs-8">
+                <input type="text" class="form-control input-sm" placeholder="y"
+                       data-bind="value: y">
+            </div>
+            <input type="range" style="width: 90%"
+                   data-bind="visible: showRangeY, value: y, attr: {max: $root.MAX_RANGE},
+                                       event: {click: $root.activateItem.bind($root)}, valueUpdate: 'input'">
+        </div>
+    </form>
+</li>
+
+
+<li class="list-group-item"
+    data-bind="event: {mouseover: $root.toggleControls, mouseout: $root.toggleControls},
                         css: {selected: isActive}, click: $root.activateItem.bind($root)">
 
-                    <a href="#" data-bind="text: name, click: $root.toggleSelectItem.bind($root),
-                        visible: !isEditOn(), clickBubble: false"></a>
+    <a href="#" data-bind="click: $root.toggleSelectItem.bind($root), clickBubble: false">Image</a>
 
-                    <input type="text" class="form-control input-sm" placeholder="name"
-                           data-bind="value: name, visible: isEditOn">
+    <a href="#" data-bind="click: $root.toggleHideItem, visible: showHide, clickBubble: false">
+        <span class="glyphicon" data-bind="css: {'glyphicon-eye-open': !isHidden(), 'glyphicon-eye-close': isHidden, 'active-light': !showControls()}"></span>
+    </a>
 
-                    <a href="#" data-bind="click: $root.toggleEditItemName, visible: showEdit">
-                            <span class="glyphicon glyphicon-pencil"
-                                  data-bind="css: {'active-light': !showControls()}">
-                            </span>
-                    </a>
+    <a href="#" data-bind="click: $root.deleteItem, visible: showControls, clickBubble: false">
+        <span class="glyphicon glyphicon-trash"></span>
+    </a>
 
-                    <a href="#" data-bind="click: $root.toggleHideItem, visible: showHide, clickBubble: false">
+    <form class="form-horizontal list-group-item-text"
+          data-bind="visible: isSelected">
+        <div class="form-group">
+            <div class="img-upload">
+                <span class="glyphicon glyphicon-plus-sign"></span>
+            </div>
+            <img class="img-thumbnail">
+            <span data-bind="text: fileName"></span>
+        </div>
+
+        <div data-bind="template: {name: 'base-item', data: $data}"></div>
+
+        <div class="form-group">
+            <label class="control-label col-xs-4 input-sm">zIndex</label>
+
+            <div class="col-xs-8">
+                <input type="text" class="form-control input-sm"
+                       data-bind="value: zIndex">
+            </div>
+        </div>
+    </form>
+</li>
+
+<li class="list-group-item" data-bind="event: {mouseover: $root.toggleControls, mouseout: $root.toggleControls},
+                        css: {selected: isActive}, click: $root.activateItem.bind($root)">
+    <a href="#" data-bind="click: $root.toggleSelectItem.bind($root), clickBubble: false">Path</a>
+    <a href="#" data-bind="click: $root.toggleHideItem, visible: showHide, clickBubble: false">
                             <span class="glyphicon"
                                   data-bind="css: {'glyphicon-eye-open': !isHidden(), 'glyphicon-eye-close': isHidden,
                                                 'active-light': !showControls()}">
                             </span>
-                    </a>
+    </a>
 
-                    <a href="#" data-bind="click: $root.linkItem, visible: showControls">
-                        <span class="glyphicon glyphicon-link"></span>
-                    </a>
+    <a href="#" data-bind="click: $root.deleteItem, visible: showControls, clickBubble: false">
+        <span class="glyphicon glyphicon-trash"></span>
+    </a>
 
-                    <a href="#" data-bind="click: $parent.deleteItem, visible: showControls, clickBubble: false">
-                        <span class="glyphicon glyphicon-trash"></span>
-                    </a>
+    <form class="form-horizontal list-group-item-text"
+          data-bind="visible: isSelected">
+        <div class="form-group"
+             data-bind="event: {mouseover: toggleRangeEndX, mouseout: toggleRangeEndX}">
+            <label class="control-label col-xs-4 input-sm">endX</label>
 
-                    <form class="form-horizontal list-group-item-text"
-                          data-bind="visible: isSelected">
+            <div class="col-xs-8">
+                <input type="text" class="form-control input-sm"
+                       data-bind="value: endX">
+            </div>
 
-                        <div data-bind="if: $root.isRectangle($data) || $root.isCircle($data)">
-                            <div class="form-group"
-                                 data-bind="event: {mouseover: toggleRangeXPoint, mouseout: toggleRangeXPoint}">
-
-                                <label class="control-label col-xs-4 input-sm" for="xpoint">x</label>
-
-                                <div class="col-xs-8">
-                                    <input id="xpoint" type="text" class="form-control input-sm" placeholder="x"
-                                           data-bind="value: xPoint">
-                                </div>
-                                <input id="xpointrange" type="range" style="width: 90%"
-                                       data-bind="visible: showRangeXPoint, value: xPoint, valueUpdate: 'input',
+            <input type="range" style="width: 90%"
+                   data-bind="visible: showRangeEndX, value: endX, valueUpdate: 'input',
                                            attr: {max: $root.MAX_RANGE}, event: {click: $root.activateItem.bind($root)}">
-                            </div>
-                        </div>
+        </div>
 
-                        <div data-bind="if: $root.isRectangle($data) || $root.isCircle($data)">
-                            <div class="form-group"
-                                 data-bind="event: {mouseover: toggleRangeYPoint, mouseout: toggleRangeYPoint}">
-                                <label class="control-label col-xs-4 input-sm" for="ypoint">y</label>
+        <div class="form-group"
+             data-bind="event: {mouseover: toggleRangeEndY, mouseout: toggleRangeEndY}">
+            <label class="control-label col-xs-4 input-sm">endY</label>
 
-                                <div class="col-xs-8">
-                                    <input id="ypoint" type="text" class="form-control input-sm" placeholder="y"
-                                           data-bind="value: yPoint">
-                                </div>
-                                <input id="ypointrange" type="range" style="width: 90%"
-                                       data-bind="visible: showRangeYPoint, value: yPoint, attr: {max: $root.MAX_RANGE},
+            <div class="col-xs-8">
+                <input type="text" class="form-control input-sm"
+                       data-bind="value: endY">
+            </div>
+
+            <input type="range" style="width: 90%"
+                   data-bind="visible: showRangeEndY, value: endY, valueUpdate: 'input',
+                                           attr: {max: $root.MAX_RANGE}, event: {click: $root.activateItem.bind($root)}">
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-xs-4 input-sm">duration</label>
+
+            <div class="col-xs-8">
+                <input type="text" class="form-control input-sm"
+                       data-bind="value: duration">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-xs-4 input-sm">transition</label>
+
+            <div class="col-xs-8">
+                <input type="text" class="form-control input-sm"
+                       data-bind="value: transition">
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            <label class="control-label col-xs-4 input-sm">loop</label>
+
+            <div class="col-xs-8">
+                <input type="checkbox" data-bind="value: loop">
+            </div>
+        </div>
+
+    </form>
+</li>
+
+<li class="list-group-item" data-bind="event: {mouseover: $root.toggleControls, mouseout: $root.toggleControls},
+                        css: {selected: isActive}, click: $root.activateItem.bind($root)">
+    <a href="#" data-bind="click: $root.toggleSelectItem.bind($root), clickBubble: false">Touch Area</a>
+    <a href="#" data-bind="click: $root.toggleHideItem, visible: showHide, clickBubble: false">
+                            <span class="glyphicon"
+                                  data-bind="css: {'glyphicon-eye-open': !isHidden(), 'glyphicon-eye-close': isHidden,
+                                                'active-light': !showControls()}">
+                            </span>
+    </a>
+
+    <a href="#" data-bind="click: $root.deleteItem, visible: showControls, clickBubble: false">
+        <span class="glyphicon glyphicon-trash"></span>
+    </a>
+
+    <form class="form-horizontal list-group-item-text"
+          data-bind="visible: isSelected">
+        <div class="form-group"
+             data-bind="event: {mouseover: toggleRangeWidth, mouseout: toggleRangeWidth}">
+            <label class="control-label col-xs-4 input-sm">Width</label>
+
+            <div class="col-xs-8">
+                <input type="text" class="form-control input-sm"
+                       data-bind="value: width">
+            </div>
+
+            <input type="range" style="width: 90%"
+                   data-bind="visible: showRangeWidth, value: width, valueUpdate: 'input',
+                                           attr: {max: $root.MAX_RANGE}, event: {click: $root.activateItem.bind($root)}">
+        </div>
+
+        <div class="form-group"
+             data-bind="event: {mouseover: toggleRangeHeight, mouseout: toggleRangeHeight}">
+            <label class="control-label col-xs-4 input-sm">Height</label>
+
+            <div class="col-xs-8">
+                <input type="text" class="form-control input-sm"
+                       data-bind="value: height">
+            </div>
+
+            <input type="range" style="width: 90%"
+                   data-bind="visible: showRangeHeight, value: height, valueUpdate: 'input',
+                                           attr: {max: $root.MAX_RANGE}, event: {click: $root.activateItem.bind($root)}">
+        </div>
+
+        <div data-bind="template: {name: 'base-item', data: $data}"></div>
+    </form>
+
+</li>
+
+<li class="list-group-item" data-bind="event: {mouseover: $root.toggleControls, mouseout: $root.toggleControls},
+                        css: {selected: isActive}, click: $root.activateItem.bind($root)">
+    <a href="#" data-bind="click: $root.toggleSelectItem.bind($root), clickBubble: false">Target</a>
+    <a href="#" data-bind="click: $root.toggleHideItem, visible: showHide, clickBubble: false">
+                            <span class="glyphicon"
+                                  data-bind="css: {'glyphicon-eye-open': !isHidden(), 'glyphicon-eye-close': isHidden,
+                                                'active-light': !showControls()}">
+                            </span>
+    </a>
+
+    <a href="#" data-bind="click: $root.deleteItem, visible: showControls, clickBubble: false">
+        <span class="glyphicon glyphicon-trash"></span>
+    </a>
+
+    <form class="form-horizontal list-group-item-text"
+          data-bind="visible: isSelected">
+
+        <div class="form-group"
+             data-bind="event: {mouseover: toggleRangeRadius, mouseout: toggleRangeRadius}">
+            <label class="control-label col-xs-4 input-sm">radius</label>
+
+            <div class="col-xs-8">
+                <input type="text" class="form-control input-sm"
+                       placeholder="radius"
+                       data-bind="value: radius">
+            </div>
+            <input type="range" style="width: 90%"
+                   data-bind="visible: showRangeRadius, value: radius, attr: {max: $root.MAX_RANGE},
                                        event: {click: $root.activateItem.bind($root)}, valueUpdate: 'input'">
-                            </div>
-                        </div>
+        </div>
 
-                        <div data-bind="if: $root.isRectangle($data)">
-                            <div class="form-group"
-                                 data-bind="event: {mouseover: toggleRangeWidth, mouseout: toggleRangeWidth}">
-                                <label class="control-label col-xs-4 input-sm" for="width">width</label>
+        <div data-bind="template: {name: 'base-item', data: $data}"></div>
+    </form>
+</li>
 
-                                <div class="col-xs-8">
-                                    <input id="width" type="text" class="form-control input-sm" placeholder="width"
-                                           data-bind="value: width">
-                                </div>
-                                <input id="widthrange" type="range" style="width: 90%"
-                                       data-bind="visible: showRangeWidth, value: width, attr: {max: $root.MAX_RANGE},
-                                       event: {click: $root.activateItem.bind($root)}, valueUpdate: 'input'">
-                            </div>
-                        </div>
+<li class="list-group-item" data-bind="event: {mouseover: $root.toggleControls, mouseout: $root.toggleControls},
+                        css: {selected: isActive}, click: $root.activateItem.bind($root)">
+    <a href="#" data-bind="click: $root.toggleSelectItem.bind($root), clickBubble: false">Sprite</a>
+    <a href="#" data-bind="click: $root.toggleHideItem, visible: showHide, clickBubble: false">
+                            <span class="glyphicon"
+                                  data-bind="css: {'glyphicon-eye-open': !isHidden(), 'glyphicon-eye-close': isHidden,
+                                                'active-light': !showControls()}">
+                            </span>
+    </a>
 
-                        <div data-bind="if: $root.isRectangle($data)">
-                            <div class="form-group"
-                                 data-bind="event: {mouseover: toggleRangeHeight, mouseout: toggleRangeHeight}">
-                                <label class="control-label col-xs-4 input-sm" for="height">height</label>
+    <a href="#" data-bind="click: $root.deleteItem, visible: showControls, clickBubble: false">
+        <span class="glyphicon glyphicon-trash"></span>
+    </a>
 
-                                <div class="col-xs-8">
-                                    <input id="height" type="text" class="form-control input-sm"
-                                           placeholder="height"
-                                           data-bind="value: height">
-                                </div>
-                                <input id="heightrange" type="range" style="width: 90%"
-                                       data-bind="visible: showRangeHeight, value: height, attr: {max: $root.MAX_RANGE},
-                                       event: {click: $root.activateItem.bind($root)}, valueUpdate: 'input'">
-                            </div>
-                        </div>
+    <form class="form-horizontal list-group-item-text"
+          data-bind="visible: isSelected">
+        <div data-bind="foreach: frames">
+            <div class="form-group">
+                <div class="img-upload">
+                    <span class="glyphicon glyphicon-plus-sign"></span>
+                </div>
+                <img class="img-thumbnail">
+                <span data-bind="text: fileName"></span>
+            </div>
+        </div>
 
-                        <div data-bind="if: $root.isLine($data)">
-                            <div class="form-group"
-                                 data-bind="event: {mouseover: toggleRangeXPointA, mouseout: toggleRangeXPointA}">
-                                <label class="control-label col-xs-4 input-sm" for="xpointa">A:x</label>
+        <div data-bind="template: {name: 'base-item', data: $data}"></div>
 
-                                <div class="col-xs-8">
-                                    <input id="xpointa" type="text" class="form-control input-sm"
-                                           data-bind="value: xPointA">
-                                </div>
-                                <input id="xpointarange" type="range" style="width: 90%"
-                                       data-bind="visible: showRangeXPointA, value: xPointA, attr: {max: $root.MAX_RANGE},
-                                       event: {click: $root.activateItem.bind($root)}, valueUpdate: 'input'">
-                            </div>
-                        </div>
+        <div class="form-group">
+            <label class="control-label col-xs-4 input-sm">loop</label>
 
-                        <div data-bind="if: $root.isLine($data)">
-                            <div class="form-group"
-                                 data-bind="event: {mouseover: toggleRangeYPointA, mouseout: toggleRangeYPointA}">
-                                <label class="control-label col-xs-4 input-sm" for="ypointa">A:y</label>
+            <div class="col-xs-8">
+                <input type="checkbox" data-bind="value: loop">
+            </div>
+        </div>
 
-                                <div class="col-xs-8">
-                                    <input id="ypointa" type="text" class="form-control input-sm"
-                                           data-bind="value: yPointA">
-                                </div>
-                                <input id="ypointarange" type="range" style="width: 90%"
-                                       data-bind="visible: showRangeYPointA, value: yPointA, attr: {max: $root.MAX_RANGE},
-                                       event: {click: $root.activateItem.bind($root)}, valueUpdate: 'input'">
-                            </div>
-                        </div>
+        <div class="form-group">
+            <label class="control-label col-xs-4 input-sm">duration</label>
 
-                        <div data-bind="if: $root.isLine($data)">
-                            <div class="form-group"
-                                 data-bind="event: {mouseover: toggleRangeXPointB, mouseout: toggleRangeXPointB}">
-                                <label class="control-label col-xs-4 input-sm" for="xpointb">B:x</label>
+            <div class="col-xs-8">
+                <input type="text" class="form-control input-sm"
+                       data-bind="value: duration">
+            </div>
+        </div>
 
-                                <div class="col-xs-8">
-                                    <input id="xpointb" type="text" class="form-control input-sm"
-                                           data-bind="value: xPointB">
-                                </div>
-                                <input id="xpointbrange" type="range" style="width: 90%"
-                                       data-bind="visible: showRangeXPointB, value: xPointB, attr: {max: $root.MAX_RANGE},
-                                       event: {click: $root.activateItem.bind($root)}, valueUpdate: 'input'">
-                            </div>
-                        </div>
+        <div class="form-group">
+            <label class="control-label col-xs-4 input-sm">zIndex</label>
 
-                        <div data-bind="if: $root.isLine($data)">
-                            <div class="form-group"
-                                 data-bind="event: {mouseover: toggleRangeYPointB, mouseout: toggleRangeYPointB}">
-                                <label class="control-label col-xs-4 input-sm" for="ypointb">B:y</label>
+            <div class="col-xs-8">
+                <input type="text" class="form-control input-sm"
+                       data-bind="value: zIndex">
+            </div>
+        </div>
+    </form>
+</li>
 
-                                <div class="col-xs-8">
-                                    <input id="ypointb" type="text" class="form-control input-sm"
-                                           data-bind="value: yPointB">
-                                </div>
-                                <input id="ypointbrange" type="range" style="width: 90%"
-                                       data-bind="visible: showRangeYPointB, value: yPointB, attr: {max: $root.MAX_RANGE},
-                                       event: {click: $root.activateItem.bind($root)}, valueUpdate: 'input'">
-                            </div>
-                        </div>
-
-                        <div data-bind="if: $root.isCircle($data)">
-                            <div class="form-group"
-                                 data-bind="event: {mouseover: toggleRangeRadius, mouseout: toggleRangeRadius}">
-                                <label class="control-label col-xs-4 input-sm" for="radius">radius</label>
-
-                                <div class="col-xs-8">
-                                    <input id="radius" type="text" class="form-control input-sm"
-                                           placeholder="radius"
-                                           data-bind="value: radius">
-                                </div>
-                                <input id="radiusrange" type="range" style="width: 90%"
-                                       data-bind="visible: showRangeRadius, value: radius, attr: {max: $root.MAX_RANGE},
-                                       event: {click: $root.activateItem.bind($root)}, valueUpdate: 'input'">
-                            </div>
-                        </div>
-
-                    </form>
-                </li>
-            </ul>
-        </li>
-    </ul>
+</ul>
+</li>
+</ul>
 </div>
 </section>
 
@@ -306,6 +441,88 @@
 
 </nav>
 
+<script type="text/html" id="item-skelleton">
+
+    <li class="list-group-item"
+        data-bind="event: {mouseover: $root.toggleControls, mouseout: $root.toggleControls},
+                        css: {selected: isActive}, click: $root.activateItem.bind($root)">
+
+        <a href="#" data-bind="click: $root.toggleSelectItem.bind($root), clickBubble: false">Image</a>
+
+        <a href="#" data-bind="click: $root.toggleHideItem, visible: showHide, clickBubble: false">
+            <span class="glyphicon" data-bind="css: {'glyphicon-eye-open': !isHidden(), 'glyphicon-eye-close': isHidden, 'active-light': !showControls()}"></span>
+        </a>
+
+        <a href="#" data-bind="click: $root.deleteItem, visible: showControls, clickBubble: false">
+            <span class="glyphicon glyphicon-trash"></span>
+        </a>
+
+        <form class="form-horizontal list-group-item-text"
+              data-bind="visible: isSelected">
+            <div class="form-group">
+                <div class="img-upload">
+                    <span class="glyphicon glyphicon-plus-sign"></span>
+                </div>
+                <img class="img-thumbnail">
+                <span data-bind="text: fileName"></span>
+            </div>
+
+            <div data-bind="template: {name: 'base-item', data: $data}"></div>
+
+            <div class="form-group">
+                <label class="control-label col-xs-4 input-sm">zIndex</label>
+
+                <div class="col-xs-8">
+                    <input type="text" class="form-control input-sm"
+                           data-bind="value: zIndex">
+                </div>
+            </div>
+        </form>
+    </li>
+
+</script>
+
+<script type="text/html" id="base-item">
+
+    <div class="form-group">
+        <label class="control-label col-xs-4 input-sm">add</label>
+
+        <div class="col-xs-8">
+            <input type="text" class="form-control input-sm"
+                   data-bind="value: add">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-xs-4 input-sm">delay</label>
+
+        <div class="col-xs-8">
+            <input type="text" class="form-control input-sm"
+                   data-bind="value: delay">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-xs-4 input-sm">remove</label>
+
+        <div class="col-xs-8">
+            <input type="text" class="form-control input-sm"
+                   data-bind="value: remove">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-xs-4 input-sm">trigger</label>
+
+        <div class="col-xs-8">
+            <input type="text" class="form-control input-sm"
+                   data-bind="value: trigger">
+        </div>
+    </div>
+
+</script>
+
 <script data-main="js/main.js" src="js/lib/require.js"></script>
+
 </body>
 </html>
