@@ -1,6 +1,6 @@
 define(['lib/knockout', 'model/Item', 'model/Base'], function (ko, Item, Base) {
     function TouchArea() {
-        Item.call(this);
+        Item.call(this, 'TouchArea');
         Base.call(this);
 
         this.width = ko.observable().extend({integer: null});

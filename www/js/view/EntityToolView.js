@@ -1,4 +1,4 @@
-define(['lib/knockout'], function(ko) {
+define(['lib/knockout', 'model/Entity'], function(ko, Entity) {
 
     function EntityToolView(entityBucket, showEntityTool) {
         this.entityBucket = entityBucket;
@@ -12,6 +12,7 @@ define(['lib/knockout'], function(ko) {
         this.showTargets = ko.observable(true);
 
         this.MAX_RANGE = 1000;
+        this.counter = 0;
     }
 
     EntityToolView.prototype.toggleControls = function (item) {
@@ -22,10 +23,13 @@ define(['lib/knockout'], function(ko) {
         entity.isSelected(!entity.isSelected());
 
         if (entity.isSelected()) {
-
-            this.entityBucket.deactivateActiveEntity();
-            this.entityBucket.activateEntity(entity);
+            this.activateEntity(entity);
         }
+    };
+
+    EntityToolView.prototype.activateEntity = function (entity) {
+        this.entityBucket.deactivateActiveEntity();
+        this.entityBucket.activateEntity(entity);
     };
 
     EntityToolView.prototype.toggleSelectItem = function (item) {
@@ -61,43 +65,39 @@ define(['lib/knockout'], function(ko) {
     };
 
     EntityToolView.prototype.addEntity = function () {
-        console.log("add entity");
+        this.entityBucket.entities.push(new Entity('unknown ' + this.counter++, 100, 100));
     };
 
     EntityToolView.prototype.removeEntity = function (entity) {
-        console.log("remove entity");
     };
 
     EntityToolView.prototype.addItem = function () {
-        console.log("add item");
     };
 
     EntityToolView.prototype.removeItem = function (item) {
-        console.log("remove item");
     };
 
     EntityToolView.prototype.toggleShowImages = function () {
-        console.log('show/hide images');
+        this.showImages(!this.showImages());
     };
 
     EntityToolView.prototype.toggleShowSprites = function () {
-        console.log('show/hide sprites');
+        this.showSprites(!this.showSprites());
     };
 
     EntityToolView.prototype.toggleShowPaths = function () {
-        console.log('show/hide paths');
+        this.showPaths(!this.showPaths());
     };
 
     EntityToolView.prototype.toggleShowTouchAreas = function () {
-        console.log('show/hide touch areas')
+        this.showTouchAreas(!this.showTouchAreas());
     };
 
     EntityToolView.prototype.toggleShowTargets = function () {
-        console.log('show/hide targets');
+        this.showTargets(!this.showTargets());
     };
 
     EntityToolView.prototype.toggleEditEvents = function () {
-        console.log('show event ')
     };
 
     return EntityToolView;

@@ -1,6 +1,6 @@
 define(['lib/knockout', 'model/Item'], function (ko, Item) {
     function Frame() {
-        Item.call(this);
+        Item.call(this, 'Frame');
 
         this.fileName = ko.observable();
     }

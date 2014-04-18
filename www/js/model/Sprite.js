@@ -1,6 +1,6 @@
 define(['lib/knockout', 'model/Item', 'model/Base'], function (ko, Item, Base) {
     function Sprite() {
-        Item.call(this);
+        Item.call(this, 'Sprite');
         Base.call(this);
 
         this.frames = ko.observableArray();

@@ -1,6 +1,6 @@
 define(['lib/knockout', 'model/Item', 'model/Base'], function (ko, Item, Base) {
     function Path() {
-        Item.call(this);
+        Item.call(this, 'Path');
         Base.call(this);
 
         this.endX = ko.observable().extend({integer: null});

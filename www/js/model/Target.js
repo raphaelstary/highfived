@@ -1,6 +1,6 @@
 define(['lib/knockout', 'model/Item', 'model/Base'], function (ko, Item, Base) {
     function Target() {
-        Item.call(this);
+        Item.call(this, 'Targetnde');
         Base.call(this);
 
         this.radius = ko.observable().extend({integer: null});

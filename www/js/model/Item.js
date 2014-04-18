@@ -1,5 +1,6 @@
 define(['lib/knockout'], function (ko) {
-    function Item() {
+    function Item(type) {
+        this.type = ko.observable(type);
         this.isSelected = ko.observable(false);
         this.isActive = ko.observable(false);
         this.showControls = ko.observable(false);

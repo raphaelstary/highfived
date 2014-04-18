@@ -1,6 +1,6 @@
 define(['lib/knockout', 'model/Item'], function (ko, Item) {
     function Entity(name, x, y) {
-        Item.call(this);
+        Item.call(this, 'Entity');
 
         this.name = ko.observable(name);
 
