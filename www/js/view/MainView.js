@@ -1,5 +1,6 @@
-define(['lib/knockout', 'view/ControlBarView', 'view/EntityToolView', 'model/Factory', 'view/EntityFilter'],
-    function (ko, ControlBarView, EntityToolView, Factory, EntityFilter) {
+define(['lib/knockout', 'view/ControlBarView', 'view/EntityToolView', 'model/Factory', 'view/EntityFilter',
+    'input/DragAndDropHandler'],
+    function (ko, ControlBarView, EntityToolView, Factory, EntityFilter, DragAndDropHandler) {
 
         // filter for numeric input fields
         ko.extenders.integer = function(target) {
@@ -27,6 +28,20 @@ define(['lib/knockout', 'view/ControlBarView', 'view/EntityToolView', 'model/Fac
 
             //return the new computed observable
             return result;
+        };
+
+        var dropHandler = new DragAndDropHandler();
+
+        ko.bindingHandlers.drop = {
+            init: function(element, valueAccessor) {
+                element.addEventListener('dragenter', function (event) {
+                    event.preventDefault();
+                });
+                element.addEventListener('dragover', function (event) {
+                    event.preventDefault();
+                });
+                element.addEventListener('drop', dropHandler.handleDrop.bind(dropHandler, valueAccessor(), element));
+            }
         };
 
         function MainView() {

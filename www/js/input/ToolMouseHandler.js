@@ -238,69 +238,69 @@ define(['model/Line', 'model/Rectangle', 'model/Circle', 'model/Curve', 'input/P
             if (isPointerShapeCollision || isPointerActionPointCollision)
                 return;
 
-            layer.items.forEach(function (item) {
-                if (isPointerShapeCollision || isPointerActionPointCollision || item.isHidden())
-                    return;
-
-                var isRect = self._isRect(item),
-                    isCircle = self._isCircle(item),
-                    isLine = self._isLine(item),
-                    isCurve = self._isCurve(item);
-
-                if (item.isActive()) {
-                    var tempAction;
-
-                    if (isRect) {
-                        tempAction = self.actionInterpreter.interpretRect(pointer, item);
-
-                    } else if (isCircle) {
-                        tempAction = self.actionInterpreter.interpretCircle(circlePointer, self._getMathCircle(item));
-
-                    } else if (isLine) {
-                        tempAction = self.actionInterpreter.interpretLine(circlePointer, self._getMathLine(item));
-
-                    } else if (isCurve) {
-                        tempAction = self.actionInterpreter.interpretCurve(circlePointer, self._getMathCurve(item));
-                    }
-
-                    if (tempAction !== PointerAction.NOTHING) {
-                        isPointerActionPointCollision = true;
-                        self.entityBucket.activeItem = item;
-                        self.activeAction = tempAction;
-
-                        if (isRect) {
-                            self._setOldRect(item);
-
-                        } else if (isCircle) {
-                            self._setOldCircle(item);
-
-                        } else if (isLine) {
-                            self._setOldLine(item);
-                        }
-                    }
-                } else {
-
-                    if (isRectCollision() || isCircleCollision() || isLineCollision()) {
-                        self.entityBucket.deactivateActiveItem();
-                        self.entityBucket.activateItem(item);
-                        self.activeAction = PointerAction.NOTHING;
-
-                        isPointerShapeCollision = true;
-                    }
-
-                    function isRectCollision() {
-                        return isRect && self.collisionDetector.checkRect(pointer, self._getABRect(item));
-                    }
-
-                    function isCircleCollision() {
-                        return isCircle && self.collisionDetector.checkCircle(self._getMathCircle(item), circlePointer);
-                    }
-
-                    function isLineCollision() {
-                        return isLine && self.collisionDetector.checkLine(self._getMathLine(item), circlePointer);
-                    }
-                }
-            });
+//            layer.items.forEach(function (item) {
+//                if (isPointerShapeCollision || isPointerActionPointCollision || item.isHidden())
+//                    return;
+//
+//                var isRect = self._isRect(item),
+//                    isCircle = self._isCircle(item),
+//                    isLine = self._isLine(item),
+//                    isCurve = self._isCurve(item);
+//
+//                if (item.isActive()) {
+//                    var tempAction;
+//
+//                    if (isRect) {
+//                        tempAction = self.actionInterpreter.interpretRect(pointer, item);
+//
+//                    } else if (isCircle) {
+//                        tempAction = self.actionInterpreter.interpretCircle(circlePointer, self._getMathCircle(item));
+//
+//                    } else if (isLine) {
+//                        tempAction = self.actionInterpreter.interpretLine(circlePointer, self._getMathLine(item));
+//
+//                    } else if (isCurve) {
+//                        tempAction = self.actionInterpreter.interpretCurve(circlePointer, self._getMathCurve(item));
+//                    }
+//
+//                    if (tempAction !== PointerAction.NOTHING) {
+//                        isPointerActionPointCollision = true;
+//                        self.entityBucket.activeItem = item;
+//                        self.activeAction = tempAction;
+//
+//                        if (isRect) {
+//                            self._setOldRect(item);
+//
+//                        } else if (isCircle) {
+//                            self._setOldCircle(item);
+//
+//                        } else if (isLine) {
+//                            self._setOldLine(item);
+//                        }
+//                    }
+//                } else {
+//
+//                    if (isRectCollision() || isCircleCollision() || isLineCollision()) {
+//                        self.entityBucket.deactivateActiveItem();
+//                        self.entityBucket.activateItem(item);
+//                        self.activeAction = PointerAction.NOTHING;
+//
+//                        isPointerShapeCollision = true;
+//                    }
+//
+//                    function isRectCollision() {
+//                        return isRect && self.collisionDetector.checkRect(pointer, self._getABRect(item));
+//                    }
+//
+//                    function isCircleCollision() {
+//                        return isCircle && self.collisionDetector.checkCircle(self._getMathCircle(item), circlePointer);
+//                    }
+//
+//                    function isLineCollision() {
+//                        return isLine && self.collisionDetector.checkLine(self._getMathLine(item), circlePointer);
+//                    }
+//                }
+//            });
         });
 
         return isPointerShapeCollision || isPointerActionPointCollision;

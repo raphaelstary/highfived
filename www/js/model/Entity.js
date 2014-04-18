@@ -1,4 +1,4 @@
-define(['lib/knockout', 'model/Item'], function (ko, Item) {
+define(['lib/knockout', 'model/Item', 'model/Image'], function (ko, Item, Image) {
     function Entity(name, x, y) {
         Item.call(this, 'Entity');
 
@@ -33,8 +33,8 @@ define(['lib/knockout', 'model/Item'], function (ko, Item) {
 
         this.hasImage = ko.observable(false);
         this.image = {};
-        this.hasPath = ko.observable(false);
-        this.path = {};
+        this.hasPaths = ko.observable(false);
+        this.paths = ko.observableArray();
         this.hasSprite = ko.observable(false);
         this.sprite = {};
         this.hasTouchArea = ko.observable(false);

@@ -69,7 +69,8 @@
                            data-bind="value: name, visible: isEditOn">
 
                     <a href="#" data-bind="click: $root.toggleEditEntityName, visible: showEdit">
-                        <span class="glyphicon glyphicon-pencil" data-bind="css: {'active-light': !showControls()}"></span>
+                        <span class="glyphicon glyphicon-pencil"
+                              data-bind="css: {'active-light': !showControls()}"></span>
                     </a>
 
                     <a href="#" data-bind="visible: showHide, click: $root.toggleHide, clickBubble: false">
@@ -91,8 +92,17 @@
                         <li data-bind="visible: !hasImage()">
                             <a href="#" data-bind="click: $root.createImage">Image</a>
                         </li>
-                        <li data-bind="visible: !hasPath()">
-                            <a href="#" data-bind="click: $root.createPath.bind($root)">Path</a>
+                        <li>
+                            <a href="#" data-bind="click: $root.createPath">Path</a>
+                        </li>
+                        <li data-bind="visible: !hasTouchArea()">
+                            <a href="#" data-bind="click: $root.createTouchArea">Touch Area</a>
+                        </li>
+                        <li data-bind="visible: !hasTarget()">
+                            <a href="#" data-bind="click: $root.createTarget">Target</a>
+                        </li>
+                        <li data-bind="visible: !hasSprite()">
+                            <a href="#" data-bind="click: $root.createSprite">Sprite</a>
                         </li>
                     </ul>
 
@@ -131,13 +141,16 @@
                             </div>
                         </form>
                     </li>
-                    <!-- ko template: {name: 'item-skeleton', if: hasImage, data: image} -->
-                    <!-- /ko -->
-                    <!--<span data-bind="template: {name: 'item-skeleton', if: hasImage, data: image}"></span>-->
-                    <div data-bind="template: {name: 'item-skeleton', data: path, if: hasPath}"></div>
-                    <div data-bind="template: {name: 'item-skeleton', data: touchArea, if: hasTouchArea}"></div>
-                    <div data-bind="template: {name: 'item-skeleton', data: target, if: hasTarget}"></div>
-                    <div data-bind="template: {name: 'item-skeleton', data: sprite, if: hasSprite}"></div>
+                    <!--ko template: {name: 'item-skeleton', if: hasImage, data: image}-->
+                    <!--/ko-->
+                    <!--ko template: {name: 'item-skeleton', if: hasPaths, foreach: paths}-->
+                    <!--/ko-->
+                    <!--ko template: {name: 'item-skeleton', if: hasTouchArea, data: touchArea}-->
+                    <!--/ko-->
+                    <!--ko template: {name: 'item-skeleton', if: hasTarget, data: target}-->
+                    <!--/ko-->
+                    <!--ko template: {name: 'item-skeleton', if: hasSprite, data: sprite}-->
+                    <!--/ko-->
                 </ul>
             </li>
         </ul>
@@ -207,200 +220,205 @@
 
 <script type="text/html" id="item-skeleton">
 
-    <li class="list-group-item"
-        data-bind="event: {mouseover: $root.toggleControls, mouseout: $root.toggleControls},
+<li class="list-group-item"
+    data-bind="event: {mouseover: $root.toggleControls, mouseout: $root.toggleControls},
                         css: {selected: isActive}, click: $root.activateItem.bind($root)">
 
-        <a href="#" data-bind="text: type, click: $root.toggleSelectItem.bind($root), clickBubble: false"></a>
+    <a href="#" data-bind="text: type, click: $root.toggleSelectItem.bind($root), clickBubble: false"></a>
 
-        <a href="#" data-bind="click: $root.toggleHideItem, visible: showHide, clickBubble: false">
+    <a href="#" data-bind="click: $root.toggleHide, visible: showHide, clickBubble: false">
             <span class="glyphicon"
                   data-bind="css: {'glyphicon-eye-open': !isHidden(), 'glyphicon-eye-close': isHidden, 'active-light': !showControls()}"></span>
-        </a>
+    </a>
 
-        <a href="#" data-bind="click: $root.deleteItem, visible: showControls, clickBubble: false">
-            <span class="glyphicon glyphicon-trash"></span>
-        </a>
+    <a href="#" data-bind="click: $root.deleteItem, visible: showControls, clickBubble: false">
+        <span class="glyphicon glyphicon-trash"></span>
+    </a>
 
-        <form class="form-horizontal list-group-item-text"
-              data-bind="visible: isSelected">
+    <form class="form-horizontal list-group-item-text"
+          data-bind="visible: isSelected">
 
-            <div class="form-group" data-bind="if: $data.fileName">
+        <!--ko if: $root.isImage($data)-->
+        <div class="form-group">
+            <div class="img-upload img-thumbnail" style="width: 50px; height: 50px; text-align: center"
+                    data-bind="drop: $data">
+                <span data-bind="visible: !imgReady()" class="glyphicon glyphicon-plus-sign" style="font-size: 21px; top: 7px"></span>
+            </div>
+
+            <span data-bind="text: fileName"></span>
+        </div>
+        <!--/ko-->
+
+        <!-- ko if: $root.isSprite($data) -->
+        <div data-bind="foreach: frames">
+            <div class="form-group">
                 <div class="img-upload">
                     <span class="glyphicon glyphicon-plus-sign"></span>
                 </div>
                 <img class="img-thumbnail">
                 <span data-bind="text: fileName"></span>
             </div>
+        </div>
+        <!-- /ko -->
 
-            <!-- ko if: $data.frames -->
-            <div data-bind="foreach: frames">
-                <div class="form-group">
-                    <div class="img-upload">
-                        <span class="glyphicon glyphicon-plus-sign"></span>
-                    </div>
-                    <img class="img-thumbnail">
-                    <span data-bind="text: fileName"></span>
-                </div>
+        <!-- ko if: $root.isTarget($data) -->
+        <div class="form-group" data-bind="event: {mouseover: toggleRangeRadius, mouseout: toggleRangeRadius}">
+
+            <label class="control-label col-xs-4 input-sm">radius</label>
+
+            <div class="col-xs-8">
+                <input type="text" class="form-control input-sm" data-bind="value: radius">
             </div>
-            <!-- /ko -->
-
-            <!-- ko if: $data.radius -->
-            <div class="form-group" data-bind="event: {mouseover: toggleRangeRadius, mouseout: toggleRangeRadius}">
-
-                <label class="control-label col-xs-4 input-sm">radius</label>
-
-                <div class="col-xs-8">
-                    <input type="text" class="form-control input-sm" data-bind="value: radius">
-                </div>
-                <input type="range" style="width: 90%"
-                       data-bind="visible: showRangeRadius, value: radius, attr: {max: $root.MAX_RANGE},
+            <input type="range" style="width: 90%"
+                   data-bind="visible: showRangeRadius, value: radius, attr: {max: $root.MAX_RANGE},
                                        event: {click: $root.activateItem.bind($root)}, valueUpdate: 'input'">
-            </div>
-            <!-- /ko -->
-
-            <!-- ko if: $data.width -->
-            <div class="form-group"
-                 data-bind="event: {mouseover: toggleRangeWidth, mouseout: toggleRangeWidth}">
-                <label class="control-label col-xs-4 input-sm">Width</label>
-
-                <div class="col-xs-8">
-                    <input type="text" class="form-control input-sm"
-                           data-bind="value: width">
-                </div>
-
-                <input type="range" style="width: 90%"
-                       data-bind="visible: showRangeWidth, value: width, valueUpdate: 'input',
-                                           attr: {max: $root.MAX_RANGE}, event: {click: $root.activateItem.bind($root)}">
-            </div>
-            <!-- /ko -->
-
-            <!-- ko if: $data.height -->
-            <div class="form-group"
-                 data-bind="event: {mouseover: toggleRangeHeight, mouseout: toggleRangeHeight}">
-                <label class="control-label col-xs-4 input-sm">Height</label>
-
-                <div class="col-xs-8">
-                    <input type="text" class="form-control input-sm"
-                           data-bind="value: height">
-                </div>
-
-                <input type="range" style="width: 90%"
-                       data-bind="visible: showRangeHeight, value: height, valueUpdate: 'input',
-                                           attr: {max: $root.MAX_RANGE}, event: {click: $root.activateItem.bind($root)}">
-            </div>
-            <!-- /ko -->
-
-            <!-- ko if: $data.endX -->
-            <div class="form-group"
-                 data-bind="event: {mouseover: toggleRangeEndX, mouseout: toggleRangeEndX}">
-                <label class="control-label col-xs-4 input-sm">endX</label>
-
-                <div class="col-xs-8">
-                    <input type="text" class="form-control input-sm"
-                           data-bind="value: endX">
-                </div>
-
-                <input type="range" style="width: 90%"
-                       data-bind="visible: showRangeEndX, value: endX, valueUpdate: 'input',
-                                           attr: {max: $root.MAX_RANGE}, event: {click: $root.activateItem.bind($root)}">
-            </div>
-            <!-- /ko -->
-
-            <!-- ko if: $data.endY -->
-            <div class="form-group"
-                 data-bind="event: {mouseover: toggleRangeEndY, mouseout: toggleRangeEndY}">
-                <label class="control-label col-xs-4 input-sm">endY</label>
-
-                <div class="col-xs-8">
-                    <input type="text" class="form-control input-sm"
-                           data-bind="value: endY">
-                </div>
-
-                <input type="range" style="width: 90%"
-                       data-bind="visible: showRangeEndY, value: endY, valueUpdate: 'input',
-                                           attr: {max: $root.MAX_RANGE}, event: {click: $root.activateItem.bind($root)}">
-            </div>
-            <!-- /ko -->
-
-            <div data-bind="template: {name: 'base-item', data: $data}"></div>
-
-            <div class="form-group" data-bind="if: $data.loop && loop() != undefined">
-                <label class="control-label col-xs-4 input-sm">loop</label>
-
-                <div class="col-xs-8">
-                    <input type="checkbox" data-bind="checked: loop">
-                </div>
-            </div>
-
-            <div class="form-group" data-bind="if: $data.duration">
-                <label class="control-label col-xs-4 input-sm">duration</label>
-
-                <div class="col-xs-8">
-                    <input type="text" class="form-control input-sm"
-                           data-bind="value: duration">
-                </div>
-            </div>
-
-            <div class="form-group" data-bind="if: $data.transition">
-                <label class="control-label col-xs-4 input-sm">transition</label>
-
-                <div class="col-xs-8">
-                    <input type="text" class="form-control input-sm"
-                           data-bind="value: transition">
-                </div>
-            </div>
-
-            <div class="form-group" data-bind="if: $data.zIndex">
-                <label class="control-label col-xs-4 input-sm">zIndex</label>
-
-                <div class="col-xs-8">
-                    <input type="text" class="form-control input-sm"
-                           data-bind="value: zIndex">
-                </div>
-            </div>
-        </form>
-    </li>
-
-</script>
-
-<script type="text/html" id="base-item">
-
-    <div class="form-group">
-        <label class="control-label col-xs-4 input-sm">add</label>
-
-        <div class="col-xs-8">
-            <input type="text" class="form-control input-sm"
-                   data-bind="value: add">
         </div>
-    </div>
+        <!-- /ko -->
 
-    <div class="form-group">
-        <label class="control-label col-xs-4 input-sm">delay</label>
+        <!-- ko if: $root.isTouchArea($data) -->
+        <div class="form-group"
+             data-bind="event: {mouseover: toggleRangeWidth, mouseout: toggleRangeWidth}">
+            <label class="control-label col-xs-4 input-sm">Width</label>
 
-        <div class="col-xs-8">
-            <input type="text" class="form-control input-sm"
-                   data-bind="value: delay">
+            <div class="col-xs-8">
+                <input type="text" class="form-control input-sm"
+                       data-bind="value: width">
+            </div>
+
+            <input type="range" style="width: 90%"
+                   data-bind="visible: showRangeWidth, value: width, valueUpdate: 'input',
+                                           attr: {max: $root.MAX_RANGE}, event: {click: $root.activateItem.bind($root)}">
         </div>
-    </div>
+        <!-- /ko -->
 
-    <div class="form-group">
-        <label class="control-label col-xs-4 input-sm">remove</label>
+        <!-- ko if: $root.isTouchArea($data) -->
+        <div class="form-group"
+             data-bind="event: {mouseover: toggleRangeHeight, mouseout: toggleRangeHeight}">
+            <label class="control-label col-xs-4 input-sm">Height</label>
 
-        <div class="col-xs-8">
-            <input type="text" class="form-control input-sm"
-                   data-bind="value: remove">
+            <div class="col-xs-8">
+                <input type="text" class="form-control input-sm"
+                       data-bind="value: height">
+            </div>
+
+            <input type="range" style="width: 90%"
+                   data-bind="visible: showRangeHeight, value: height, valueUpdate: 'input',
+                                           attr: {max: $root.MAX_RANGE}, event: {click: $root.activateItem.bind($root)}">
         </div>
-    </div>
+        <!-- /ko -->
 
-    <div class="form-group">
-        <label class="control-label col-xs-4 input-sm">trigger</label>
+        <!-- ko if: $root.isPath($data) -->
+        <div class="form-group"
+             data-bind="event: {mouseover: toggleRangeEndX, mouseout: toggleRangeEndX}">
+            <label class="control-label col-xs-4 input-sm">endX</label>
 
-        <div class="col-xs-8">
-            <input type="text" class="form-control input-sm"
-                   data-bind="value: trigger">
+            <div class="col-xs-8">
+                <input type="text" class="form-control input-sm"
+                       data-bind="value: endX">
+            </div>
+
+            <input type="range" style="width: 90%"
+                   data-bind="visible: showRangeEndX, value: endX, valueUpdate: 'input',
+                                           attr: {max: $root.MAX_RANGE}, event: {click: $root.activateItem.bind($root)}">
         </div>
-    </div>
+        <!-- /ko -->
+
+        <!-- ko if: $root.isPath($data) -->
+        <div class="form-group"
+             data-bind="event: {mouseover: toggleRangeEndY, mouseout: toggleRangeEndY}">
+            <label class="control-label col-xs-4 input-sm">endY</label>
+
+            <div class="col-xs-8">
+                <input type="text" class="form-control input-sm"
+                       data-bind="value: endY">
+            </div>
+
+            <input type="range" style="width: 90%"
+                   data-bind="visible: showRangeEndY, value: endY, valueUpdate: 'input',
+                                           attr: {max: $root.MAX_RANGE}, event: {click: $root.activateItem.bind($root)}">
+        </div>
+        <!-- /ko -->
+
+        <div class="form-group">
+            <label class="control-label col-xs-4 input-sm">add</label>
+
+            <div class="col-xs-8">
+                <input type="text" class="form-control input-sm"
+                       data-bind="value: add">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-xs-4 input-sm">delay</label>
+
+            <div class="col-xs-8">
+                <input type="text" class="form-control input-sm"
+                       data-bind="value: delay">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-xs-4 input-sm">remove</label>
+
+            <div class="col-xs-8">
+                <input type="text" class="form-control input-sm"
+                       data-bind="value: remove">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-xs-4 input-sm">trigger</label>
+
+            <div class="col-xs-8">
+                <input type="text" class="form-control input-sm"
+                       data-bind="value: trigger">
+            </div>
+        </div>
+
+        <!--ko if: $root.isPath($data) || $root.isSprite($data)-->
+        <div class="form-group">
+            <label class="control-label col-xs-4 input-sm">loop</label>
+
+            <div class="col-xs-8">
+                <input type="checkbox" data-bind="checked: loop">
+            </div>
+        </div>
+        <!--/ko-->
+
+        <!--ko if: $root.isPath($data) || $root.isSprite($data)-->
+        <div class="form-group">
+            <label class="control-label col-xs-4 input-sm">duration</label>
+
+            <div class="col-xs-8">
+                <input type="text" class="form-control input-sm"
+                       data-bind="value: duration">
+            </div>
+        </div>
+        <!--/ko-->
+
+        <!--ko if: $root.isPath($data)-->
+        <div class="form-group">
+            <label class="control-label col-xs-4 input-sm">transition</label>
+
+            <div class="col-xs-8">
+                <input type="text" class="form-control input-sm"
+                       data-bind="value: transition">
+            </div>
+        </div>
+        <!--/ko-->
+
+        <!--ko if: $root.isImage($data) || $root.isSprite($data)-->
+        <div class="form-group">
+            <label class="control-label col-xs-4 input-sm">zIndex</label>
+
+            <div class="col-xs-8">
+                <input type="text" class="form-control input-sm"
+                       data-bind="value: zIndex">
+            </div>
+        </div>
+        <!--/ko-->
+    </form>
+</li>
 
 </script>
 

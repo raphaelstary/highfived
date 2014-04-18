@@ -1,17 +1,17 @@
 require(['view/MainView', 'input/ToolMouseHandler', 'input/RectCollisionDetector', 'input/RectActionInterpreter',
     'input/CircleCollisionDetector', 'input/CircleActionInterpreter', 'input/checkLineCollision',
     'input/LineActionInterpreter', 'render/getRequestAnimationFrame', 'render/Loop', 'render/Renderer',
-        'render/ResizeBus', 'render/ResizeHandler', 'render/ScreenSizer', 'input/DragAndDropHandler',
+        'render/ResizeBus', 'render/ResizeHandler', 'render/ScreenSizer', 'input/DragAndDropHandler', 'lib/knockout',
     'lib/domReady', 'lib/bootstrap', 'lib/jquery'],
     function (MainView, ToolMouseHandler, RectCollisionDetector, RectActionInterpreter, CircleCollisionDetector,
               CircleActionInterpreter, checkLineCollision, LineActionInterpreter, getAnimFrame, Loop, Renderer,
-              ResizeBus, ResizeHandler, ScreenSizer, DragAndDropHandler) {
+              ResizeBus, ResizeHandler, ScreenSizer, DragAndDropHandler, ko) {
 
 
         $('#tool-menu a').tooltip();
 
         var layerData = new MainView().init();
-        var layerModel = layerData.entityBucket;
+        var entityModel = layerData.entityBucket;
         var zoomLevel = layerData.zoomLevel;
 
         var canvas = document.getElementById('editor-ui');
@@ -32,14 +32,14 @@ require(['view/MainView', 'input/ToolMouseHandler', 'input/RectCollisionDetector
             checkCircle: CircleCollisionDetector.checkCircle
         };
 
-        var toolMouseHandler = new ToolMouseHandler(layerModel, collisionDetector, actionInterpreter, zoomLevel);
+        var toolMouseHandler = new ToolMouseHandler(entityModel, collisionDetector, actionInterpreter, zoomLevel);
 
         canvas.addEventListener('mousedown', toolMouseHandler.handleDown.bind(toolMouseHandler));
         canvas.addEventListener('mousemove', toolMouseHandler.handleMove.bind(toolMouseHandler));
         canvas.addEventListener('mouseup', toolMouseHandler.handleUp.bind(toolMouseHandler));
 
         var context = canvas.getContext('2d');
-        var renderer = new Renderer(canvas, context, canvas.width, canvas.height, layerModel, zoomLevel);
+        var renderer = new Renderer(canvas, context, canvas.width, canvas.height, entityModel, zoomLevel);
         renderer.resize(window.innerWidth, window.innerHeight);
 
         var resizeBus = new ResizeBus();
@@ -47,16 +47,6 @@ require(['view/MainView', 'input/ToolMouseHandler', 'input/RectCollisionDetector
         var resizeHandler = new ResizeHandler(new ScreenSizer(resizeBus), getAnimFrame(window));
 
         window.addEventListener('resize', resizeHandler.handleResize.bind(resizeHandler));
-
-        canvas.addEventListener('dragenter', function () {
-            event.preventDefault();
-        });
-        canvas.addEventListener('dragover', function () {
-            event.preventDefault();
-        });
-
-        var dropHandler = new DragAndDropHandler(layerModel, zoomLevel);
-        canvas.addEventListener('drop', dropHandler.handleDrop.bind(dropHandler));
 
         var loop = new Loop(getAnimFrame(window), renderer);
         loop.start();

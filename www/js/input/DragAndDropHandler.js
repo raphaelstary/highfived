@@ -1,15 +1,8 @@
-define(['model/StaticImage'], function (StaticImage) {
-    function DragAndDropHandler(entityBucket) {
-        this.entityBucket = entityBucket;
-
-        var self = this;
-        entityBucket.entities.forEach(function (entity) {
-            if (entity.name() === 'static image')
-                self.staticLayer = entity;
-        });
+define(function () {
+    function DragAndDropHandler() {
     }
 
-    DragAndDropHandler.prototype.handleDrop = function (event) {
+    DragAndDropHandler.prototype.handleDrop = function (image, domElem, event) {
         event.preventDefault();
 
         var file = event.dataTransfer.files[0];
@@ -17,17 +10,14 @@ define(['model/StaticImage'], function (StaticImage) {
         var img = new Image();
         var self = this;
         img.onload = function () {
-            self.entityBucket.deactivateActiveEntity();
-            self.entityBucket.activateEntity(self.staticLayer);
-
-            var item = new StaticImage(file.name, event.clientX, event.clientY, img.width, img.height, img);
-
-            self.entityBucket.deactivateActiveItem();
-            self.entityBucket.activateItem(item);
-
-            self.entityBucket.activeEntity.items.push(item);
+            image.img = img;
+            image.fileName(file.name);
+            image.imgReady(true);
         };
         img.src = window.URL.createObjectURL(file);
+        if (domElem.childElementCount > 1)
+            domElem.removeChild(domElem.children[1]);
+        domElem.appendChild(img);
     };
 
     return DragAndDropHandler;

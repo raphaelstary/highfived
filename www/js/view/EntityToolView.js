@@ -1,4 +1,5 @@
-define(['lib/knockout', 'model/Entity', 'model/Image'], function(ko, Entity, Image) {
+define(['lib/knockout', 'model/Entity', 'model/Image', 'model/Path', 'model/TouchArea', 'model/Target',
+'model/Sprite', 'model/Frame'], function(ko, Entity, Image, Path, TouchArea, Target, Sprite, Frame) {
 
     function EntityToolView(entityBucket, showEntityTool) {
         this.entityBucket = entityBucket;
@@ -40,6 +41,11 @@ define(['lib/knockout', 'model/Entity', 'model/Image'], function(ko, Entity, Ima
         }
     };
 
+    EntityToolView.prototype.activateItem = function (item) {
+        this.entityBucket.deactivateActiveItem();
+        this.entityBucket.activateItem(item);
+    };
+
     EntityToolView.prototype.toggleEditEntityName = function (entity) {
         entity.isEditOn(!entity.isEditOn());
     };
@@ -52,16 +58,6 @@ define(['lib/knockout', 'model/Entity', 'model/Image'], function(ko, Entity, Ima
         this.entityBucket.entities.forEach(function (entity) {
             entity.isSelected(false);
         });
-    };
-
-    EntityToolView.prototype.activateItem = function (item) {
-        if (this.entityBucket.activeItem != null) {
-            this.entityBucket.activeItem.isActive(false);
-        }
-
-        item.isActive(true);
-
-        this.entityBucket.activeItem = item;
     };
 
     EntityToolView.prototype.addEntity = function () {
@@ -120,6 +116,30 @@ define(['lib/knockout', 'model/Entity', 'model/Image'], function(ko, Entity, Ima
     };
 
     EntityToolView.prototype.toggleEditEvents = function () {
+    };
+
+    EntityToolView.prototype.isImage = function (item) {
+        return item instanceof Image;
+    };
+
+    EntityToolView.prototype.isPath = function (item) {
+        return item instanceof Path;
+    };
+
+    EntityToolView.prototype.isSprite = function (item) {
+        return item instanceof Sprite;
+    };
+
+    EntityToolView.prototype.isTouchArea = function (item) {
+        return item instanceof TouchArea;
+    };
+
+    EntityToolView.prototype.isTarget = function (item) {
+        return item instanceof Target;
+    };
+
+    EntityToolView.prototype.isFrame = function (item) {
+        return item instanceof Frame;
     };
 
     return EntityToolView;
