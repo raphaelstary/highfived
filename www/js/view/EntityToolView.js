@@ -69,6 +69,7 @@ define(['lib/knockout', 'model/Entity', 'model/Image', 'model/Path', 'model/Touc
     };
 
     EntityToolView.prototype.removeEntity = function (entity) {
+        this.entityBucket.entities.remove(entity);
     };
 
     EntityToolView.prototype.createImage = function (entity) {

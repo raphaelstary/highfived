@@ -80,7 +80,7 @@
                         </span>
                     </a>
 
-                    <a href="#" data-bind="click: $root.removeEntity($parent, $data), visible: showControls, clickBubble: false">
+                    <a href="#" data-bind="click: $root.removeEntity.bind($root, $data), visible: showControls, clickBubble: false">
                         <span class="glyphicon glyphicon-trash"></span>
                     </a>
                     <a href="#" class="dropdown-toggle"

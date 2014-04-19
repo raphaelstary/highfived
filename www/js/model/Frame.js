@@ -1,8 +1,7 @@
-define(['lib/knockout', 'model/Item'], function (ko, Item) {
+define(['lib/knockout', 'model/Item', 'model/BaseImage'], function (ko, Item, BaseImage) {
     function Frame() {
         Item.call(this, 'frame');
-
-        this.fileName = ko.observable();
+        BaseImage.call(this);
     }
 
     Frame.prototype = Object.create(Item.prototype);
