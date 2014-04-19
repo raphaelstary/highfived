@@ -80,7 +80,7 @@
                         </span>
                     </a>
 
-                    <a href="#" data-bind="click: $root.deleteItem, visible: showControls, clickBubble: false">
+                    <a href="#" data-bind="click: $root.removeEntity($parent, $data), visible: showControls, clickBubble: false">
                         <span class="glyphicon glyphicon-trash"></span>
                     </a>
                     <a href="#" class="dropdown-toggle"
@@ -143,7 +143,7 @@
                     </li>
                     <!--ko template: {name: 'item-skeleton', if: hasImage, data: image}-->
                     <!--/ko-->
-                    <!--ko template: {name: 'item-skeleton', if: hasPaths, foreach: paths}-->
+                    <!--ko template: {name: 'item-skeleton', foreach: paths}-->
                     <!--/ko-->
                     <!--ko template: {name: 'item-skeleton', if: hasTouchArea, data: touchArea}-->
                     <!--/ko-->
@@ -231,7 +231,7 @@
                   data-bind="css: {'glyphicon-eye-open': !isHidden(), 'glyphicon-eye-close': isHidden, 'active-light': !showControls()}"></span>
     </a>
 
-    <a href="#" data-bind="click: $root.deleteItem, visible: showControls, clickBubble: false">
+    <a href="#" data-bind="click: $root.removeItem.bind($root, $parent, $data), visible: showControls, clickBubble: false">
         <span class="glyphicon glyphicon-trash"></span>
     </a>
 
@@ -280,7 +280,7 @@
         <!-- ko if: $root.isTouchArea($data) -->
         <div class="form-group"
              data-bind="event: {mouseover: toggleRangeWidth, mouseout: toggleRangeWidth}">
-            <label class="control-label col-xs-4 input-sm">Width</label>
+            <label class="control-label col-xs-4 input-sm">width</label>
 
             <div class="col-xs-8">
                 <input type="text" class="form-control input-sm"
@@ -296,7 +296,7 @@
         <!-- ko if: $root.isTouchArea($data) -->
         <div class="form-group"
              data-bind="event: {mouseover: toggleRangeHeight, mouseout: toggleRangeHeight}">
-            <label class="control-label col-xs-4 input-sm">Height</label>
+            <label class="control-label col-xs-4 input-sm">height</label>
 
             <div class="col-xs-8">
                 <input type="text" class="form-control input-sm"

@@ -1,10 +1,10 @@
 define(['lib/knockout', 'model/Item', 'model/Base'], function (ko, Item, Base) {
     function Target() {
-        Item.call(this, 'Targetnde');
+        Item.call(this, 'target');
         Base.call(this);
 
         this.radius = ko.observable().extend({integer: null});
-
+        var self = this;
         this.toggleRangeRadius = function () {
             self.focusOnRadius(!self.focusOnRadius());
         };

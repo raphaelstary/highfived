@@ -78,7 +78,6 @@ define(['lib/knockout', 'model/Entity', 'model/Image', 'model/Path', 'model/Touc
 
     EntityToolView.prototype.createPath = function (entity) {
         entity.paths.push(new Path());
-        entity.hasPaths(true);
     };
 
     EntityToolView.prototype.createTouchArea = function (entity) {
@@ -98,10 +97,18 @@ define(['lib/knockout', 'model/Entity', 'model/Image', 'model/Path', 'model/Touc
 
     EntityToolView.prototype.createFrame = function (sprite) {
         sprite.frames.push(new Frame());
-        sprite.hasFrames(true);
     };
 
-    EntityToolView.prototype.removeItem = function (item) {
+    EntityToolView.prototype.removeItem = function (entity, item) {
+        var type = item.type();
+        if (type == 'path') {
+            entity.paths.remove(item);
+        } else if (type == 'frame') {
+            entity.frames.remove(item);
+        } else {
+            entity[type] = {};
+            entity['has' + type.substr(0, 1).toUpperCase() + type.substr(1, type.length)](false);
+        }
     };
 
     EntityToolView.prototype.toggleShowImages = function () {

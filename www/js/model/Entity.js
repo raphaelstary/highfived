@@ -1,6 +1,6 @@
 define(['lib/knockout', 'model/Item', 'model/Image'], function (ko, Item, Image) {
     function Entity(name, x, y) {
-        Item.call(this, 'Entity');
+        Item.call(this, 'entity');
 
         this.name = ko.observable(name);
 
@@ -33,14 +33,19 @@ define(['lib/knockout', 'model/Item', 'model/Image'], function (ko, Item, Image)
 
         this.hasImage = ko.observable(false);
         this.image = {};
-        this.hasPaths = ko.observable(false);
+//        this.hasPaths = ko.observable(false);
         this.paths = ko.observableArray();
+        this.paths.forEach = forEach;
         this.hasSprite = ko.observable(false);
         this.sprite = {};
         this.hasTouchArea = ko.observable(false);
         this.touchArea = {};
         this.hasTarget = ko.observable(false);
         this.target = {};
+    }
+
+    function forEach(fn) {
+        ko.utils.arrayForEach(this(), fn);
     }
 
     Entity.prototype = Object.create(Item.prototype);
