@@ -42,7 +42,7 @@ section#entity-tool {
     width: 225px;
     right: 10px;
     top: 10px;
-    max-height: 95%;
+    max-height: 90%;
     overflow-y: scroll;
 }
 

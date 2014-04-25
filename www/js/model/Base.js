@@ -1,9 +1,9 @@
 define(['lib/knockout'], function (ko) {
     function Base() {
-        this.add = ko.observable();
+        this.add = ko.observableArray();
         this.delay = ko.observable().extend({integer: null});
-        this.remove = ko.observable();
-        this.trigger = ko.observable();
+        this.remove = ko.observableArray();
+        this.trigger = ko.observableArray();
     }
 
     return Base;

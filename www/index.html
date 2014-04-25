@@ -49,6 +49,18 @@
                 <span class="glyphicon glyphicon-resize-small"></span>
             </a>
         </div>
+        <div data-bind="visible: showEditEvents" style="margin-top: 20px">
+            <p>events</p>
+            <input type="text" class="form-control input-sm"
+                   data-bind="value: newEvent">
+            <a href="#" data-bind="click: addEvent">add</a>
+            <ul class="list-group" data-bind="foreach: events">
+                <li class="list-group-item">
+                    <span data-bind="text: $data"></span>
+                    <a href="#" data-bind="click: $root.deleteEvent.bind($root, $data)">delete</a>
+                </li>
+            </ul>
+        </div>
     </div>
     <div class="panel-body">
         <ul class="list-group" data-bind="foreach: entityBucket.entities">
@@ -80,7 +92,8 @@
                         </span>
                     </a>
 
-                    <a href="#" data-bind="click: $root.removeEntity.bind($root, $data), visible: showControls, clickBubble: false">
+                    <a href="#"
+                       data-bind="click: $root.removeEntity.bind($root, $data), visible: showControls, clickBubble: false">
                         <span class="glyphicon glyphicon-trash"></span>
                     </a>
                     <a href="#" class="dropdown-toggle"
@@ -231,7 +244,8 @@
                   data-bind="css: {'glyphicon-eye-open': !isHidden(), 'glyphicon-eye-close': isHidden, 'active-light': !showControls()}"></span>
     </a>
 
-    <a href="#" data-bind="click: $root.removeItem.bind($root, $parent, $data), visible: showControls, clickBubble: false">
+    <a href="#"
+       data-bind="click: $root.removeItem.bind($root, $parent, $data), visible: showControls, clickBubble: false">
         <span class="glyphicon glyphicon-trash"></span>
     </a>
 
@@ -241,8 +255,9 @@
         <!--ko if: $root.isImage($data)-->
         <div class="form-group">
             <div class="col-xs-4 img-upload img-thumbnail"
-                    data-bind="drop: $data">
-                <span data-bind="visible: !imgReady()" class="glyphicon glyphicon-plus-sign" style="font-size: 21px; top: 7px"></span>
+                 data-bind="drop: $data">
+                <span data-bind="visible: !imgReady()" class="glyphicon glyphicon-plus-sign"
+                      style="font-size: 21px; top: 7px"></span>
             </div>
             <div class="col-xs-8">
                 <p class="form-control-static" data-bind="text: shortFileName"></p>
@@ -345,8 +360,8 @@
             <label class="control-label col-xs-4 input-sm">add</label>
 
             <div class="col-xs-8">
-                <input type="text" class="form-control input-sm"
-                       data-bind="value: add">
+                <select class="form-control input-sm" data-bind="options: $root.events, selectedOptions: add" multiple>
+                </select>
             </div>
         </div>
 
@@ -363,8 +378,8 @@
             <label class="control-label col-xs-4 input-sm">remove</label>
 
             <div class="col-xs-8">
-                <input type="text" class="form-control input-sm"
-                       data-bind="value: remove">
+                <select class="form-control input-sm" data-bind="options: $root.events, selectedOptions: remove" multiple>
+                </select>
             </div>
         </div>
 
@@ -372,8 +387,8 @@
             <label class="control-label col-xs-4 input-sm">trigger</label>
 
             <div class="col-xs-8">
-                <input type="text" class="form-control input-sm"
-                       data-bind="value: trigger">
+                <select class="form-control input-sm" data-bind="options: $root.events, selectedOptions: trigger" multiple>
+                </select>
             </div>
         </div>
 

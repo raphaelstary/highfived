@@ -11,6 +11,9 @@ define(['lib/knockout', 'model/Entity', 'model/Image', 'model/Path', 'model/Touc
         this.showPaths = ko.observable(true);
         this.showTouchAreas = ko.observable(true);
         this.showTargets = ko.observable(true);
+        this.events = ko.observableArray();
+        this.showEditEvents = ko.observable(false);
+        this.newEvent = ko.observable();
 
         this.MAX_RANGE = 1000;
         this.counter = 0;
@@ -133,6 +136,16 @@ define(['lib/knockout', 'model/Entity', 'model/Image', 'model/Path', 'model/Touc
     };
 
     EntityToolView.prototype.toggleEditEvents = function () {
+        this.showEditEvents(!this.showEditEvents());
+    };
+
+    EntityToolView.prototype.addEvent = function () {
+        this.events.push(this.newEvent());
+        this.newEvent("");
+    };
+
+    EntityToolView.prototype.deleteEvent = function (event) {
+        this.events.remove(event);
     };
 
     EntityToolView.prototype.isImage = function (item) {

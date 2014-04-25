@@ -2,7 +2,7 @@ define(['lib/knockout', 'model/Item', 'model/Base', 'model/BaseImage'], function
     function Image() {
         Item.call(this, 'image');
         Base.call(this);
-        BaseImage(this);
+        BaseImage.call(this);
 
         this.zIndex = ko.observable().extend({integer: null});
     }
