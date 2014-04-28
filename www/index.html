@@ -268,11 +268,13 @@
         <!-- ko if: $root.isSprite($data) -->
         <div data-bind="foreach: frames">
             <div class="form-group">
-                <div class="img-upload">
-                    <span class="glyphicon glyphicon-plus-sign"></span>
+                <div class="col-xs-4 img-upload img-thumbnail"
+                     data-bind="drop: $data">
+                <span data-bind="visible: !imgReady()" class="glyphicon glyphicon-plus-sign"
+                      style="font-size: 21px; top: 7px"></span>
                 </div>
                 <div class="col-xs-8">
-                    <span data-bind="text: fileName"></span>
+                    <p class="form-control-static" data-bind="text: shortFileName"></p>
                 </div>
             </div>
         </div>
@@ -358,6 +360,14 @@
 
         <div class="form-group">
             <label class="control-label col-xs-4 input-sm">add</label>
+
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <span class="glyphicon glyphicon-plus"></span>
+            </a>
+
+            <ul class="dropdown-menu" data-bind="foreach: $root.events">
+                <li><a href="#" data-bind="text: $data, click: add" </li>
+            </ul>
 
             <div class="col-xs-8">
                 <select class="form-control input-sm" data-bind="options: $root.events, selectedOptions: add" multiple>
