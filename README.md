@@ -1,4 +1,4 @@
 highfive
 ========
 
-high five - game design editor
+game design editor
