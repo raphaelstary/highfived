@@ -1,0 +1,26 @@
+{
+  "name": "highfived",
+  "version": "0.1.0",
+  "description": "highfive.js UI editor",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/raphaelstary/highfived.git"
+  },
+  "keywords": [
+    "highfive.js",
+    "editor"
+  ],
+  "author": "Raphael Stary",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/raphaelstary/highfived/issues"
+  },
+  "homepage": "https://github.com/raphaelstary/highfived#readme",
+  "dependencies": {
+    "highfive.js": "^0.20.0"
+  }
+}
