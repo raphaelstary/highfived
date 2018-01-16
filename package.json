@@ -1,7 +1,7 @@
 {
   "name": "highfived",
   "version": "0.1.0",
-  "description": "highfive.js UI editor",
+  "description": "highfive'd - the highfive.js UI editor",
   "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
