@@ -21,9 +21,6 @@
   },
   "homepage": "https://github.com/raphaelstary/highfived#readme",
   "dependencies": {
-    "highfive.js": "0.20.0",
-    "bootstrap": "3.1.1",
-    "jquery": "2.1.4",
-    "knockout": "2.3.0"
+    "highfive.js": "0.20.0"
   }
 }
