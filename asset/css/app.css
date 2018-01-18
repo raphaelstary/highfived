@@ -31,15 +31,7 @@ html {
     min-height: auto;
 }
 
-.editor-toolbar__section-title {
-    margin-left: 240px;
-}
-
 /* override mdc classes */
 .mdc-list-item {
     padding-left: 24px;
-}
-
-.mdc-toolbar__title {
-    margin-left: 16px;
 }

@@ -15,43 +15,200 @@
 
 <header class="mdc-toolbar mdc-toolbar--fixed">
     <div class="mdc-toolbar__row editor-toolbar__row">
-        <section class="editor-toolbar__section-title">
+        <section class="mdc-toolbar__section mdc-toolbar__section--align-start">
             <span class="mdc-toolbar__title">scene-name.json</span>
         </section>
 
         <section class="mdc-toolbar__section mdc-toolbar__section--align-end">
-            <a href="#" class="material-icons mdc-toolbar__icon">watch_later</a>
-            <a href="#" class="material-icons mdc-toolbar__icon">work</a>
-            <a href="#" class="material-icons mdc-toolbar__icon">zoom_in</a>
-            <a href="#" class="material-icons mdc-toolbar__icon">zoom_out</a>
-            <a href="#" class="material-icons mdc-toolbar__icon">file_download</a>
-            <a href="#" class="material-icons mdc-toolbar__icon">settings</a>
+            <a href="#" class="mdc-toolbar__icon">
+                <svg fill="#f0f0f0" height="18" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"></path>
+                    <path d="M0 0h24v24H0z" fill="none"></path>
+                </svg>
+            </a>
+
+            <a href="#" class="mdc-toolbar__icon">
+                <svg fill="#f0f0f0" height="18" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 0h24v24H0z" fill="none"></path>
+                    <path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"></path>
+                </svg>
+            </a>
         </section>
     </div>
+
     <div class="mdc-toolbar__row editor-toolbar__row">
         <section class="mdc-toolbar__section mdc-toolbar__section--align-start">
 
             <a class="mdc-toolbar__icon" style="padding-left: 24px">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="#f0f0f0" height="20" viewBox="0 0 24 24" width="20">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="#f0f0f0" height="18" viewBox="0 0 24 24" width="18">
                     <path d="M0 0h24v24H0V0z" fill="none"></path>
                     <path d="M20 6h-8l-2-2H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-1 8h-3v3h-2v-3h-3v-2h3V9h2v3h3v2z"></path>
                 </svg>
             </a>
 
             <a class="mdc-toolbar__icon">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="#f0f0f0" height="20" viewBox="0 0 24 24" width="20">
-                    <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"></path>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="#f0f0f0" height="18" viewBox="0 0 24 24" width="18">
                     <path d="M0 0h24v24H0z" fill="none"></path>
+                    <path d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"></path>
                 </svg>
             </a>
 
             <a class="mdc-toolbar__icon">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="#f0f0f0" height="20" viewBox="0 0 24 24" width="20">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="#f0f0f0" height="18" viewBox="0 0 24 24" width="18">
+                    <path d="M0 0h24v24H0z" fill="none"></path>
+                    <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"></path>
+                </svg>
+            </a>
+            <a class="mdc-toolbar__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="#f0f0f0" height="18" viewBox="0 0 24 24" width="18">
+                    <path d="M0 0h24v24H0zm0 0h24v24H0zm0 0h24v24H0zm0 0h24v24H0z" fill="none"></path>
+                    <path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"></path>
+                </svg>
+            </a>
+
+            <a class="mdc-toolbar__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="#f0f0f0" height="18" viewBox="0 0 24 24" width="18">
                     <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"></path>
                     <path d="M0 0h24v24H0z" fill="none"></path>
                 </svg>
             </a>
 
+            <a class="mdc-toolbar__icon">
+                <svg fill="#f0f0f0" height="18" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path>
+                    <path d="M0 0h24v24H0z" fill="none"></path>
+                </svg>
+            </a>
+
+            <a class="mdc-toolbar__icon">
+                <svg fill="#f0f0f0" height="18" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7.41 7.84L12 12.42l4.59-4.58L18 9.25l-6 6-6-6z"></path>
+                    <path d="M0-.75h24v24H0z" fill="none"></path>
+                </svg>
+            </a>
+        </section>
+
+        <section class="mdc-toolbar__section">
+
+            <a href="#" class="mdc-toolbar__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="#f0f0f0" height="18" viewBox="0 0 24 24" width="18">
+                    <path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"></path>
+                    <path d="M0 0h24v24H0z" fill="none"></path>
+                </svg>
+            </a>
+
+            <a href="#" class="mdc-toolbar__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="#f0f0f0" height="18" viewBox="0 0 24 24" width="18">
+                    <path d="M0 0h24v24H0z" fill="none"></path>
+                    <path d="M3 5h2V3c-1.1 0-2 .9-2 2zm0 8h2v-2H3v2zm4 8h2v-2H7v2zM3 9h2V7H3v2zm10-6h-2v2h2V3zm6 0v2h2c0-1.1-.9-2-2-2zM5 21v-2H3c0 1.1.9 2 2 2zm-2-4h2v-2H3v2zM9 3H7v2h2V3zm2 18h2v-2h-2v2zm8-8h2v-2h-2v2zm0 8c1.1 0 2-.9 2-2h-2v2zm0-12h2V7h-2v2zm0 8h2v-2h-2v2zm-4 4h2v-2h-2v2zm0-16h2V3h-2v2zM7 17h10V7H7v10zm2-8h6v6H9V9z"></path>
+                </svg>
+            </a>
+
+            <a href="#" class="mdc-toolbar__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#f0f0f0"
+                     height="18" viewBox="0 0 24 24" width="18">
+                    <defs>
+                        <path d="M24 24H0V0h24v24z" id="a"></path>
+                    </defs>
+                    <clipPath id="b">
+                        <use overflow="visible" xlink:href="#a"></use>
+                    </clipPath>
+                    <path clip-path="url(#b)"
+                          d="M3 4V1h2v3h3v2H5v3H3V6H0V4h3zm3 6V7h3V4h7l1.83 2H21c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2V10h3zm7 9c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-3.2-5c0 1.77 1.43 3.2 3.2 3.2s3.2-1.43 3.2-3.2-1.43-3.2-3.2-3.2-3.2 1.43-3.2 3.2z"></path>
+                </svg>
+            </a>
+
+            <a href="#" class="mdc-toolbar__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="#f0f0f0" height="18" viewBox="0 0 24 24" width="18">
+                    <path d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"></path>
+                    <path d="M0 0h24v24H0z" fill="none"></path>
+                </svg>
+            </a>
+
+            <a href="#" class="mdc-toolbar__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="#f0f0f0" height="18" viewBox="0 0 24 24" width="18">
+                    <path d="M0 0h24v24H0z" fill="none"></path>
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"></path>
+                </svg>
+            </a>
+
+            <a href="#" class="mdc-toolbar__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#f0f0f0"
+                     height="18" viewBox="0 0 24 24" width="18">
+                    <defs>
+                        <path d="M0 0h24v24H0V0z" id="a"></path>
+                    </defs>
+                    <clipPath id="b">
+                        <use overflow="visible" xlink:href="#a"></use>
+                    </clipPath>
+                    <path clip-path="url(#b)"
+                          d="M23 8c0 1.1-.9 2-2 2-.18 0-.35-.02-.51-.07l-3.56 3.55c.05.16.07.34.07.52 0 1.1-.9 2-2 2s-2-.9-2-2c0-.18.02-.36.07-.52l-2.55-2.55c-.16.05-.34.07-.52.07s-.36-.02-.52-.07l-4.55 4.56c.05.16.07.33.07.51 0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2c.18 0 .35.02.51.07l4.56-4.55C8.02 9.36 8 9.18 8 9c0-1.1.9-2 2-2s2 .9 2 2c0 .18-.02.36-.07.52l2.55 2.55c.16-.05.34-.07.52-.07s.36.02.52.07l3.55-3.56C19.02 8.35 19 8.18 19 8c0-1.1.9-2 2-2s2 .9 2 2z"></path>
+                </svg>
+            </a>
+
+            <a href="#" class="mdc-toolbar__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" baseProfile="tiny" fill="#f0f0f0" height="18"
+                     viewBox="0 0 24 24" width="18">
+                    <path d="M0 0h24v24H0V0z" fill="none"></path>
+                    <path d="M9.93 13.5h4.14L12 7.98zM20 2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-4.05 16.5l-1.14-3H9.17l-1.12 3H5.96l5.11-13h1.86l5.11 13h-2.09z"></path>
+                </svg>
+            </a>
+        </section>
+
+        <section class="mdc-toolbar__section mdc-toolbar__section--align-end">
+
+
+            <a href="#" class="mdc-toolbar__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="#f0f0f0" height="18" viewBox="0 0 24 24" width="18">
+                    <path d="M15 15H3v2h12v-2zm0-8H3v2h12V7zM3 13h18v-2H3v2zm0 8h18v-2H3v2zM3 3v2h18V3H3z"></path>
+                    <path d="M0 0h24v24H0z" fill="none"></path>
+                </svg>
+            </a>
+
+            <a href="#" class="mdc-toolbar__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="#f0f0f0" height="18" viewBox="0 0 24 24" width="18">
+                    <path d="M7 15v2h10v-2H7zm-4 6h18v-2H3v2zm0-8h18v-2H3v2zm4-6v2h10V7H7zM3 3v2h18V3H3z"></path>
+                    <path d="M0 0h24v24H0z" fill="none"></path>
+                </svg>
+            </a>
+            <a href="#" class="mdc-toolbar__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="#f0f0f0" height="18" viewBox="0 0 24 24" width="18">
+                    <path d="M3 21h18v-2H3v2zm6-4h12v-2H9v2zm-6-4h18v-2H3v2zm6-4h12V7H9v2zM3 3v2h18V3H3z"></path>
+                    <path d="M0 0h24v24H0z" fill="none"></path>
+                </svg>
+            </a>
+            <a href="#" class="mdc-toolbar__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="#f0f0f0" height="18" viewBox="0 0 24 24" width="18">
+                    <path d="M8 11h3v10h2V11h3l-4-4-4 4zM4 3v2h16V3H4z"></path>
+                    <path d="M0 0h24v24H0z" fill="none"></path>
+                </svg>
+            </a>
+            <a href="#" class="mdc-toolbar__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="#f0f0f0" height="18" viewBox="0 0 24 24" width="18">
+                    <path d="M8 19h3v4h2v-4h3l-4-4-4 4zm8-14h-3V1h-2v4H8l4 4 4-4zM4 11v2h16v-2H4z"></path>
+                    <path d="M0 0h24v24H0z" fill="none"></path>
+                </svg>
+            </a>
+            <a href="#" class="mdc-toolbar__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="#f0f0f0" height="18" viewBox="0 0 24 24" width="18">
+                    <path d="M16 13h-3V3h-2v10H8l4 4 4-4zM4 19v2h16v-2H4z"></path>
+                    <path d="M0 0h24v24H0z" fill="none"></path>
+                </svg>
+            </a>
+
+            <a href="#" class="mdc-toolbar__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="#f0f0f0" height="18" viewBox="0 0 24 24" width="18">
+                    <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                    <path d="M0 0h24v24H0V0z" fill="none"></path>
+                    <path d="M12 10h-2v2H9v-2H7V9h2V7h1v2h2v1z"></path>
+                </svg>
+            </a>
+            <a href="#" class="mdc-toolbar__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="#f0f0f0" height="18" viewBox="0 0 24 24" width="18">
+                    <path d="M0 0h24v24H0V0z" fill="none"></path>
+                    <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14zM7 9h5v1H7z"></path>
+                </svg>
+            </a>
         </section>
     </div>
 </header>
