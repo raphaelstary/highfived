@@ -1,0 +1,45 @@
+/* Ensure layout covers the entire screen. */
+html {
+    height: 100%;
+}
+
+/* Stack toolbar and content on top of each other. */
+.editor-body {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    min-height: 100%;
+}
+
+/* Place drawer and main next to each other. */
+.editor-content {
+    margin-top: 106px;
+
+    display: flex;
+    flex: 1 1 auto;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.editor-main {
+    padding-left: 16px;
+}
+
+.editor-toolbar__row {
+    min-height: auto;
+}
+
+.editor-toolbar__section-title {
+    margin-left: 240px;
+}
+
+/* override mdc classes */
+.mdc-list-item {
+    padding-left: 24px;
+}
+
+.mdc-toolbar__title {
+    margin-left: 16px;
+}

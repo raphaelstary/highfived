@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>highfive'd</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui">
+
+    <link href="../node_modules/roboto-fontface/css/roboto/roboto-fontface.css" rel="stylesheet">
+    <link href="../node_modules/material-components-web/dist/material-components-web.css" rel="stylesheet">
+
+    <link href="../asset/css/app.css" rel="stylesheet">
+</head>
+
+<body class="mdc-typography editor-body">
+
+<header class="mdc-toolbar mdc-toolbar--fixed">
+    <div class="mdc-toolbar__row editor-toolbar__row">
+        <section class="editor-toolbar__section-title">
+            <span class="mdc-toolbar__title">scene-name.json</span>
+        </section>
+
+        <section class="mdc-toolbar__section mdc-toolbar__section--align-end">
+            <a href="#" class="material-icons mdc-toolbar__icon">watch_later</a>
+            <a href="#" class="material-icons mdc-toolbar__icon">work</a>
+            <a href="#" class="material-icons mdc-toolbar__icon">zoom_in</a>
+            <a href="#" class="material-icons mdc-toolbar__icon">zoom_out</a>
+            <a href="#" class="material-icons mdc-toolbar__icon">file_download</a>
+            <a href="#" class="material-icons mdc-toolbar__icon">settings</a>
+        </section>
+    </div>
+    <div class="mdc-toolbar__row editor-toolbar__row">
+        <section class="mdc-toolbar__section mdc-toolbar__section--align-start">
+
+            <a class="mdc-toolbar__icon" style="padding-left: 24px">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="#f0f0f0" height="20" viewBox="0 0 24 24" width="20">
+                    <path d="M0 0h24v24H0V0z" fill="none"></path>
+                    <path d="M20 6h-8l-2-2H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-1 8h-3v3h-2v-3h-3v-2h3V9h2v3h3v2z"></path>
+                </svg>
+            </a>
+
+            <a class="mdc-toolbar__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="#f0f0f0" height="20" viewBox="0 0 24 24" width="20">
+                    <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"></path>
+                    <path d="M0 0h24v24H0z" fill="none"></path>
+                </svg>
+            </a>
+
+            <a class="mdc-toolbar__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="#f0f0f0" height="20" viewBox="0 0 24 24" width="20">
+                    <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"></path>
+                    <path d="M0 0h24v24H0z" fill="none"></path>
+                </svg>
+            </a>
+
+        </section>
+    </div>
+</header>
+
+<div class="editor-content">
+
+
+    <nav class="mdc-drawer mdc-drawer--permanent">
+
+        <ul class="mdc-list mdc-list--dense">
+            <li>
+                <a class="mdc-list-item">
+
+                    <svg class="mdc-list-item__graphic" xmlns="http://www.w3.org/2000/svg" fill="#8f8f8f"
+                         height="18"
+                         viewBox="0 0 24 24" width="18">
+                        <path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"></path>
+                        <path d="M0 0h24v24H0z" fill="none"></path>
+                    </svg>
+
+                    <svg class="mdc-list-item__graphic" xmlns="http://www.w3.org/2000/svg" fill="#8f8f8f"
+                         height="18" viewBox="0 0 24 24" width="18" style="display: none">
+                        <path d="M0 0h24v24H0z" fill="none"></path>
+                        <path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z"></path>
+                    </svg>
+
+                    sample folder
+                </a>
+            </li>
+
+            <li class="mdc-list-item">
+
+                <svg class="mdc-list-item__graphic" xmlns="http://www.w3.org/2000/svg" fill="#8f8f8f" height="18"
+                     viewBox="0 0 24 24" width="18">
+                    <path d="M0 0h24v24H0z" fill="none"></path>
+                    <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"></path>
+                </svg>
+
+                sample-image
+            </li>
+
+            <li class="mdc-list-item">
+
+                <svg class="mdc-list-item__graphic" xmlns="http://www.w3.org/2000/svg"
+                     xmlns:xlink="http://www.w3.org/1999/xlink" fill="#8f8f8f" height="18" viewBox="0 0 24 24"
+                     width="18">
+                    <defs>
+                        <path d="M0 0h24v24H0V0z" id="a"></path>
+                    </defs>
+                    <clipPath id="b">
+                        <use overflow="visible" xlink:href="#a"></use>
+                    </clipPath>
+                    <path clip-path="url(#b)"
+                          d="M19.5 9.5c-1.03 0-1.9.62-2.29 1.5h-2.92c-.39-.88-1.26-1.5-2.29-1.5s-1.9.62-2.29 1.5H6.79c-.39-.88-1.26-1.5-2.29-1.5C3.12 9.5 2 10.62 2 12s1.12 2.5 2.5 2.5c1.03 0 1.9-.62 2.29-1.5h2.92c.39.88 1.26 1.5 2.29 1.5s1.9-.62 2.29-1.5h2.92c.39.88 1.26 1.5 2.29 1.5 1.38 0 2.5-1.12 2.5-2.5s-1.12-2.5-2.5-2.5z"></path>
+                </svg>
+
+                sample-line
+            </li>
+
+            <li class="mdc-list-item">
+
+                <svg class="mdc-list-item__graphic" xmlns="http://www.w3.org/2000/svg" fill="#8f8f8f" height="18"
+                     viewBox="0 0 24 24" width="18">
+                    <path d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"></path>
+                    <path d="M0 0h24v24H0z" fill="none"></path>
+                </svg>
+
+                sample-rectangle
+            </li>
+
+            <li class="mdc-list-item">
+
+                <svg class="mdc-list-item__graphic" xmlns="http://www.w3.org/2000/svg" fill="#8f8f8f" height="18"
+                     viewBox="0 0 24 24" width="18">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"></path>
+                    <path d="M0 0h24v24H0z" fill="none"></path>
+                </svg>
+
+                sample-circle
+            </li>
+
+        </ul>
+    </nav>
+
+    <main class="editor-main">
+        <h1 class="mdc-typography--display1">Hello, Material Components!</h1>
+
+        <p class="mdc-typography--body1">
+            A demo paragraph here.
+        </p>
+    </main>
+</div>
+
+<!--<script src="../node_modules/highfive.js/dist/highfive.js"></script>-->
+<!--<script>-->
+<!--var H5d = {};-->
+<!--</script>-->
+<!--<script src="main.js"></script>-->
+
+</body>
+</html>
