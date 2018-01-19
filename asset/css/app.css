@@ -31,7 +31,34 @@ html {
     min-height: auto;
 }
 
+.editor-list-nested {
+    margin-left: 24px
+}
+
+.editor-value {
+    padding-left: 16px;
+    color: rgba(0, 0, 0, 0.38);
+}
+
+.editor-list-item-value {
+    height: 24px !important;
+    font-size: 0.9em !important;
+}
+
+.editor-list-add {
+    padding-top: 6px;
+    padding-left: 20px;
+}
+
 /* override mdc classes */
+.mdc-toolbar__title {
+    font-size: inherit;
+}
+
 .mdc-list-item {
     padding-left: 24px;
+}
+
+.mdc-list--dense .mdc-list-item__graphic {
+    margin-right: 16px;
 }
