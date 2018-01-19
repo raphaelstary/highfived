@@ -240,302 +240,10 @@
 
     <nav class="mdc-drawer mdc-drawer--permanent">
 
-        <ul class="mdc-list mdc-list--dense">
-            <li>
-                <a class="mdc-list-item">
+        <ul id="root-items" class="mdc-list mdc-list--dense">
 
-                    <svg class="mdc-list-item__graphic" xmlns="http://www.w3.org/2000/svg" fill="#8f8f8f"
-                         height="18"
-                         viewBox="0 0 24 24" width="18">
-                        <path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"></path>
-                        <path d="M0 0h24v24H0z" fill="none"></path>
-                    </svg>
+            <!--items-->
 
-                    <svg class="mdc-list-item__graphic" xmlns="http://www.w3.org/2000/svg" fill="#8f8f8f"
-                         height="18" viewBox="0 0 24 24" width="18" style="display: none">
-                        <path d="M0 0h24v24H0z" fill="none"></path>
-                        <path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z"></path>
-                    </svg>
-
-                    sample folder
-                </a>
-            </li>
-
-            <li>
-                <a class="mdc-list-item mdc-list-item--selected">
-                    <svg class="mdc-list-item__graphic" xmlns="http://www.w3.org/2000/svg" fill="#8f8f8f" height="18"
-                         viewBox="0 0 24 24" width="18">
-                        <path d="M0 0h24v24H0z" fill="none"></path>
-                        <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"></path>
-                    </svg>
-                    sample-image
-                </a>
-                <ul class="mdc-list mdc-list--dense editor-list-nested">
-
-                    <li class="mdc-list-item editor-list-item-value">
-                        <span class="editor-label" contenteditable="true">
-                            key
-                        </span>
-                        <span class="editor-value" contenteditable="true">
-                            value
-                        </span>
-                    </li>
-
-                    <li class="editor-list-add">
-                        <svg fill="#8f8f8f" height="18" viewBox="0 0 24 24" width="18"
-                             xmlns="http://www.w3.org/2000/svg">
-                            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
-                            <path d="M0 0h24v24H0z" fill="none"></path>
-                        </svg>
-                    </li>
-
-                </ul>
-            </li>
-
-            <li class="mdc-list-item">
-
-                <svg class="mdc-list-item__graphic" xmlns="http://www.w3.org/2000/svg"
-                     xmlns:xlink="http://www.w3.org/1999/xlink" fill="#8f8f8f" height="18" viewBox="0 0 24 24"
-                     width="18">
-                    <defs>
-                        <path d="M0 0h24v24H0V0z" id="a"></path>
-                    </defs>
-                    <clipPath id="b">
-                        <use overflow="visible" xlink:href="#a"></use>
-                    </clipPath>
-                    <path clip-path="url(#b)"
-                          d="M19.5 9.5c-1.03 0-1.9.62-2.29 1.5h-2.92c-.39-.88-1.26-1.5-2.29-1.5s-1.9.62-2.29 1.5H6.79c-.39-.88-1.26-1.5-2.29-1.5C3.12 9.5 2 10.62 2 12s1.12 2.5 2.5 2.5c1.03 0 1.9-.62 2.29-1.5h2.92c.39.88 1.26 1.5 2.29 1.5s1.9-.62 2.29-1.5h2.92c.39.88 1.26 1.5 2.29 1.5 1.38 0 2.5-1.12 2.5-2.5s-1.12-2.5-2.5-2.5z"></path>
-                </svg>
-
-                sample-line
-            </li>
-
-            <li class="mdc-list-item mdc-list-item--activated">
-
-                <svg class="mdc-list-item__graphic" xmlns="http://www.w3.org/2000/svg" fill="#8f8f8f" height="18"
-                     viewBox="0 0 24 24" width="18">
-                    <path d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"></path>
-                    <path d="M0 0h24v24H0z" fill="none"></path>
-                </svg>
-
-                sample-rectangle
-            </li>
-
-            <li class="mdc-list-item">
-
-                <svg class="mdc-list-item__graphic" xmlns="http://www.w3.org/2000/svg" fill="#8f8f8f" height="18"
-                     viewBox="0 0 24 24" width="18">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"></path>
-                    <path d="M0 0h24v24H0z" fill="none"></path>
-                </svg>
-
-                sample-circle
-            </li>
-
-
-            <!--TEST-->
-
-            <li>
-                <a class="mdc-list-item mdc-list-item--selected">
-
-                    <svg class="mdc-list-item__graphic" xmlns="http://www.w3.org/2000/svg" fill="#8f8f8f"
-                         height="18" viewBox="0 0 24 24" width="18" style="display: none">
-                        <path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"></path>
-                        <path d="M0 0h24v24H0z" fill="none"></path>
-                    </svg>
-
-                    <svg class="mdc-list-item__graphic" xmlns="http://www.w3.org/2000/svg" fill="#8f8f8f"
-                         height="18" viewBox="0 0 24 24" width="18">
-                        <path d="M0 0h24v24H0z" fill="none"></path>
-                        <path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z"></path>
-                    </svg>
-
-                    sample folder
-                </a>
-
-                <ul class="mdc-list mdc-list--dense editor-list-nested">
-
-                    <li class="mdc-list-item">
-
-                        <svg class="mdc-list-item__graphic" xmlns="http://www.w3.org/2000/svg" fill="#8f8f8f"
-                             height="18"
-                             viewBox="0 0 24 24" width="18">
-                            <path d="M0 0h24v24H0z" fill="none"></path>
-                            <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"></path>
-                        </svg>
-
-                        sample-image
-                    </li>
-
-                    <li class="mdc-list-item">
-
-                        <svg class="mdc-list-item__graphic" xmlns="http://www.w3.org/2000/svg"
-                             xmlns:xlink="http://www.w3.org/1999/xlink" fill="#8f8f8f" height="18" viewBox="0 0 24 24"
-                             width="18">
-                            <defs>
-                                <path d="M0 0h24v24H0V0z" id="a"></path>
-                            </defs>
-                            <clipPath id="b">
-                                <use overflow="visible" xlink:href="#a"></use>
-                            </clipPath>
-                            <path clip-path="url(#b)"
-                                  d="M19.5 9.5c-1.03 0-1.9.62-2.29 1.5h-2.92c-.39-.88-1.26-1.5-2.29-1.5s-1.9.62-2.29 1.5H6.79c-.39-.88-1.26-1.5-2.29-1.5C3.12 9.5 2 10.62 2 12s1.12 2.5 2.5 2.5c1.03 0 1.9-.62 2.29-1.5h2.92c.39.88 1.26 1.5 2.29 1.5s1.9-.62 2.29-1.5h2.92c.39.88 1.26 1.5 2.29 1.5 1.38 0 2.5-1.12 2.5-2.5s-1.12-2.5-2.5-2.5z"></path>
-                        </svg>
-
-                        sample-line
-                    </li>
-
-                    <li>
-                        <a class="mdc-list-item mdc-list-item--selected">
-
-                            <svg class="mdc-list-item__graphic" xmlns="http://www.w3.org/2000/svg" fill="#8f8f8f"
-                                 height="18" viewBox="0 0 24 24" width="18" style="display: none">
-                                <path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"></path>
-                                <path d="M0 0h24v24H0z" fill="none"></path>
-                            </svg>
-
-                            <svg class="mdc-list-item__graphic" xmlns="http://www.w3.org/2000/svg" fill="#8f8f8f"
-                                 height="18" viewBox="0 0 24 24" width="18">
-                                <path d="M0 0h24v24H0z" fill="none"></path>
-                                <path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z"></path>
-                            </svg>
-
-                            sample folder
-                        </a>
-
-                        <ul class="mdc-list mdc-list--dense editor-list-nested">
-
-                            <li class="mdc-list-item">
-
-                                <svg class="mdc-list-item__graphic" xmlns="http://www.w3.org/2000/svg" fill="#8f8f8f"
-                                     height="18"
-                                     viewBox="0 0 24 24" width="18">
-                                    <path d="M0 0h24v24H0z" fill="none"></path>
-                                    <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"></path>
-                                </svg>
-
-                                sample-image
-                            </li>
-
-                            <li class="mdc-list-item">
-
-                                <svg class="mdc-list-item__graphic" xmlns="http://www.w3.org/2000/svg"
-                                     xmlns:xlink="http://www.w3.org/1999/xlink" fill="#8f8f8f" height="18"
-                                     viewBox="0 0 24 24"
-                                     width="18">
-                                    <defs>
-                                        <path d="M0 0h24v24H0V0z" id="a"></path>
-                                    </defs>
-                                    <clipPath id="b">
-                                        <use overflow="visible" xlink:href="#a"></use>
-                                    </clipPath>
-                                    <path clip-path="url(#b)"
-                                          d="M19.5 9.5c-1.03 0-1.9.62-2.29 1.5h-2.92c-.39-.88-1.26-1.5-2.29-1.5s-1.9.62-2.29 1.5H6.79c-.39-.88-1.26-1.5-2.29-1.5C3.12 9.5 2 10.62 2 12s1.12 2.5 2.5 2.5c1.03 0 1.9-.62 2.29-1.5h2.92c.39.88 1.26 1.5 2.29 1.5s1.9-.62 2.29-1.5h2.92c.39.88 1.26 1.5 2.29 1.5 1.38 0 2.5-1.12 2.5-2.5s-1.12-2.5-2.5-2.5z"></path>
-                                </svg>
-
-                                sample-line
-                            </li>
-
-                            <li class="mdc-list-item">
-
-                                <svg class="mdc-list-item__graphic" xmlns="http://www.w3.org/2000/svg" fill="#8f8f8f"
-                                     height="18" viewBox="0 0 24 24" width="18">
-                                    <path d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"></path>
-                                    <path d="M0 0h24v24H0z" fill="none"></path>
-                                </svg>
-
-                                sample-rectangle2
-                            </li>
-
-                            <li class="mdc-list-item">
-
-                                <svg class="mdc-list-item__graphic" xmlns="http://www.w3.org/2000/svg" fill="#8f8f8f"
-                                     height="18" viewBox="0 0 24 24" width="18">
-                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"></path>
-                                    <path d="M0 0h24v24H0z" fill="none"></path>
-                                </svg>
-
-                                sample-circle
-                            </li>
-                        </ul>
-                    </li>
-
-                    <li class="mdc-list-item">
-
-                        <svg class="mdc-list-item__graphic" xmlns="http://www.w3.org/2000/svg" fill="#8f8f8f"
-                             height="18"
-                             viewBox="0 0 24 24" width="18">
-                            <path d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"></path>
-                            <path d="M0 0h24v24H0z" fill="none"></path>
-                        </svg>
-
-                        sample-rectangle
-                    </li>
-
-                    <li class="mdc-list-item">
-
-                        <svg class="mdc-list-item__graphic" xmlns="http://www.w3.org/2000/svg" fill="#8f8f8f"
-                             height="18"
-                             viewBox="0 0 24 24" width="18">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"></path>
-                            <path d="M0 0h24v24H0z" fill="none"></path>
-                        </svg>
-
-                        sample-circle
-                    </li>
-                </ul>
-            </li>
-
-            <li class="mdc-list-item">
-
-                <svg class="mdc-list-item__graphic" xmlns="http://www.w3.org/2000/svg" fill="#8f8f8f" height="18"
-                     viewBox="0 0 24 24" width="18">
-                    <path d="M0 0h24v24H0z" fill="none"></path>
-                    <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"></path>
-                </svg>
-
-                sample-image
-            </li>
-
-            <li class="mdc-list-item">
-
-                <svg class="mdc-list-item__graphic" xmlns="http://www.w3.org/2000/svg"
-                     xmlns:xlink="http://www.w3.org/1999/xlink" fill="#8f8f8f" height="18" viewBox="0 0 24 24"
-                     width="18">
-                    <defs>
-                        <path d="M0 0h24v24H0V0z" id="a"></path>
-                    </defs>
-                    <clipPath id="b">
-                        <use overflow="visible" xlink:href="#a"></use>
-                    </clipPath>
-                    <path clip-path="url(#b)"
-                          d="M19.5 9.5c-1.03 0-1.9.62-2.29 1.5h-2.92c-.39-.88-1.26-1.5-2.29-1.5s-1.9.62-2.29 1.5H6.79c-.39-.88-1.26-1.5-2.29-1.5C3.12 9.5 2 10.62 2 12s1.12 2.5 2.5 2.5c1.03 0 1.9-.62 2.29-1.5h2.92c.39.88 1.26 1.5 2.29 1.5s1.9-.62 2.29-1.5h2.92c.39.88 1.26 1.5 2.29 1.5 1.38 0 2.5-1.12 2.5-2.5s-1.12-2.5-2.5-2.5z"></path>
-                </svg>
-
-                sample-line
-            </li>
-
-            <li class="mdc-list-item">
-
-                <svg class="mdc-list-item__graphic" xmlns="http://www.w3.org/2000/svg" fill="#8f8f8f" height="18"
-                     viewBox="0 0 24 24" width="18">
-                    <path d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"></path>
-                    <path d="M0 0h24v24H0z" fill="none"></path>
-                </svg>
-
-                sample-rectangle
-            </li>
-
-            <li class="mdc-list-item">
-
-                <svg class="mdc-list-item__graphic" xmlns="http://www.w3.org/2000/svg" fill="#8f8f8f" height="18"
-                     viewBox="0 0 24 24" width="18">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"></path>
-                    <path d="M0 0h24v24H0z" fill="none"></path>
-                </svg>
-
-                sample-circle
-            </li>
         </ul>
     </nav>
 
@@ -547,6 +255,160 @@
         </p>
     </main>
 </div>
+
+<template id="item-folder-closed">
+    <li>
+        <a class="mdc-list-item">
+
+            <svg class="mdc-list-item__graphic" xmlns="http://www.w3.org/2000/svg"
+                 fill="#8f8f8f"
+                 height="18"
+                 viewBox="0 0 24 24" width="18">
+                <path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"></path>
+                <path d="M0 0h24v24H0z" fill="none"></path>
+            </svg>
+
+            <span class="editor-item-name">
+                <!--name-->
+            </span>
+
+            <!--key-value list-->
+
+            <!--containing files-->
+        </a>
+    </li>
+</template>
+
+<template id="item-folder-open">
+    <li>
+        <a class="mdc-list-item">
+
+            <svg class="mdc-list-item__graphic" xmlns="http://www.w3.org/2000/svg"
+                 fill="#8f8f8f"
+                 height="18" viewBox="0 0 24 24" width="18">
+                <path d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z"></path>
+            </svg>
+
+            <span class="editor-item-name">
+                <!--name-->
+            </span>
+
+            <!--key-value list-->
+        </a>
+    </li>
+</template>
+
+<template id="item-image">
+    <li>
+        <a class="mdc-list-item">
+            <svg class="mdc-list-item__graphic" xmlns="http://www.w3.org/2000/svg" fill="#8f8f8f"
+                 height="18"
+                 viewBox="0 0 24 24" width="18">
+                <path d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"></path>
+            </svg>
+            <span class="editor-item-name">
+                <!--name-->
+            </span>
+        </a>
+
+        <!--key-value list-->
+    </li>
+</template>
+
+<template id="item-line">
+    <li>
+        <a class="mdc-list-item">
+            <svg class="mdc-list-item__graphic" xmlns="http://www.w3.org/2000/svg"
+                 xmlns:xlink="http://www.w3.org/1999/xlink" fill="#8f8f8f" height="18" viewBox="0 0 24 24"
+                 width="18">
+                <defs>
+                    <path d="M0 0h24v24H0V0z" id="a"></path>
+                </defs>
+                <clipPath id="b">
+                    <use overflow="visible" xlink:href="#a"></use>
+                </clipPath>
+                <path clip-path="url(#b)"
+                      d="M19.5 9.5c-1.03 0-1.9.62-2.29 1.5h-2.92c-.39-.88-1.26-1.5-2.29-1.5s-1.9.62-2.29 1.5H6.79c-.39-.88-1.26-1.5-2.29-1.5C3.12 9.5 2 10.62 2 12s1.12 2.5 2.5 2.5c1.03 0 1.9-.62 2.29-1.5h2.92c.39.88 1.26 1.5 2.29 1.5s1.9-.62 2.29-1.5h2.92c.39.88 1.26 1.5 2.29 1.5 1.38 0 2.5-1.12 2.5-2.5s-1.12-2.5-2.5-2.5z"></path>
+            </svg>
+            <span class="editor-item-name">
+                <!--name-->
+            </span>
+        </a>
+
+        <!--key-value list-->
+    </li>
+</template>
+
+<template id="item-rectangle">
+    <li>
+        <a class="mdc-list-item">
+            <svg class="mdc-list-item__graphic" xmlns="http://www.w3.org/2000/svg" fill="#8f8f8f"
+                 height="18"
+                 viewBox="0 0 24 24" width="18">
+                <path d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"></path>
+                <path d="M0 0h24v24H0z" fill="none"></path>
+            </svg>
+            <span class="editor-item-name">
+                <!--name-->
+            </span>
+        </a>
+
+        <!--key-value list-->
+    </li>
+</template>
+
+<template id="item-circle">
+    <li>
+        <a class="mdc-list-item">
+            <svg class="mdc-list-item__graphic" xmlns="http://www.w3.org/2000/svg" fill="#8f8f8f"
+                 height="18"
+                 viewBox="0 0 24 24" width="18">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"></path>
+                <path d="M0 0h24v24H0z" fill="none"></path>
+            </svg>
+            <span class="editor-item-name">
+                <!--name-->
+            </span>
+        </a>
+
+        <!--key-value list-->
+    </li>
+</template>
+
+<template id="item-key-value-list">
+    <ul class="mdc-list mdc-list--dense editor-list-nested">
+
+        <!--key-value items-->
+
+        <li class="editor-list-add">
+            <svg fill="#8f8f8f" height="18" viewBox="0 0 24 24" width="18"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                <path d="M0 0h24v24H0z" fill="none"></path>
+            </svg>
+        </li>
+
+    </ul>
+</template>
+
+<template id="item-key-value-pair">
+    <li class="mdc-list-item editor-list-item-value">
+        <span class="editor-item-key" contenteditable="true">
+            <!--key-->
+        </span>
+        <span class="editor-item-value" contenteditable="true">
+            <!--value-->
+        </span>
+    </li>
+</template>
+
+<template id="sub-items">
+    <ul class="mdc-list mdc-list--dense editor-list-nested">
+        <!--items-->
+    </ul>
+</template>
 
 <!--<script src="../node_modules/highfive.js/dist/highfive.js"></script>-->
 <!--<script>-->
