@@ -31,6 +31,10 @@ html {
     min-height: auto;
 }
 
+.editor-toolbar__icon-spacer {
+    margin-left: 42px;
+}
+
 .editor-list-nested {
     margin-left: 24px
 }
@@ -61,4 +65,8 @@ html {
 
 .mdc-list--dense .mdc-list-item__graphic {
     margin-right: 16px;
+}
+
+.mdc-drawer--permanent {
+    width: 300px;
 }
