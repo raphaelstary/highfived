@@ -4,7 +4,8 @@
   "description": "highfive'd - the highfive.js UI editor",
   "main": "index.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "http-server -o http://localhost:8080/src/index.html"
   },
   "repository": {
     "type": "git",
@@ -24,5 +25,8 @@
     "highfive.js": "0.20.0",
     "material-components-web": "^0.28.0",
     "roboto-fontface": "^0.8.0"
+  },
+  "devDependencies": {
+    "http-server": "^0.11.1"
   }
 }
