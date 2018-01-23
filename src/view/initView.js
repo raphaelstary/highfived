@@ -10,7 +10,7 @@ const folderClosedTemplate = document.getElementById('item-folder-closed');
 const folderOpenTemplate = document.getElementById('item-folder-open');
 
 export default function initView(sceneData) {
-    const layers = new Layers(sceneData.drawables, layerListRoot, circleTemplate, lineTemplate, rectangleTemplate,
+    const layers = new Layers(sceneData.layers, layerListRoot, circleTemplate, lineTemplate, rectangleTemplate,
         textTemplate, imageTemplate, folderClosedTemplate, folderOpenTemplate);
     layers.initHtml();
 }
