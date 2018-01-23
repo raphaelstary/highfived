@@ -16,8 +16,32 @@
 <header class="mdc-toolbar mdc-toolbar--fixed">
     <div class="mdc-toolbar__row editor-toolbar__row">
         <section class="mdc-toolbar__section mdc-toolbar__section--align-start">
-            <span class="mdc-toolbar__title">scene-name.json</span>
+            <span class="mdc-toolbar__title">project-name.json</span>
 
+            <a class="mdc-toolbar__icon">
+                <svg fill="#f0f0f0" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 0h24v24H0V0z" fill="none"></path>
+                    <path d="M20 6h-8l-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-2.06 11L15 15.28 12.06 17l.78-3.33-2.59-2.24 3.41-.29L15 8l1.34 3.14 3.41.29-2.59 2.24.78 3.33z"></path>
+                </svg>
+            </a>
+
+            <div class="editor-toolbar__menu-icon-spacer"></div>
+
+            <div class="mdc-select">
+                <select class="mdc-select__surface">
+                    <option value="scene-name-x.json">scene-name-x.json</option>
+                    <option value="scene-name-y.json">scene-name-y.json</option>
+                    <option value="scene-name-z.json">scene-name-z.json</option>
+                </select>
+                <div class="mdc-select__bottom-line"></div>
+            </div>
+
+            <a class="mdc-toolbar__icon">
+                <svg fill="#f0f0f0" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                    <path d="M0 0h24v24H0z" fill="none"></path>
+                </svg>
+            </a>
         </section>
 
         <section class="mdc-toolbar__section mdc-toolbar__section--align-end">
@@ -260,11 +284,7 @@
     </nav>
 
     <main class="editor-main">
-        <h1 class="mdc-typography--display1">Hello, Material Components!</h1>
-
-        <p class="mdc-typography--body1">
-            A demo paragraph here.
-        </p>
+        <canvas id="screen"></canvas>
     </main>
 </div>
 

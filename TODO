@@ -1,0 +1,31 @@
+[x] add project name to html mock-up
+[x] add scenes list to html mock-up
+[ ] enter project name
+[ ] select project folder/file
+[ ] create project file
+[ ] open project file
+[ ] reopen last project file after editor startup
+[ ] add background color
+[ ] undo changes within editor
+[ ] redo changes
+[ ] save background color to file
+[ ] change background color
+[ ] update background color to file
+
+[ ] change project name / file name
+    [ ] update view
+    [ ] rename file
+    [ ] reopen right file
+
+[ ] add font
+    [ ] select
+    [ ] save
+    [ ] update
+    [ ] load & add to dom
+        [ ] after new/edit
+        [ ] after editor booted
+
+[ ] add scene to project
+[ ] create scene file
+[ ] create another scene
+[ ] switch scenes
